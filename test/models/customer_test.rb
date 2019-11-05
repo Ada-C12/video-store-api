@@ -20,4 +20,20 @@ describe Customer do
       end
     end 
   end
+
+  describe "relationships" do
+    let(:movie) {movies(:movie_one)}
+    let(:customer) {customers(:customer_one)}
+    let(:rental) {rentals(:rental_one)}
+
+    it "can have rentals" do
+      expect(customer.rentals.first).must_be_instance_of Rental
+      expect(customer.rentals.first.id).must_equal rental.id
+    end
+
+    it "can have moviess through rentals" do
+      expect(customer.movies.first).must_be_instance_of Movie
+      expect(customer.movies.first.title).must_equal movie.title
+    end
+  end
 end
