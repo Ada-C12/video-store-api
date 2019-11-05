@@ -7,6 +7,10 @@ describe Customer do
       @customer = customers(:eminique)
     end
 
+    it 'can be instantiated' do
+      assert(@customer.valid?)
+    end
+
     it "can have the all customer fields" do
       @customers.each do |customer|
         [:name, :registered_at, :postal_code, :movies_checked_out_count, :city, :state, :address, :phone].each do |field|
@@ -25,7 +29,6 @@ describe Customer do
   
     
     it 'must have a name' do
-      expect(@customer.valid?)
       @customer.name = nil
 
       refute(@customer.valid?)
