@@ -18,22 +18,23 @@ describe Movie do
   
   describe "relationships" do
     it "can have many rentals" do
-      # rental_1 = Rental.new(checkout_date: Time.new(2018, 1, 1), due_date: Time.new(2018, 1, 7),)
-      # rental_2 = Rental.new(checkout_date: Time.new(2018, 1, 1), due_date: Time.new(2018, 1, 7),)
-      # rental_3 = Rental.new(checkout_date: Time.new(2018, 1, 1), due_date: Time.new(2018, 1, 7),)
+      customer = customers(:customer1)
+      rental_1 = Rental.new(customer: customer, checkout_date: Time.new(2018, 1, 1), due_date: Time.new(2018, 1, 7),)
+      rental_2 = Rental.new(customer: customer, checkout_date: Time.new(2018, 1, 1), due_date: Time.new(2018, 1, 7),)
+      rental_3 = Rental.new(customer: customer, checkout_date: Time.new(2018, 1, 1), due_date: Time.new(2018, 1, 7),)
       
-      # new_movie.save!
-      # new_movie = Movie.last
+      new_movie.save!
+      new_movie = Movie.last
 
-      # new_movie.rentals << rental_1
-      # new_movie.rentals << rental_1
-      # new_movie.rentals << rental_1
+      new_movie.rentals << rental_1
+      new_movie.rentals << rental_2
+      new_movie.rentals << rental_3
 
-      # expect(new_movie.rentals.count).must_be :>, 1
+      expect(new_movie.rentals.count).must_be :>, 1
       
-      # new_movie.rentals.each do |rental|
-      #   expect(rental).must_be_instance_of Rental
-      # end
+      new_movie.rentals.each do |rental|
+        expect(rental).must_be_instance_of Rental
+      end
     end
   end
 
