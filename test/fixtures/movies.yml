@@ -1,0 +1,11 @@
+croods:
+  title: The Croods
+  overview: Prehistoric family live in a dangerous moment in time
+  release_date: 2013-03-22
+  inventory: 10
+
+ghibli:
+  title: Spirited Away
+  overview: Girl meets boy in spa resort
+  release_date: 2002-08-31
+  inventory: 10
