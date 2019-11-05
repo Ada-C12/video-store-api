@@ -59,6 +59,8 @@ describe Rental do
         starting_inventory = @movie.available_inventory
 
         @rental.check_out_rental
+
+        @movie.reload
                 
         expect(@movie.available_inventory).must_equal starting_inventory - 1
       end
@@ -67,6 +69,8 @@ describe Rental do
         starting_checked_out = @customer.movies_checked_out_count
 
         @rental.check_out_rental
+
+        @customer.reload
 
         expect(@customer.movies_checked_out_count
         ).must_equal starting_checked_out + 1
