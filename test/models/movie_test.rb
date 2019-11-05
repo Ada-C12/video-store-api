@@ -1,7 +1,21 @@
 require "test_helper"
 
 describe Movie do
-  # it "does a thing" do
-  #   value(1+1).must_equal 2
-  # end
+  describe "validation" do
+    it "will create movie if title is present" do
+      movie = Movie.new(title: "valid movie")
+
+      is_valid = movie.valid?
+
+      assert(is_valid)
+    end
+
+    it "will not create movie if title is not present" do
+      movie = Movie.new()
+
+      is_valid = movie.valid?
+
+      refute(is_valid)
+    end
+  end
 end
