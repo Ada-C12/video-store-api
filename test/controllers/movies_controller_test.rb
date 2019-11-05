@@ -53,7 +53,6 @@ describe MoviesController do
       expect(body).must_be_instance_of Hash
       expect(body.keys.sort).must_equal ["id", "title", "release_date", "overview", "inventory", "available_inventory"].sort
       must_respond_with :ok
-
     end
 
     it "responds with JSON and not found error for invalid movie" do
@@ -66,6 +65,43 @@ describe MoviesController do
       expect(body["errors"]).must_equal ["not found"]
 
       must_respond_with :not_found
+    end
+  end
+
+  describe "create" do
+    it "creates new movie with valid parameters" do
+      new_movie_params = {
+        title: "new movie",
+        overview: "new movie description",
+        release_date: 2019,
+        inventory: 10
+      }
+
+      expect {
+        post movies_path, params: new_movie_params
+      }.must_change "Movie.count", 1
+
+      body = JSON.parse(response.body)
+
+      expect(body.keys.length).must_equal 1
+      expect(body.keys).must_equal ["id"]
+      expect(body["id"]).must_be_instance_of Integer
+      expect(body["id"]).must_equal Movie.find_by(title: new_movie_params[:title]).id
+      must_respond_with :ok
+    end
+
+    it "renders error if unable to save movie " do
+      new_movie_params = {
+        overview: "new movie description",
+        release_date: 2019,
+        inventory: 10
+      }
+
+      expect {
+        post movies_path, params: new_movie_params
+      }.wont_change "Movie.count"
+
+      must_respond_with :bad_request
     end
   end
 end
