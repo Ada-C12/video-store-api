@@ -1,7 +1,18 @@
 require "test_helper"
 
 describe Rental do
-  # it "does a thing" do
-  #   value(1+1).must_equal 2
-  # end
+  describe "relations" do
+    let(:one) {rentals(:one)}
+    
+    it "belongs to a customer" do
+      _(one).must_respond_to :customer
+      _(one.customer).must_be_kind_of Customer
+    end
+    
+    it "belongs to a movie" do
+      _(one).must_respond_to :movie
+      _(one.movie).must_be_kind_of Movie
+    end
+  end
+  
 end
