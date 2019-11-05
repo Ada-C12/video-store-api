@@ -3,9 +3,9 @@ class CreateMovies < ActiveRecord::Migration[5.2]
     create_table :movies do |t|
       t.string :title
       t.string :overview
-      t.Date :release_date
+      t.date :release_date
       t.integer :inventory
-
+      
       t.timestamps
     end
   end
