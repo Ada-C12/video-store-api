@@ -16,6 +16,7 @@ describe Customer do
     end
     
     it 'must have a name' do
+      expect(@customer.valid?)
       @customer.name = nil
 
       refute(@customer.valid?)
