@@ -1,7 +1,23 @@
 require "test_helper"
 
 describe Customer do
-  # it "does a thing" do
-  #   value(1+1).must_equal 2
-  # end
+  describe "relations" do
+    let(:customer) { customers(:shelley) }
+    let(:rental_1)  {movies()}
+    let(:rental_2)  {movies()}
+    
+    it "can have many rentals" do
+      customer.rental << 
+    end
+    
+    it "can have zero rentals" do
+    end
+  end
+  
+  describe "validations" do
+    it "is valid when all fields are present" do
+    end
+    
+    it 
+  end
 end
