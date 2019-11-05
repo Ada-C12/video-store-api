@@ -5,5 +5,7 @@ customer1:
   city: "Bikini Bottom"
   state: "Ocean"
   phone: "123456789"
+  postal_code: "12345"
+
 
 
