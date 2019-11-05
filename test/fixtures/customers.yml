@@ -1,0 +1,4 @@
+customer_one:
+  name: "Austin Powers"
+  registered_at: Time.now
+  postal_code: "Test Postal Code"

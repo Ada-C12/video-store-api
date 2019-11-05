@@ -1,0 +1,5 @@
+rental_one:
+  movie: movie_one
+  customer: customer_one
+  checkout_date: Date.current
+  due_date: Date.current + 5

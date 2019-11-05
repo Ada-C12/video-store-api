@@ -1,7 +1,10 @@
 require "test_helper"
 
 describe Movie do
-  # it "does a thing" do
-  #   value(1+1).must_equal 2
-  # end
+  describe "validations" do
+    it "can be created" do
+      movie = movies(:movie_one)
+      expect(movie.valid?).must_equal true
+    end
+  end
 end
