@@ -1,14 +1,14 @@
-m_1:
+movie1:
   title: Titanic
   overview: love sunk with ship
   release_date: '1997'
   inventory: 1
-m_2:
+movie2:
   title: Harry Potter
   overview: magic gone dark
   release_date: '2011'
   inventory: 2
-m_3:
+movie3:
   title: Arrival
   overview: underrated sci-fi
   release_date: '2016'
