@@ -22,9 +22,9 @@ describe Customer do
 
   describe "relationships" do
     it "has a list of rentals" do
-      new_customer.must_respond_to :rentals
+      _(new_customer).must_respond_to :rentals
       new_customer.rentals.each do |rental|
-        rental.must_be_kind_of Rental
+        _(rental).must_be_kind_of Rental
       end
     end
   end

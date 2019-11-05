@@ -23,9 +23,9 @@ describe Movie do
 
   describe "relationships" do
     it "has a list of rentals" do
-      movie.must_respond_to :rentals
+      _(movie).must_respond_to :rentals
       movie.rentals.each do |rental|
-        rental.must_be_instance_of Rental
+        _(rental).must_be_instance_of Rental
       end
     end
   end
