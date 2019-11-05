@@ -14,6 +14,15 @@ describe Customer do
         end
       end
     end
+
+      it "wont respond to non-customer fields" do
+        @customers.each do |customer|
+          [:title, :author, :driver].each do |field|
+            expect(customer).wont_respond_to field
+          end
+        end
+      end
+  
     
     it 'must have a name' do
       expect(@customer.valid?)
