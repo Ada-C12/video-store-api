@@ -7,7 +7,7 @@ require 'minitest/skip_dsl'
 
 require 'simplecov'
 SimpleCov.start do
-  add_filter 'test/'
+  add_filter '/test/'
 end
 
 class ActiveSupport::TestCase
