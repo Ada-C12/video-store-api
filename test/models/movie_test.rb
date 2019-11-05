@@ -32,21 +32,21 @@ describe Movie do
     end 
 
     it "is invalid without a release_date" do
-      @movie.release_date= nil
+      @movie.release_date = nil
       result = @movie.valid?
 
       expect(result).must_equal false
     end
 
     it "is invalid without a inventory number" do
-      @movie.inventory= nil
+      @movie.inventory = nil
       result = @movie.valid?
 
       expect(result).must_equal false
     end
 
     it "is invalid without a invalid inventory number" do
-      @movie.inventory= -1
+      @movie.inventory = -1
       result = @movie.valid?
       
       expect(result).must_equal false
