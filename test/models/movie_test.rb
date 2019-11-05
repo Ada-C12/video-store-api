@@ -53,6 +53,4 @@ describe Movie do
       expect(new_movie.errors.messages[:inventory]).must_include "can't be blank"
     end
   end
-
-
 end
