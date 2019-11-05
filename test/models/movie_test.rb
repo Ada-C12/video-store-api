@@ -19,5 +19,11 @@ describe Movie do
         movie.reload
       end
     end 
+    
+    it "requires a numeric inventory" do
+      movie.inventory = ""
+      
+      expect(movie.valid?).must_equal false
+    end
   end
 end
