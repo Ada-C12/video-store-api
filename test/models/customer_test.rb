@@ -1,7 +1,16 @@
 require "test_helper"
 
 describe Customer do
-  # it "does a thing" do
-  #   value(1+1).must_equal 2
-  # end
+  before do 
+    @customer = customers(:c1)
+  end
+  
+  describe "relations" do
+    it "can have one or many rentals" do
+      @customer.must_respond_to :rentals
+      @customer.rentals.each do |rental|
+        rental.must_be_kind_of rental
+      end
+    end    
+  end
 end
