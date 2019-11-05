@@ -50,8 +50,21 @@ describe Customer do
   end
   
   describe "relationships" do
+    before do
+      @customer = customers(:eminique)
+    end
     it "can have many rentals" do
-      
+      expect(@customer.rentals.count).must_equal 2
+      @customer.rentals.each do |rental|
+        expect(rental).must_be_instance_of Rental
       end
     end
+
+    it "returns [] if no rentals for user" do
+      customer = customers(:gretchen)
+      
+      expect(customer.rentals.count).must_equal 0
+      expect(customer.rentals).must_equal []
+    end
+  end
 end
