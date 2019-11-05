@@ -1,0 +1,9 @@
+rental_1:
+  customer_id: eminique
+  movie_id: titanic
+rental_2:
+  customer_id: emily
+  movie_id: signs
+rental_3:
+  customer_id: dominique 
+  movie_id: inception
