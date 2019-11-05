@@ -1,0 +1,15 @@
+eminique:
+  name: "Eminique"
+  registered_at: "11/05/2019"
+  address: "1234 Cool St."
+  phone: "123-123-1234"
+emily:
+  name: "Emily"
+  registered_at: "12/07/2019"
+  address: "4321 Cool St."
+  phone: "444-123-1234"
+dominique:
+  name: "Dominique"
+  registered_at: "1/07/2019"
+  address: "123 Cool St."
+  phone: "333-123-1234"
