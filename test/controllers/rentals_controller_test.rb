@@ -2,10 +2,6 @@ require "test_helper"
 
 describe RentalsController do
   describe "checkout" do
-    before do
-      
-    end
-    
     it "can checkout a movie by creating a new rental with valid input and available inventory" do
       movie = Movie.create(title: "valid movie", inventory: 10, available_inventory: 10)
       customer = Customer.create(name: "valid customer")
