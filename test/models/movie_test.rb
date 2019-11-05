@@ -15,14 +15,14 @@ describe Movie do
       expect(new_movie.save).must_equal true
     end
   end
-  
+
   describe "relationships" do
     it "can have many rentals" do
       customer = customers(:customer1)
-      rental_1 = Rental.new(customer: customer, checkout_date: Time.new(2018, 1, 1), due_date: Time.new(2018, 1, 7),)
-      rental_2 = Rental.new(customer: customer, checkout_date: Time.new(2018, 1, 1), due_date: Time.new(2018, 1, 7),)
-      rental_3 = Rental.new(customer: customer, checkout_date: Time.new(2018, 1, 1), due_date: Time.new(2018, 1, 7),)
-    
+      rental_1 = Rental.new(customer: customer, checkout_date: Time.new(2018, 1, 1), due_date: Time.new(2018, 1, 7))
+      rental_2 = Rental.new(customer: customer, checkout_date: Time.new(2018, 1, 1), due_date: Time.new(2018, 1, 7))
+      rental_3 = Rental.new(customer: customer, checkout_date: Time.new(2018, 1, 1), due_date: Time.new(2018, 1, 7))
+
       new_movie.save!
       new_movie = Movie.last
 
@@ -31,7 +31,7 @@ describe Movie do
       new_movie.rentals << rental_3
 
       expect(new_movie.rentals.count).must_be :>, 1
-      
+
       new_movie.rentals.each do |rental|
         expect(rental).must_be_instance_of Rental
       end
@@ -53,6 +53,4 @@ describe Movie do
       expect(new_movie.errors.messages[:inventory]).must_include "can't be blank"
     end
   end
-
-
 end
