@@ -1,4 +1,4 @@
 customer_one:
   name: "Austin Powers"
-  registered_at: Time.now
+  registered_at: Tue, 05 Nov 2019 21:45:00 UTC +00:00
   postal_code: "Test Postal Code"

@@ -1,5 +1,5 @@
 rental_one:
   movie: movie_one
   customer: customer_one
-  checkout_date: Date.current
-  due_date: Date.current + 5
+  checkout_date: Tue, 05 Nov 2019 21:45:00 UTC +00:00
+  due_date: Tue, 12 Nov 2019 21:45:00 UTC +00:00
