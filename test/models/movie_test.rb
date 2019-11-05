@@ -22,7 +22,7 @@ describe Movie do
       rental_1 = Rental.new(customer: customer, checkout_date: Time.new(2018, 1, 1), due_date: Time.new(2018, 1, 7),)
       rental_2 = Rental.new(customer: customer, checkout_date: Time.new(2018, 1, 1), due_date: Time.new(2018, 1, 7),)
       rental_3 = Rental.new(customer: customer, checkout_date: Time.new(2018, 1, 1), due_date: Time.new(2018, 1, 7),)
-      
+    
       new_movie.save!
       new_movie = Movie.last
 
@@ -40,9 +40,17 @@ describe Movie do
 
   describe "validations" do
     it "must have a title" do
+      new_movie.title = nil
+      expect(new_movie.valid?).must_equal false
+      expect(new_movie.errors.messages).must_include :title
+      expect(new_movie.errors.messages[:title]).must_include "can't be blank"
     end
 
     it "inventory can't be nil" do
+      new_movie.inventory = nil
+      expect(new_movie.valid?).must_equal false
+      expect(new_movie.errors.messages).must_include :inventory
+      expect(new_movie.errors.messages[:inventory]).must_include "can't be blank"
     end
   end
 
