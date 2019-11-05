@@ -50,4 +50,35 @@ describe MoviesController do
       expect(body["errors"]["id"]).must_equal ["Movie with id -1 not found."]
     end
   end
+
+  describe 'create' do
+    before do
+      @movie_params = { movie: { title: "test", overview: "test movie", release_date: "today", inventory: 4 } }
+    end
+    
+    it 'responds with json and success' do
+      post movies_path, params: @movie_params
+
+      expect(response.header['Content-Type']).must_include 'json'
+      must_respond_with :ok
+    end
+
+    it 'stores the movie info in the db and returns id' do
+      expect { post movies_path, params: @movie_params }.must_change "Movie.count", 1
+
+      movie = Movie.find_by(title: "test")
+
+      assert movie
+      expect(movie.overview).must_equal "test movie"
+    end
+
+    it 'wont save a bad movie' do
+      movie_params = { movie: { title: nil, overview: "stinker", release_date: "today", inventory: 4 } }
+      
+      expect { post movies_path, params: movie_params }.wont_change "Movie.count"
+
+      body = JSON.parse(response.body)
+      expect(body["errors"]["title"]).must_equal ["can't be blank"]
+    end
+  end
 end
