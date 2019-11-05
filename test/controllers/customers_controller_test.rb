@@ -13,7 +13,8 @@ describe CustomersController do
       get customers_path
 
       body = JSON.parse(response.body)
-      expect(body).must_be_instance_of Hash
+
+      expect(body).must_be_instance_of Array
 
       names = Customer.columns.map { |column| column.name }
       body.each do |customer|
@@ -21,13 +22,14 @@ describe CustomersController do
         expect(customer.keys.sort).must_equal names.sort
       end
     end
-    it "responds with a message and empty array if there are no customers" do
+
+    it "responds with an empty array if there are no customers" do
+      Customer.destroy_all
       get customers_path
 
       body = JSON.parse(response.body)
-      expect(body).must_be_instance_of Hash
-      expect(body.keys).must_include "message"
-      assert_equal "No customers", body["message"]
+      expect(body).must_be_instance_of Array
+      expect(body).must_equal []
     end
   end
 end
