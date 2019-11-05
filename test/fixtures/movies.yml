@@ -1,0 +1,7 @@
+movie1:
+  title: "Birds"
+  inventory: 5
+
+movie2:
+  title: "Clue"
+  inventory: 3

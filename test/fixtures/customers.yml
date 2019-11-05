@@ -1,1 +1,7 @@
-:
+janice:
+  name: "Janice"
+  registered_at: Date.now
+
+dora:
+  name: "Dora"
+  registered_at: Date.now
