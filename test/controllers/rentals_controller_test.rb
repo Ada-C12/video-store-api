@@ -3,7 +3,7 @@ require "test_helper"
 describe RentalsController do
   describe "checkout" do
     before do
-      movie = Movie.create(title: "valid movie")
+      movie = Movie.create(title: "valid movie", inventory: 10, available_inventory: 10)
       customer = Customer.create(name: "valid customer")
     end
     

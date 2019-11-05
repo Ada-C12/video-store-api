@@ -46,4 +46,31 @@ describe Rental do
       @rental.movie.must_be_kind_of Movie
     end
   end
+
+  describe "custom methods" do
+    before do
+      @movie = Movie.create(title: "valid movie", inventory: 10, available_inventory: 10)
+      @customer = Customer.create(name: "valid customer")
+      @rental = Rental.create(movie_id: @movie.id, customer_id: @customer.id)
+    end
+
+    describe "check out rental method" do
+      it "decrements available inventory" do
+        starting_inventory = @movie.available_inventory
+
+        @rental.check_out_rental
+                
+        expect(@movie.available_inventory).must_equal starting_inventory - 1
+      end
+
+      it "increments movies checkout out count" do
+        starting_checked_out = @customer.movies_checked_out_count
+
+        @rental.check_out_rental
+
+        expect(@customer.movies_checked_out_count
+        ).must_equal starting_checked_out + 1
+      end
+    end
+  end
 end
