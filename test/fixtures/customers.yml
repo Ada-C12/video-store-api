@@ -6,6 +6,8 @@ customer1:
   state: "Ocean"
   phone: "123456789"
   postal_code: "12345"
+  movies_checked_out_count: 4
+
 
 
 

@@ -23,11 +23,11 @@ class Rental < ApplicationRecord
 
 
 
-  # def checkout_rental
-    
-  #   # reduce movie inventory 
-  #   # increment customer movies_checked_out_count by 1
-  # end
+  def checkout_movie
+    self.movie.inventory -= 1
+    self.customer.movies_checked_out_count += 1
+    return
+  end
 
   
 
