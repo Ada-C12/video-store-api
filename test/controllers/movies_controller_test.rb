@@ -34,8 +34,9 @@ describe MoviesController do
 
   describe "show" do
     before do
-      Movie.create(title: "random")
+      Movie.create(title: "random", inventory: 10)
     end
+    
     let (:valid_movie_id) { Movie.all.first }
     let (:invalid_movie_id) { -1 }
     it "responds with JSON and success for valid movie" do      
