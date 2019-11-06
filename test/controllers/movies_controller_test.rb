@@ -69,13 +69,13 @@ describe MoviesController do
         }
       }
     }
-    
+
     it "can create a new movie" do 
       expect {
         post movies_path, params: movie_data
       }.must_differ 'Movie.count', 1
 
-      body = check_response(expected_type: Hash, expected_status: :ok)
+      body = check_response(expected_type: Hash, expected_status: :created)
 
       new_movie = Movie.find(body["id"])
 

@@ -1,4 +1,6 @@
-class ApplicationController < ActionController::API
+class ApplicationController < ActionController::API 
+  
+  private
 
   def not_found
     render json: { 
