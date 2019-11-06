@@ -5,15 +5,15 @@ describe Customer do
     it "has movies" do 
       # Arrange
       mariya = customers(:mariya)
-
+      
       # Act
       mariya.movies 
-
+      
       # Assert
       expect(mariya.movies).must_equal []
-
+      
     end
-
+    
     it "can checkout the movies" do 
     end
   end
