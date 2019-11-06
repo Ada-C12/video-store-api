@@ -1,7 +1,7 @@
 require "test_helper"
 
 describe Rental do
-  let (:movie) {movie = Movie.create(title: "valid movie")}
+  let (:movie) {movie = Movie.create(title: "valid movie", inventory: 10)}
   let (:customer) {customer = Customer.create(name: "valid customer")}
   
   describe "validation" do
