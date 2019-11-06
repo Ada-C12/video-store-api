@@ -6,7 +6,8 @@ class Customer < ApplicationRecord
   end
   
   
-  #https://blog.arkency.com/how-to-overwrite-to-json-as-json-in-active-record-models-in-rails/
+  #taken from https://blog.arkency.com/how-to-overwrite-to-json-as-json-in-active-record-models-in-rails/
+  #it overwrites the as_json method to include the "movies_checked_out_count" key
   def as_json(*)
     super.except("created_at", "updated_at").tap do |hash|
       hash["movies_checked_out_count"] = movies_checked_out_count

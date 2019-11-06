@@ -16,6 +16,15 @@ class MoviesController < ApplicationController
   def create
     
   end
+
+  def create
+    new_movie = Movie.new(movie_params)
+    if new_movie.save
+      render json: { id: new_movie.id }, status: :created
+    else
+      render json: { ok: false, errors: new_movie.errors }
+    end 
+  end
   
   private
   
