@@ -69,7 +69,7 @@ describe MoviesController do
       }.must_differ "Movie.count", 1
       body = JSON.parse(response.body)
       expect(body.keys).must_include "id"
-      must_respond_with :created
+      must_respond_with :ok
     end
 
     it "won't create a movie given bad data" do

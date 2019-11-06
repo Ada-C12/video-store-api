@@ -5,7 +5,7 @@ class RentalsController < ApplicationController
     rental.due_date = Time.now + 7
 
     if rental.save
-      render json: rental.as_json(only: [:id]), status: :created
+      render json: rental.as_json(only: [:id]), status: :ok
       return
     else
       render json: {

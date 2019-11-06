@@ -29,7 +29,7 @@ describe RentalsController do
       
       body = JSON.parse(response.body)
       expect(body.keys).must_include "id"
-      must_respond_with :created
+      must_respond_with :ok
     end
 
     it "will not create a rental with missing attributes" do
