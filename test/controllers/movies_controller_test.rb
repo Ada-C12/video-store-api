@@ -46,7 +46,10 @@ describe MoviesController do
     end
 
     it "sends back a not found when the movie doesn't exist" do
+      get movie_path(-1)
 
+      body = check_response(expected_type: Hash, expected_status: :not_found)
+      expect(body["errors"]).must_equal "not_found"
     end
   end
 
