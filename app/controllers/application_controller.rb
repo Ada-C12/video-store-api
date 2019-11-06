@@ -1,2 +1,19 @@
-class ApplicationController < ActionController::API
+class ApplicationController < ActionController::API 
+  
+  private
+
+  def not_found
+    render json: { 
+      ok: false, 
+      errors: ["Not Found"] 
+      }, status: :not_found
+  end 
+
+  def bad_request(model)
+    render json: { 
+      ok: false, 
+      errors: model.errors.messages 
+      }, status: :bad_request
+  end 
+
 end
