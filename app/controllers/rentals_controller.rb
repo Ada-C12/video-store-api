@@ -1,6 +1,6 @@
 KEYS = [:id, :checkout_date, :due_date, :rental_id, :customer_id]
 
-class RentalController < ApplicationController
+class RentalsController < ApplicationController
   def index
     rentals = Rental.all.as_json(only: KEYS)
     render json: rentals, status: :ok
