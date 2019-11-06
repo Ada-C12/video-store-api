@@ -15,4 +15,13 @@ describe Movie do
       _(movies(:curse).rentals.length).must_equal 0
     end
   end
+
+  describe "validations" do
+    it "requires YYYY-MM-DD format for release_date" do
+      invalid_release_date_movie = Movie.create(release_date: "HAHAHAH")
+
+      expect(invalid_release_date_movie.valid?).must_equal false
+      expect(invalid_release_date_movie.errors).must_include "release_date"
+    end
+  end
 end
