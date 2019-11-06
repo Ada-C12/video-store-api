@@ -1,0 +1,23 @@
+r_1:
+  checkout_date: 2010-11-05
+  due_date: 2010-11-12
+  customer: c_1
+  movie: m_1
+
+r_2:
+  checkout_date: 2010-11-05
+  due_date: 2010-11-12
+  customer: c_1
+  movie: m_2
+
+r_3:
+  checkout_date: 2010-11-05
+  due_date: 2010-11-12
+  customer: c_2
+  movie: m_3
+
+r_4:
+  checkout_date: 2010-11-05
+  due_date: 2010-11-12
+  customer: c_3
+  movie: m_3

@@ -1,4 +1,4 @@
-u_1:
+c_1:
   name: Shelley Rocha
   registered_at: Wed 29 Apr 2015 07:54:14 -0700
   address: Ap #292-5216 Ipsum Rd.
@@ -7,7 +7,7 @@ u_1:
   postal_code: 24309
   phone: (322) 510-8695
 
-u_2:
+c_2:
   name: Curran Stout
   registered_at: Wed 16 Apr 2014 21:40:20 -0700
   address: Ap #658-1540 Erat Rd.
@@ -16,7 +16,7 @@ u_2:
   postal_code: 94267
   phone: (908) 949-6758
 
-u_3:
+c_3:
   name: Roanna Robinson
   registered_at: Fri 28 Nov 2014 13:14:08 -0800
   address: Ap #561-4214 Eget St.
@@ -25,7 +25,7 @@ u_3:
   postal_code: 15867
   phone: (323) 336-1841
 
-u_4:
+c_4:
   name: Carolyn Chandler
   registered_at: Fri 04 Jul 2014 11:05:11 -0700
   address: 133-8707 Arcu. Avenue
