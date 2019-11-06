@@ -1,11 +1,11 @@
 require "test_helper"
 
 describe Rental do
+  let (:movie) {movie = Movie.create(title: "valid movie")}
+  let (:customer) {customer = Customer.create(name: "valid customer")}
   
   describe "validation" do
     it "must have a customer and movie" do
-      movie = Movie.create(title: "valid movie")
-      customer = Customer.create(name: "valid customer")
       rental = Rental.create(movie_id: movie.id, customer_id: customer.id)
       
       is_valid = rental.valid?
@@ -13,7 +13,6 @@ describe Rental do
       assert(is_valid)
     end
     it "returns invalid if no customer is present" do
-      movie = Movie.create(title: "valid movie")
       rental = Rental.create(movie_id: movie.id)
       
       is_valid = rental.valid?
@@ -21,7 +20,6 @@ describe Rental do
       refute(is_valid)
     end
     it "returns invalid if no movie is present" do
-      customer = Customer.create(name: "valid customer")
       rental = Rental.create(customer_id: customer.id)
       
       is_valid = rental.valid?
@@ -33,21 +31,21 @@ describe Rental do
   
   describe "relationships" do
     before do
-      @movie = Movie.create(title: "valid movie")
-      @customer = Customer.create(name: "valid customer")
-      @rental = Rental.create(movie_id: @movie.id, customer_id: @customer.id)
+      @rental = Rental.create(movie_id: movie.id, customer_id: customer.id)
     end
+
     it "must belong to a customer" do
-      @rental.must_respond_to :customer
-      @rental.customer.must_be_kind_of Customer
+      expect(@rental).must_respond_to :customer
+      expect(@rental.customer).must_be_kind_of Customer
     end
+
     it "must belong to a movie" do
-      @rental.must_respond_to :movie
-      @rental.movie.must_be_kind_of Movie
+      expect(@rental).must_respond_to :movie
+      expect(@rental.movie).must_be_kind_of Movie
     end
   end
   
-  describe "custom methods" do
+  describe "custom methods" do    
     before do
       @movie = Movie.create(title: "valid movie", inventory: 10, available_inventory: 10)
       @customer = Customer.create(name: "valid customer")
