@@ -85,12 +85,10 @@ describe MoviesController do
     it "creates a movie with valid parameters, returns new movie id" do
       # parameters
       movie_params = {
-        movie: {
-          title: "The Martian Elf",
-          overview: "Elf brings holiday cheer to the people stranded on Mars",
-          release_date: "2018-12-25",
-          inventory: 2
-        }
+        title: "The Martian Elf",
+        overview: "Elf brings holiday cheer to the people stranded on Mars",
+        release_date: "2018-12-25",
+        inventory: 2
       }
       
       # the route
@@ -106,20 +104,18 @@ describe MoviesController do
       # check that we can find the movie by the id
       new_movie = Movie.find_by(id: body["id"])
       # and its variables match the parameters
-      expect(new_movie.title).must_equal movie_params[:movie][:title]
-      expect(new_movie.overview).must_equal movie_params[:movie][:overview]
-      expect(new_movie.release_date).must_equal Date.parse(movie_params[:movie][:release_date])
-      expect(new_movie.inventory).must_equal movie_params[:movie][:inventory]
+      expect(new_movie.title).must_equal movie_params[:title]
+      expect(new_movie.overview).must_equal movie_params[:overview]
+      expect(new_movie.release_date).must_equal Date.parse(movie_params[:release_date])
+      expect(new_movie.inventory).must_equal movie_params[:inventory]
     end
     
     it "gives appropriate response if attempting to create invalid movie" do
       # invalid parameters
       movie_params = {
-        movie: {
-          overview: "Elf brings holiday cheer to the people stranded on Mars",
-          release_date: "2018-12-25",
-          inventory: 2
-        }
+        overview: "Elf brings holiday cheer to the people stranded on Mars",
+        release_date: "2018-12-25",
+        inventory: 2
       }
       
       # the route
