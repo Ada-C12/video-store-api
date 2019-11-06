@@ -1,10 +1,20 @@
 class MoviesController < ApplicationController
   
   def index
-    render json: { ready_for_lunch: "yassss" }, status: :ok
+    movies = Movie.all.as_json(only: [:id, :title, :overview, :release_date, :inventory])
+    render json: movies, status: :ok
+  end
+  
+  def show
+    movie = Movie.find_by(id: params[:id])
     
-    # zomg = Movies.all.as_json(only: id:, :registered_at, :address, :city, :state, :postal_code, :phone)
-    # render json: movies, status: ok
+    if movie
+      render json: movie.as_json(only: :id, :title, :overview, :release_date, :inventory)
+      return
+    else
+      render json: { ok: false, errors: 'Not found'}, status: :not_found
+      return
+    end
   end
   
 end
