@@ -82,7 +82,7 @@ describe MoviesController do
         post movies_path, params: movie_data
       }.must_differ 'Movie.count', 1
 
-      must_respond_with :created
+      must_respond_with :ok
     end
 
     it "should not create a movie with invalid data, no title" do
