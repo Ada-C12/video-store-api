@@ -17,7 +17,7 @@ describe MoviesController do
       expect(body).must_be_instance_of Array
       body.each do |movie|
         expect(movie).must_be_instance_of Hash
-        expect(movie.keys.sort).must_equal ["id", "title", "release_date"]
+        expect(movie.keys.sort).must_equal ["id", "release_date", "title"]
       end
     end
     

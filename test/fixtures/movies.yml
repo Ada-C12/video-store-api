@@ -1,0 +1,15 @@
+movie1:
+  title: "Avengers: Endgame"
+  overview: "Avengers have an epic showdown with Thanos."
+  release_date: "2019-04-26"
+  inventory: 5
+movie2:
+  title: "Toy Story 4"
+  overview: "Woody, Buzz Lightyear and the rest of the gang embark on a road trip with Bonnie and a new toy named Forky."
+  release_date: "2019-06-21"
+  inventory: 3
+movie3:
+  title: "The Lion King"
+  overview: "Simba idolizes his father, King Mufasa, and takes to heart his own royal destiny on the plains of Africa."
+  release_date: "2019-07-19"
+  inventory: 2
