@@ -70,14 +70,16 @@ describe MoviesController do
   describe "create" do
     let(:movie_data) {
       {
-        movie: {
-          title: "Clue",
-          inventory: 4
-        }
+        title: "Clue",
+        inventory: 4,
+        overview: "test",
+        release_date: (Time.now - 50000),
+        available_inventory: 3
       }
     }
 
-    it "shouhld create a movie" do
+    it "should create a movie" do
+      # binding.pry
       expect{
         post movies_path, params: movie_data
       }.must_differ 'Movie.count', 1
@@ -86,7 +88,7 @@ describe MoviesController do
     end
 
     it "should not create a movie with invalid data, no title" do
-      movie_data[:movie][:title] = nil
+      movie_data[:title] = nil
 
       expect {
         post movies_path, params: movie_data
