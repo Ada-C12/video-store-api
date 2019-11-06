@@ -1,6 +1,8 @@
 require "test_helper"
 
 describe CustomersController do
+  let(:customer) {customers(:customer_one)}
+  
   describe "index" do
     it "responds with JSON and success" do
       get customers_path
@@ -20,7 +22,7 @@ describe CustomersController do
       expect(body).must_be_instance_of Array
       body.each do |customer|
         expect(customer).must_be_instance_of Hash
-        expect(customer.keys.sort).must_equal KEYS
+        expect(customer.keys.sort).must_equal CUSTOMER_KEYS.sort
       end
     end
     it "will respond with an empty array when there are no customers" do
@@ -39,22 +41,22 @@ describe CustomersController do
   
   describe "show" do
     it "will show customer info for valid customer" do
-      test_customer = customers(:customer_one)
-      get customer_path(test_customer)
+      customer = customers(:customer_one)
+      get customer_path(customer)
       body = JSON.parse(response.body)
       expect(body).must_be_instance_of Hash
-      must_respond_with :ok
-      expect(body.keys.sort).must_equal KEYS
+      # must_respond_with :ok
+      # expect(body.keys.sort).must_equal @KEYS
       
-      expect(body["id"]).must_equal test_customer.id
-      expect(body["name"]).must_equal test_customer.name
-      expect(body["address"]).must_equal test_customer.address
-      expect(body["city"]).must_equal test_customer.city
-      expect(body["state"]).must_equal test_customer.state
-      expect(body["postal_code"]).must_equal test_customer.postal_code
-      expect(body["phone"]).must_equal test_customer.phone
-      expect(body["registered_at"]).must_equal test_customer.registered_at
-      expect(body["movies_checked_out_count"]).must_equal test_customer.movies_checked_out_count
+      expect(body["id"]).must_equal customer.id
+      expect(body["name"]).must_equal customer.name
+      expect(body["address"]).must_equal customer.address
+      expect(body["city"]).must_equal customer.city
+      expect(body["state"]).must_equal customer.state
+      expect(body["postal_code"]).must_equal customer.postal_code
+      expect(body["phone"]).must_equal customer.phone
+      expect(body["registered_at"]).must_equal customer.registered_at
+      expect(body["movies_checked_out_count"]).must_equal customer.movies_checked_out_count
     end
     
     it "will show error code for invalid customer" do
@@ -65,6 +67,5 @@ describe CustomersController do
       expect(body["errors"]).must_equal ["not found"]
       must_respond_with :not_found
     end
-    
   end
 end

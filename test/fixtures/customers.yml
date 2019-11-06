@@ -1,4 +1,9 @@
 customer_one:
   name: "Austin Powers"
-  registered_at: Tue, 05 Nov 2019 21:45:00 UTC +00:00
+  address: "Test Address"
+  city: "Test City"
+  state: "Test State"
   postal_code: "Test Postal Code"
+  phone: "Test Phone"
+  registered_at: Time.now
+  movies_checked_out_count: 0
