@@ -49,4 +49,20 @@ describe Rental do
     end
   end
 
+  describe "custom methods" do
+    describe "checkout" do
+      it "will reduce the inventory for a movie by 1" do 
+      end
+
+      it "will increase the count for a customers checked out movies count by 1" do
+      end
+
+      it "won't checkout a movie if that movie is out of stock" do
+      end
+
+
+    end
+
+  end
+
 end
