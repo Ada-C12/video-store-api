@@ -1,4 +1,4 @@
-KEYS = [:id, :title, :overview, :release_date, :inventory]
+KEYS = [:id, :title, :overview, :release_date, :inventory, :available_inventory]
 
 class MoviesController < ApplicationController
   def index
@@ -22,7 +22,7 @@ class MoviesController < ApplicationController
   private
   
   def movie_params
-    params.require(:movie).permit(:title, :overview, :release_date, :inventory)
+    params.require(:movie).permit(:title, :overview, :release_date, :inventory, :available_inventory)
   end
 end
 

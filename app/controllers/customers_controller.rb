@@ -1,4 +1,4 @@
-KEYS = [:id, :name, :address, :city, :state, :postal_code, :phone, :registered_at]
+KEYS = [:id, :name, :address, :city, :state, :postal_code, :phone, :registered_at, :movies_checked_out_count]
 
 class CustomersController < ApplicationController
   def zomg
@@ -26,6 +26,6 @@ class CustomersController < ApplicationController
   private
   
   def customer_params
-    params.require(:customer).permit(:id, :name, :address, :city, :state, :postal_code, :phone, :registered_at)
+    params.require(:customer).permit(:id, :name, :address, :city, :state, :postal_code, :phone, :registered_at, :movies_checked_out_count)
   end
 end
