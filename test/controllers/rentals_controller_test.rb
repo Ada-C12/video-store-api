@@ -27,7 +27,7 @@ describe RentalsController do
       
       post checkout_path, params: {movie_id: movie.id, customer_id: customer.id}
       
-      expect{ patch checkin_path, params: {id: Rental.first.id} }.wont_change "Rental.count"
+      expect{ patch checkin_path, params: {movie_id: movie.id, customer_id: customer.id} }.wont_change "Rental.count"
       
       must_respond_with :ok
     end
