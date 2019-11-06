@@ -5,4 +5,6 @@ class CustomersController < ApplicationController
     customers = Customer.all.as_json(only: CUSTOMER_FIELDS)
     render json: customers, status: :ok
   end
+
+  
 end
