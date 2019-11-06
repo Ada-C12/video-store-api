@@ -45,4 +45,18 @@ describe Customer do
     end
     
   end
+  
+  describe "relationships" do
+    it "customer rentals are verifiable" do
+      expected_rental = 2 #checked by hand based on yml
+      customer = customers(:c_1)      
+      expect(customer.rentals.count).must_equal expected_rental
+    end
+    
+    it "customer without rentals does not have rentals" do
+      expected_rental = 0
+      customer = customers(:c_4)
+      expect(customer.rentals.count).must_equal expected_rental
+    end
+  end
 end

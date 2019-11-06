@@ -89,4 +89,19 @@ describe Movie do
       assert(@valid_movie.valid?)
     end
   end
+  
+  describe "relationships" do
+    it "movie rentals are verifiable" do
+      expected_rental = 1
+      movie = movies(:m_2)
+      expect(movie.rentals.count).must_equal expected_rental
+    end
+    
+    it "movie without rentals does not have rentals" do
+      expected_rental = 0
+      movie = movies(:m_5)
+      expect(movie.rentals.count).must_equal expected_rental
+    end
+  end
+  
 end
