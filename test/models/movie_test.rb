@@ -47,4 +47,12 @@ describe Movie do
       refute @movie.valid?          
     end
   end
+
+  describe 'relations' do
+    it 'has many rentals' do
+      movie = movies(:first)
+
+      expect(movie).must_respond_to(:rentals)
+    end 
+  end
 end
