@@ -17,7 +17,7 @@ class RentalsController < ApplicationController
   end
   
   def update
-    rental = Rental.find_by(id: params[:id])
+    rental = Rental.find_by(movie_id: params[:movie_id], customer_id: params[:customer_id])
     if rental
       rental.check_in_rental
       render json: rental.as_json(only: [:id]), status: :ok
