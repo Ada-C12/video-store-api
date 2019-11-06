@@ -64,30 +64,30 @@ describe Movie do
       assert(@valid_movie.valid?)
     end
     
-    it "movies are invalid if available_inventory is missing" do
-      @valid_movie.available_inventory = nil
-      refute(@valid_movie.valid?)
-    end
+    # it "movies are invalid if available_inventory is missing" do
+    #   @valid_movie.available_inventory = nil
+    #   refute(@valid_movie.valid?)
+    # end
     
-    it "movies are invalid if available_inventory is not an integer" do
-      @valid_movie.available_inventory = "bananas"
-      refute(@valid_movie.valid?)
-    end
+    # it "movies are invalid if available_inventory is not an integer" do
+    #   @valid_movie.available_inventory = "bananas"
+    #   refute(@valid_movie.valid?)
+    # end
     
-    it "movies are invalid if available_inventory is a negative integer" do
-      @valid_movie.available_inventory = -2
-      refute(@valid_movie.valid?)
-    end
+    # it "movies are invalid if available_inventory is a negative integer" do
+    #   @valid_movie.available_inventory = -2
+    #   refute(@valid_movie.valid?)
+    # end
     
-    it "movies are valid if available_inventory is a positive integer" do
-      @valid_movie.available_inventory = 1
-      assert(@valid_movie.valid?)
-    end
+    # it "movies are valid if available_inventory is a positive integer" do
+    #   @valid_movie.available_inventory = 1
+    #   assert(@valid_movie.valid?)
+    # end
     
-    it "movies are valid if available_inventory is zero" do
-      @valid_movie.available_inventory = 0
-      assert(@valid_movie.valid?)
-    end
+    # it "movies are valid if available_inventory is zero" do
+    #   @valid_movie.available_inventory = 0
+    #   assert(@valid_movie.valid?)
+    # end
   end
   
   describe "relationships" do
