@@ -53,4 +53,41 @@ describe MoviesController do
     end
   end
 
+  describe "create" do 
+    it "can create a new movie" do
+      movie_data = {
+        movie: {
+          title: "Cinderella",
+          overview: "A Disney classic",
+          release_date: Time.new(1992,1,1),
+          inventory: 6,
+        }
+      }
+
+      expect {
+        post movies_path, params: movie_data
+      }.must_differ "Movie.count", 1
+
+      must_respond_with :created
+    end
+
+    it "won't create a movie given bad data" do
+      movie_data = {
+        movie: {
+          title: nil,
+          overview: "A Disney classic",
+          release_date: Time.new(1992,1,1),
+          inventory: 6,
+        }
+      }
+
+      expect {
+        post movies_path, params: movie_data
+      }.wont_change "Movie.count"
+
+      body = check_response(expected_type: Hash, expected_status: :bad_request)
+      expect(body["errors"].keys).must_include "title"
+    end
+  end
+
 end

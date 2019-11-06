@@ -27,12 +27,9 @@ describe CustomersController do
 
       get customers_path
       body = JSON.parse(response.body) 
-      
+
       expect(body).must_be_instance_of Array
       expect(body).must_equal []
     end
-
-
-
   end
 end
