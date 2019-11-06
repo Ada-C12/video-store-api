@@ -1,5 +1,4 @@
 require "test_helper"
-MOVIE_KEYS = ["id", "release_date", "title"]
 
 describe MoviesController do
   describe "index" do
@@ -8,7 +7,7 @@ describe MoviesController do
       body = check_response(expected_type: Array)
       body.each do |movie|
         expect(movie).must_be_instance_of Hash
-        expect(movie.keys.sort).must_equal MOVIE_KEYS
+        expect(movie.keys.sort).must_equal MOVIE_KEYS.sort
       end
     end
 
@@ -25,7 +24,7 @@ describe MoviesController do
       movie = movies(:movie2)
       get movie_path(movie.id)
       body = check_response(expected_type: Hash)
-      expect(body.keys.sort).must_equal MOVIE_KEYS
+      expect(body.keys.sort).must_equal MOVIE_KEYS.sort
       expect(body["title"]).must_equal movie.title
     end
   end

@@ -1,5 +1,4 @@
 require "test_helper"
-CUSTOMER_KEYS = ["address", "city", "id", "movies_checked_out_count", "name", "phone", "postal_code", "state"]
 
 describe CustomersController do
   it "responds with JSON, success, and an array of customer hashes" do
@@ -7,10 +6,10 @@ describe CustomersController do
     body = check_response(expected_type: Array)
     body.each do |customer|
       expect(customer).must_be_instance_of Hash
-      expect(customer.keys.sort).must_equal CUSTOMER_KEYS
+      expect(customer.keys.sort).must_equal CUSTOMER_KEYS.sort
     end
   end
-  
+
   it "will respond with an empty array when there are no customers" do
     Customer.destroy_all
     get customers_path
