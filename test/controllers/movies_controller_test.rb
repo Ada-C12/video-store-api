@@ -48,7 +48,7 @@ describe MoviesController do
       must_respond_with :ok
       expect(body.keys.sort).must_equal MOVIE_KEYS
       
-      expect(body[:id]).must_equal test_movie.id
+      expect(body["id"]).must_equal test_movie.id
       expect(body["title"]).must_equal test_movie.title
       expect(body["overview"]).must_equal test_movie.overview
       expect(body["release_date"]).must_equal test_movie.release_date

@@ -1,4 +1,4 @@
-MOVIE_KEYS = ["id", "title", "overview", "release_date", "inventory", "availble_inventory"].sort
+MOVIE_KEYS = ["id", "title", "overview", "release_date", "inventory", "available_inventory"].sort
 
 class MoviesController < ApplicationController
   def index
