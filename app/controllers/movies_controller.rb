@@ -22,11 +22,7 @@ class MoviesController < ApplicationController
   private
   
   def movie_params
-    <<<<<<< HEAD
     params.require(:movie).permit("title", "overview", "release_date", "inventory", "inventory_available")
-    =======
-    params.require(:movie).permit(:title, :overview, :release_date, :inventory, :available_inventory)
-    >>>>>>> master
   end
 end
 
