@@ -7,10 +7,10 @@ class ApplicationController < ActionController::API
       }, status: :not_found
   end 
 
-  def bad_request
+  def bad_request(model)
     render json: { 
       ok: false, 
-      errors: pet.errors.messages 
+      errors: model.errors.messages 
       }, status: :bad_request
   end 
 

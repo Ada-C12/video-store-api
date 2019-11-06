@@ -23,7 +23,7 @@ class CustomersController < ApplicationController
       render json: pet.as_json(only: [:id], status: :created)
       return
     else 
-      bad_request
+      bad_request(customer)
     end 
   end 
 
