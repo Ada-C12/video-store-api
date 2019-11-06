@@ -49,6 +49,7 @@ describe MoviesController do
     it "sends back not found if the movie does not exist" do
       get movie_path(-1)
       body = JSON.parse(response.body)
+      binding.pry
       
       must_respond_with :not_found
       expect(response.header['Content-Type']).must_include 'json'
