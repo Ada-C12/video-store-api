@@ -10,7 +10,7 @@ class RentalsController < ApplicationController
       render json: rental.as_json(only: [:id]), status: :ok
       return
     else
-      render json: { "errors" => ["unable to create rental"]}, status: :bad_request
+      render json: { ok: false, "errors" => ["unable to create rental"]}, status: :bad_request
       return
     end
   end
@@ -22,7 +22,7 @@ class RentalsController < ApplicationController
       render json: rental.as_json(only: [:id]), status: :ok
       return
     else
-      render json: { "errors" => ["rental not found"]}, status: :not_found
+      render json: { ok: false, "errors" => ["rental not found"]}, status: :not_found
       return
     end
   end
