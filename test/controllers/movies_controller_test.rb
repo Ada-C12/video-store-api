@@ -47,7 +47,7 @@ describe MoviesController do
 
       body = JSON.parse(response.body)
       expect _(body).must_be_instance_of Hash
-      expect _(body.keys.sort).must_equal ["inventory", "overview", "release_date", "title"]
+      expect _(body.keys.sort).must_equal ["available_inventory", "inventory", "overview", "release_date", "title"]
     end
 
 
