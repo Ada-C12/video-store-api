@@ -13,7 +13,7 @@ describe RentalsController do
         post checkout_path, params: {movie_id: @movie.id, customer_id: @customer.id} 
       }.must_change "Rental.count", 1
       
-      must_respond_with :created
+      must_respond_with :ok
     end
     
     it "will not create rental without available inventory" do
