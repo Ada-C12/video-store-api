@@ -11,6 +11,7 @@ class MoviesController < ApplicationController
     movie = Movie.find_by(id: params[:id])
     
     if movie
+      movie.adjust_available_inventory()
       render json: movie.as_json(only: SHOW_MOVIE_FIELDS), status: :found
       return
     else

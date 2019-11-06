@@ -66,7 +66,7 @@ describe MoviesController do
       expect(body["overview"]).must_equal movie.overview
       expect(body["release_date"]).must_equal movie.release_date.to_s
       expect(body["inventory"]).must_equal movie.inventory
-      expect(body["available_inventory"]).must_equal movie.available_inventory
+      expect(body["available_inventory"]).must_equal movie.inventory
     end
     
     it "returns JSON, not_found, and error message for invalid movie" do

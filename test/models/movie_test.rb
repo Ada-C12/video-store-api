@@ -104,4 +104,17 @@ describe Movie do
     end
   end
   
+  describe "adjust_available_inventory" do
+    it "set available inventory to match inventory" do
+      # get a movie
+      movie = movies(:m_2)
+      # set available inventory to nil
+      movie.available_inventory = nil
+      # call method on the movie
+      movie.adjust_available_inventory()
+      # check that the inventory and available inventory match
+      expect(movie.available_inventory).must_equal movie.inventory
+    end
+  end
+  
 end

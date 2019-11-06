@@ -11,4 +11,7 @@ class Movie < ApplicationRecord
   
   #deliberately not checking for available inventory
   
+  def adjust_available_inventory()
+    return self.available_inventory = self.inventory
+  end
 end
