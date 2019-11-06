@@ -46,4 +46,5 @@ ActiveRecord::Schema.define(version: 2019_11_05_233849) do
     t.index ["customer_id"], name: "index_rentals_on_customer_id"
     t.index ["movie_id"], name: "index_rentals_on_movie_id"
   end
+
 end
