@@ -3,3 +3,28 @@ m1:
   overview: What a cool movie
   release_date: 2019-11-05
   inventory: 10
+m2: 
+  title: 
+  overview: What a cool movie
+  release_date: 2019-11-05
+  inventory: 9
+m3: 
+  title: m3
+  overview: What a cool movie
+  release_date: 
+  inventory: 9
+m4: 
+  title: m4
+  overview: What a cool movie
+  release_date: 02-01-2019
+  inventory: 9
+m5: 
+  title: m5
+  overview: What a cool movie
+  release_date: 02-01-2019
+  inventory: 
+m6: 
+  title: m6
+  overview: What a cool movie
+  release_date: 02-01-2019
+  inventory: a
