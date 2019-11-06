@@ -1,5 +1,6 @@
 require "test_helper"
 
+
 describe Rental do
   let (:rental) {rentals(:r1)}
   
@@ -53,13 +54,13 @@ describe Rental do
     end    
   end
   
-  describe "relations" do
-    it "can have one or many rentals" do
-      rental.must_respond_to :rentals
-      rental.rentals.each do |rental|
-        rental.must_be_kind_of Rental
-      end
-    end    
-  end
+  # describe "relations" do
+  #   it "can have one or many rentals" do
+  #     rental.must_respond_to :movie
+  #     rental.must_respond_to :customer
+      
+  #       rental.must_be_instance_of Rental
+  #   end    
+  # end
 end
 
