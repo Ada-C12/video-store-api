@@ -18,7 +18,7 @@ describe CustomersController do
 
       body.each do |customer_info|
         expect _(customer_info).must_be_instance_of Hash
-        expect _(customer_info.keys.sort).must_equal ["id", "name", "phone", "postal_code", "registered_at"]
+        expect _(customer_info.keys.sort).must_equal ["id", "movies_checked_out_count", "name", "phone", "postal_code", "registered_at"]
       end
     end
 
