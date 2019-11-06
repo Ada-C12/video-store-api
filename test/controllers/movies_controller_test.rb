@@ -31,4 +31,34 @@ describe MoviesController do
       expect _(body).must_be_empty
     end
   end
+
+  describe "show" do
+    let(:valid_movie) {movies(:movie1)}
+
+    it "responds with JSON and success" do
+      get movie_path(valid_movie.id)
+
+      expect(response.header['Content-Type']).must_include 'json'
+      must_respond_with :ok
+    end 
+
+    it "responds with the expected movies info for valid input" do
+      get movie_path(valid_movie.id)
+
+      body = JSON.parse(response.body)
+      expect _(body).must_be_instance_of Hash
+      expect _(body.keys.sort).must_equal ["inventory", "overview", "release_date", "title"]
+    end
+
+
+    it "sends back not_found if the movie doesn't exist" do
+      get movie_path(-1)
+
+      body = JSON.parse(response.body)
+
+      expect _(body).must_be_instance_of Hash
+      must_respond_with :not_found
+      expect _(body.keys).must_include "errors"
+    end
+  end
 end
