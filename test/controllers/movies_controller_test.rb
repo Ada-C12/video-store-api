@@ -19,7 +19,7 @@ describe MoviesController do
 
       body.each do |movie|
         expect(movie).must_be_instance_of Hash
-        expect(movie.keys.sort).must_equal ["id", "release_date", "title"]
+        expect(movie.keys.sort).must_equal ["available_inventory", "id", "inventory", "overview", "release_date", "title"]
       end
     end
   end
@@ -53,7 +53,7 @@ describe MoviesController do
 
   describe 'create' do
     before do
-      @movie_params = { movie: { title: "test", overview: "test movie", release_date: "today", inventory: 4 } }
+      @movie_params = { title: "test", overview: "test movie", release_date: "today", inventory: 4 } 
     end
     
     it 'responds with json and success' do
@@ -73,7 +73,7 @@ describe MoviesController do
     end
 
     it 'wont save a bad movie' do
-      movie_params = { movie: { title: nil, overview: "stinker", release_date: "today", inventory: 4 } }
+      movie_params = { title: nil, overview: "stinker", release_date: "today", inventory: 4 } 
       
       expect { post movies_path, params: movie_params }.wont_change "Movie.count"
 

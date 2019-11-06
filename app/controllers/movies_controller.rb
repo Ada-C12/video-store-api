@@ -14,6 +14,7 @@ class MoviesController < ApplicationController
   end
 
   def create
+
     movie = Movie.new(movie_params)
 
     if movie.save
@@ -30,6 +31,6 @@ class MoviesController < ApplicationController
 
   private
   def movie_params
-    params.permit(:title, :overview, :release_date, :inventory)
+    params.permit(:title, :overview, :release_date, :inventory).merge({ available_inventory: params[:inventory]} )
   end
 end
