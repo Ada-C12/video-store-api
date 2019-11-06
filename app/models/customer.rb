@@ -1,7 +1,7 @@
 class Customer < ApplicationRecord
   has_many :rentals
   
-  def self.group_by_n(n, sort_type, page)
+  def self.group_by_n(sort_type, n, page)
     if sort_type == "name"
       customers = Customer.sort_by_name.to_a
     else
@@ -10,23 +10,23 @@ class Customer < ApplicationRecord
     
     if n
       iterations = (customers.count)/n.to_i
-      result_array = []
+      groups_of_customers = []
       
       iterations.times do
-        result_array << customers.shift(n.to_i)
+        groups_of_customers << customers.shift(n.to_i)
       end
       
-      result_array << customers
-      # returns only one "page" of customers if :p exists
+      groups_of_customers << customers
+      
+      #returns only one "page" of customers if page exists
       if page
-        result_array = result_array[page.to_i - 1]
+        groups_of_customers = groups_of_customers[page.to_i - 1]
       end
-      return result_array
-      
+
+      return groups_of_customers
     else 
       return customers
     end
-    
   end
   
   def self.sort_by_name
