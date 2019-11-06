@@ -8,6 +8,8 @@ require 'minitest/reporters'
 Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 
 CUSTOMER_KEYS = ["address", "city", "id", "movies_checked_out_count", "name", "phone", "postal_code", "registered_at", "state"].sort 
+RENTAL_KEYS = ["id", "checkout_date", "due_date", "movie_id", "customer_id"]
+MOVIE_KEYS = ["id", "title", "overview", "release_date", "inventory", "inventory_available"]
 
 class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.

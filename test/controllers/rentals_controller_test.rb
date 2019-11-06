@@ -5,10 +5,10 @@ describe RentalsController do
     let(:rental_data) {
       {
         rental: {
-          movie: :movie_one,
-          customer: :cutomer_one,
-          checkout_date: Time.now,
-          due_date: (Time.now + 5)
+          "movie" => :movie_one,
+          "customer" => :cutomer_one,
+          "checkout_date" => Time.now,
+          "due_date" => (Time.now + 5)
         }
       }
     }
