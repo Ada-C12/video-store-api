@@ -66,4 +66,33 @@ describe MoviesController do
       must_respond_with :not_found
     end
   end
+
+  describe "create" do
+    let(:movie_data) {
+      {
+        movie: {
+          title: "Clue",
+          inventory: 4
+        }
+      }
+    }
+
+    it "shouhld create a movie" do
+      expect{
+        post movies_path, params: movie_data
+      }.must_differ 'Movie.count', 1
+
+      must_respond_with :created
+    end
+
+    it "should not create a movie with invalid data, no title" do
+      movie_data[:movie][:title] = nil
+
+      expect {
+        post movies_path, params: movie_data
+      }.wont_differ 'Movie.count'
+
+      must_respond_with :bad_request
+    end
+  end
 end
