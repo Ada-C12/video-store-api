@@ -3,3 +3,4 @@ movie_one:
   overview: "Test Information"
   release_date: Tue, 05 Nov 2019 21:45:00 UTC +00:00
   inventory: 5
+  available_inventory: 5

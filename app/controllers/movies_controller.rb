@@ -1,4 +1,4 @@
-MOVIE_KEYS = ["id", "title", "overview", "release_date", "inventory", "inventory_available"]
+MOVIE_KEYS = ["id", "title", "overview", "release_date", "inventory", "availble_inventory"].sort
 
 class MoviesController < ApplicationController
   def index
@@ -22,7 +22,7 @@ class MoviesController < ApplicationController
   private
   
   def movie_params
-    params.require(:movie).permit("title", "overview", "release_date", "inventory", "inventory_available")
+    params.require(:movie).permit("title", "overview", "release_date", "inventory", "available_inventory")
   end
 end
 

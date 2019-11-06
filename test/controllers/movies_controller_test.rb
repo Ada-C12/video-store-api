@@ -2,8 +2,6 @@ require "test_helper"
 
 describe MoviesController do
   
-  @KEYS = [:id, :title, :overview, :release_date, :inventory]
-  
   describe "index" do
     it "responds with JSON and success" do
       get movies_path
@@ -24,7 +22,7 @@ describe MoviesController do
       expect(body).must_be_instance_of Array
       body.each do |movie|
         expect(movie).must_be_instance_of Hash
-        expect(movie.keys.sort).must_equal @KEYS
+        expect(movie.keys.sort).must_equal MOVIE_KEYS
       end
     end
     it "will respond with an empty array when there are no movies" do
@@ -48,13 +46,14 @@ describe MoviesController do
       body = JSON.parse(response.body)
       expect(body).must_be_instance_of Hash
       must_respond_with :ok
-      #expect(body.keys.sort).must_equal KEYS
+      expect(body.keys.sort).must_equal MOVIE_KEYS
       
       expect(body[:id]).must_equal test_movie.id
       expect(body["title"]).must_equal test_movie.title
       expect(body["overview"]).must_equal test_movie.overview
       expect(body["release_date"]).must_equal test_movie.release_date
       expect(body["inventory"]).must_equal test_movie.inventory
+      expect(body["available_inventory"]).must_equal test_movie.available_inventory
     end
     
     it "will show error code for invalid movie" do
