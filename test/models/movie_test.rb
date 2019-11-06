@@ -35,14 +35,14 @@ describe Movie do
       customer = Customer.new(name: "Ada")
       movie = movies(:movie2)
       movie.customers << customer
-      movie.customers.last.id.must_equal customer.id
+      _(movie.customers.last.id).must_equal customer.id
     end
 
     it "can have many rentals" do
       cur_movie = movies(:movie1)
       expect(cur_movie.rentals.count).must_equal 2
       cur_movie.rentals.each do |rental|
-        rental.must_be_kind_of Rental
+        _(rental).must_be_kind_of Rental
       end
     end
   end
