@@ -97,7 +97,7 @@ describe MoviesController do
         }
       }
 
-      it "can create a new movie" do
+      it "responds with JSOn and can create a new movie" do
         expect {
           post movies_path, params: movie_data
         }.must_differ 'Movie.count', 1
@@ -105,7 +105,22 @@ describe MoviesController do
         body = JSON.parse(response.body)
 
         expect(body["id"]).must_be_instance_of Integer
+        expect(response.header['Content-Type']).must_include 'json'
         must_respond_with :created 
+      end 
+
+      it "responds with a bad request when missing a required field" do
+        movie_data[:movie][:title] = nil
+
+        # binding.pry
+
+        expect { post movies_path, params: movie_data}.must_differ 'Movie.count', 0
+
+        must_respond_with :bad_request
+
+        body = JSON.parse(response.body)
+
+        expect(body["errors"]["title"]).must_equal ["can't be blank"]
       end 
     end 
   end 
