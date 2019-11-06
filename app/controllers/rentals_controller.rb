@@ -17,7 +17,15 @@ class RentalsController < ApplicationController
           }, status: :bad_request
         return
       end
+    else
+      render json: {
+        ok: false,
+        errors: ["movie not available"],
+        }, status: :bad_request
+      return
     end
+
+
   end
 
   private

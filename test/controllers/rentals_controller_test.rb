@@ -42,6 +42,31 @@ describe RentalsController do
       expect(body["errors"].keys).must_include "movie"
     end
 
+    it "won't create a rental for a movie with 0 inventory" do
+      movie = Movie.create(
+        title: "title",
+        overview: "Description", 
+        release_date: Time.new(2018, 1, 1) ,
+        inventory: 0,
+      )
+      customer = customers(:customer1)
+      rental_data = {
+        rental: {
+          movie_id: movie.id,
+          customer_id: customer.id,
+        }
+      }
+
+      expect {
+        post rental_checkout_path, params: rental_data
+      }.wont_change "Rental.count"
+
+      must_respond_with :bad_request
+      expect(response.header['Content-Type']).must_include 'json'
+      body = JSON.parse(response.body)
+      expect(body).must_be_kind_of Hash
+      expect(body["errors"]).must_include "movie not available"
+    end
   end
 
 end
