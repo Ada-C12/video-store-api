@@ -1,10 +1,11 @@
 require "test_helper"
 
 describe Customer do
+  before do 
+    @customer = customers(:one)
+  end 
+
   describe "validations" do 
-    before do 
-      @customer = Customer.create(name: "Beep", registered_at: '1999-01-01 00:00', address: "822 Lake St", city: "Seattle", state: "WA", postal_code: "98112", phone:"323-322-5466")
-    end 
       
     it "is valid when all fields are present" do 
       result = @customer.valid?
@@ -48,4 +49,34 @@ describe Customer do
     end 
 
   end 
+
+  describe "relationships" do 
+    it "can have many rentals" do 
+      expect(@customer.rentals.count).must_equal 2
+    end 
+
+    it "can have customers" do 
+      expect(@customer.movies.count).must_equal 2
+    end 
+
+    it "cannot have any movies without rentals" do 
+      Rental.destroy_all
+      expect(@customer.movies).must_be_empty
+    end 
+
+    it "can exist without customers" do 
+      Rental.destroy_all
+      Movie.destroy_all
+      result = @customer.valid?
+      expect(result).must_equal true 
+    end 
+
+    it "can exist without any rentals" do 
+      Rental.destroy_all 
+      result = @customer.valid?
+      expect(result).must_equal true 
+    end 
+
+  end 
+
 end

@@ -1,5 +1,6 @@
 one:
   name: "bob"
+  registered_at: "10-10-20"
   address: "1250 4th Ave."
   city: "Seattle"
   state: "WA"
@@ -9,6 +10,7 @@ one:
 
 two:
   name: "ada"
+  registered_at: "10-10-20"
   address: "1250 3th Ave."
   city: "Seattle"
   state: "WA"
@@ -18,6 +20,7 @@ two:
 
 three:
   name: "grace"
+  registered_at: "10-10-20"
   address: "1250 2nd Ave."
   city: "Seattle"
   state: "WA"
