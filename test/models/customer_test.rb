@@ -2,6 +2,19 @@ require "test_helper"
 
 describe Customer do
   describe "relationships" do 
+    it "has movies" do 
+      # Arrange
+      mariya = customers(:mariya)
+
+      # Aact
+      mariya.movies 
+
+      # Assert
+
+    end
+
+    it "can checkout the movies" do 
+    end
   end
   
   describe "validations" do 
