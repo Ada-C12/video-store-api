@@ -1,22 +1,25 @@
 require "test_helper"
-
+require "date"
+require 'pry'
 describe Customer do
   describe "validations" do
-    let(:customer) {customers(:customer_one)}
-    
+    before do
+      @customer = customers(:customer_one)
+    end
     it "can be created" do
-      expect(customer.valid?).must_equal true
+      
+      expect(@customer.valid?).must_equal true
     end
     
     it "requires name, postal_cost, registered_at" do
-      required_fields = [:name, :postal_code, :registered_at]
+      required_fields = [:name, :postal_code, :registered_at, :phone, :movies_checked_out_count]
       
       required_fields.each do |field|
-        customer[field] = nil
+        @customer[field] = nil
         
-        expect(customer.valid?).must_equal false
+        expect(@customer.valid?).must_equal false
         
-        customer.reload
+        @customer.reload
       end
     end 
   end

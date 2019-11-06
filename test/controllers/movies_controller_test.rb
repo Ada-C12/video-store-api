@@ -1,4 +1,5 @@
 require "test_helper"
+require 'pry'
 
 describe MoviesController do
   
@@ -51,7 +52,7 @@ describe MoviesController do
       expect(body["id"]).must_equal test_movie.id
       expect(body["title"]).must_equal test_movie.title
       expect(body["overview"]).must_equal test_movie.overview
-      expect(body["release_date"]).must_equal test_movie.release_date
+      expect(body["release_date"]).must_equal test_movie.release_date.to_s
       expect(body["inventory"]).must_equal test_movie.inventory
       expect(body["available_inventory"]).must_equal test_movie.available_inventory
     end

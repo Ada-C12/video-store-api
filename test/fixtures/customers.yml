@@ -5,5 +5,5 @@ customer_one:
   state: "Test State"
   postal_code: "Test Postal Code"
   phone: "Test Phone"
-  registered_at: Time.now
+  registered_at: "2013-09-25 16:00:00 +0800"
   movies_checked_out_count: 0

@@ -8,7 +8,7 @@ class RentalsController < ApplicationController
   
   def show
     rental_id = params[:id]
-    rental = Rental.find_by(id: rental_id)
+    rental = Rental.find_by(id: rental_id) #This may be casing us some problems
     
     if rental
       render json: rental.as_json(only: RENTAL_KEYS), status: :ok
