@@ -20,7 +20,7 @@ class CustomersController < ApplicationController
     customer = Customer.new(customer_params)
 
     if customer.save
-      render json: pet.as_json(only: [:id], status: :created)
+      render json: pet.as_json(only: [:id]), status: :created
       return
     else 
       bad_request(customer)

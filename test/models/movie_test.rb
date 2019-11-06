@@ -53,7 +53,7 @@ describe Movie do
 
     it "can exist without any customers" do 
       Rental.destroy_all
-      Customer.destroy_all
+    Customer.destroy_all
       result = @movie.valid?
       expect(result).must_equal true 
     end 
