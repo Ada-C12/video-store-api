@@ -2,19 +2,31 @@ require "test_helper"
 
 describe Movie do
   describe "validations" do
+    before do
+      @movie = movies(:movie2)
+    end
     it "must be valid with title and non-negative integer inventory" do
+      expect(@movie.valid?).must_equal true
     end
 
     it "must be invalid without title" do
+      @movie.title = nil
+      expect(@movie.valid?).must_equal false
     end
 
     it "must be invalid if the inventory is not an integer" do
+      @movie.inventory = "peaches"
+      expect(@movie.valid?).must_equal false
     end
 
-    it "must be invalid without inventory" do
+    it "must be invalid if inventory is nil" do
+      @movie.inventory = nil
+      expect(@movie.valid?).must_equal false
     end
 
     it "must be invalid with a negative inventory" do
+      @movie.inventory = -1
+      expect(@movie.valid?).must_equal false
     end
   end
 
