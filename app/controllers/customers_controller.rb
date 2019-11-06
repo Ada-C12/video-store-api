@@ -19,6 +19,11 @@ class CustomersController < ApplicationController
       return
     else
       render json: {"errors"=>["not found"]}, status: :not_found
+      # {
+      #   "errors": {
+      #     "title": ["Movie 'Revenge of the Gnomes' not found"]
+      #   }
+      # }
       return
     end
   end

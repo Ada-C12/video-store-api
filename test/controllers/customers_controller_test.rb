@@ -1,7 +1,7 @@
 require "test_helper"
 
+KEYS = [:address, :city, :id, :movies_checked_out_count, :name,  :phone, :postal_code,:registered_at, :state]
+
 describe CustomersController do
-  # it "does a thing" do
-  #   value(1+1).must_equal 2
-  # end
+  
 end
