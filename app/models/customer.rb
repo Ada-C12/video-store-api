@@ -1,5 +1,5 @@
 class Customer < ApplicationRecord
-  has_many :rentals
+  has_many :rentals, :dependent => :nullify
   
   validates :name, presence: true
   validates :address, presence: true
