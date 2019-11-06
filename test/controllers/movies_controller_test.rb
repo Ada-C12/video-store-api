@@ -42,7 +42,7 @@ describe MoviesController do
       must_respond_with :ok
       expect(response.header["Content-Type"]).must_include "json"
       expect(body).must_be_instance_of Hash
-      expect(body.keys.sort).must_equal ["inventory", "overview", "release_date", "title"]
+      expect(body.keys.sort).must_equal ["inventory", "overview", "release_date", "title", "available_inventory"].sort
     end
     
     it "returns a not_found if given an invalid ID" do
