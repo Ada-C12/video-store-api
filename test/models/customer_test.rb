@@ -70,10 +70,11 @@ describe Customer do
   
   describe "relations" do
     it "can have one or many rentals" do
+      
       customer.must_respond_to :rentals
       customer.rentals.each do |rental|
-        rental.must_be_kind_of rental
-      end
-    end    
+        rental.must_be_kind_of Rental
+      end    
+    end
   end
 end

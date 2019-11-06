@@ -58,9 +58,25 @@ describe Rental do
   #   it "can have one or many rentals" do
   #     rental.must_respond_to :movie
   #     rental.must_respond_to :customer
-      
+  
   #       rental.must_be_instance_of Rental
   #   end    
   # end
+  
+  before do 
+    rental = rentals(:r1)
+  end
+  
+  describe "relations" do
+    it "belongs to one customer" do
+      expect(rental).must_respond_to :customer
+      expect(rental.customer).must_be_instance_of Customer
+    end    
+    
+    it "belongs to one movie" do
+      expect(rental).must_respond_to :movie
+      expect(rental.movie).must_be_instance_of Movie
+    end    
+  end
 end
 

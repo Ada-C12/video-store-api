@@ -1,7 +1,16 @@
 require "test_helper"
 
 describe Movie do
-  # it "does a thing" do
-  #   value(1+1).must_equal 2
-  # end
+  before do 
+    @movie = movies(:m1)
+  end
+  
+  describe "relations" do
+    it "can have one or many rentals" do
+      @movie.must_respond_to :rentals
+      @movie.rentals.each do |rental|
+        rental.must_be_kind_of Rental
+      end
+    end    
+  end
 end
