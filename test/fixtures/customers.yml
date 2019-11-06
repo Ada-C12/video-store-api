@@ -1,6 +1,11 @@
 janice:
   name: "Janice"
   registered_at: Date.now
+  address: bogus
+  city: Seattle
+  phone: doh
+  postal_code: somewhere
+  state: doh
 
 dora:
   name: "Dora"

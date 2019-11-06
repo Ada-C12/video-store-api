@@ -1,4 +1,5 @@
 require "test_helper"
+require 'pry'
 CUSTOMER_KEYS = ["address", "city", "id", "movies_checked_out_count", "name", "phone", "postal_code", "state"]
 
 describe CustomersController do
@@ -7,6 +8,7 @@ describe CustomersController do
     body = check_response(expected_type: Array)
     body.each do |customer|
       expect(customer).must_be_instance_of Hash
+      # binding.pry
       expect(customer.keys.sort).must_equal CUSTOMER_KEYS
     end
   end
