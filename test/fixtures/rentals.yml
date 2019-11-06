@@ -6,3 +6,7 @@ b:
   customer_id: 2
   movie_id: 2
   created_at: Fri, 28 Nov 2014
+c:
+  customer_id: 1
+  movie_id: 2
+  created_at: Wed, 29 Apr 2015

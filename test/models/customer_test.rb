@@ -6,10 +6,11 @@ describe Customer do
       # Arrange
       mariya = customers(:mariya)
 
-      # Aact
+      # Act
       mariya.movies 
 
       # Assert
+      expect(mariya.movies).must_equal []
 
     end
 
