@@ -13,13 +13,7 @@ describe RentalsController do
     # once the rental is created, reduce the inventory of that movie 
     # by one. -- maybe a model method?
 
-    it "will create a new instance of a rental" do
-      # rental = Rental.new(
-      #   checkout_date: Time.now,
-      #   due_date: Time.now + 7,
-      #   movie: movies(:movie1),
-      #   customer: customers(:customer1),
-      # )
+    it "will create a new instance of a rental and return an id" do
       movie = movies(:movie1)
       customer = customers(:customer1)
       rental_data = {
@@ -33,21 +27,30 @@ describe RentalsController do
         post rental_checkout_path, params: rental_data
       }.must_differ "Rental.count", 1
       
+      body = JSON.parse(response.body)
+      expect(body.keys).must_include "id"
       must_respond_with :created
     end
 
-    it "will have the correct attributes" do
-    end
-
     it "will not create a rental with missing attributes" do
+      customer = customers(:customer1)
+      rental_data = {
+        rental: {
+          movie_id: nil,
+          customer_id: customer.id,
+        }
+      }
+
+      expect {
+        post rental_checkout_path, params: rental_data
+      }.wont_change "Rental.count"
+
+      must_respond_with :bad_request
+      expect(response.header['Content-Type']).must_include 'json'
+      body = JSON.parse(response.body)
+
+      expect(body).must_be_kind_of Hash
+      expect(body["errors"].keys).must_include "movie"
     end
-
-    it "will reduce the inventory of a movie by 1" do
-    end
-
-    it "will not rent a movie that is out of stock" do
-    end
-
-
   end
 end

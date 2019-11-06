@@ -67,7 +67,8 @@ describe MoviesController do
       expect {
         post movies_path, params: movie_data
       }.must_differ "Movie.count", 1
-
+      body = JSON.parse(response.body)
+      expect(body.keys).must_include "id"
       must_respond_with :created
     end
 
