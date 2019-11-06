@@ -1,6 +1,6 @@
 require "test_helper"
 
-CUSTOMER_FIELDS = ["id", "name", "phone", "postal_code", "registered_at"]
+CUSTOMER_FIELDS = ["id", "movies_checked_out_count", "name", "phone", "postal_code", "registered_at"]
 
 describe CustomersController do
   describe "index" do

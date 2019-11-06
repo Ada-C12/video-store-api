@@ -98,3 +98,5 @@ describe MoviesController do
       end
     end
     
+  end
+end
