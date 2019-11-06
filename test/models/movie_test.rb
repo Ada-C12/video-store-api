@@ -48,7 +48,7 @@ describe Movie do
     it "is invalid without a invalid inventory number" do
       @movie.inventory = -1
       result = @movie.valid?
-      
+
       expect(result).must_equal false
     end
   end
