@@ -1,9 +1,15 @@
 require "test_helper"
 
 describe MoviesController do
-  # it "does a thing" do
-  #   value(1+1).must_equal 2
-  # end
+
+  def check_response(expected_type:, expected_status:)
+    must_respond_with expected_status
+    expect(response.header['Content-Type']).must_include 'json'
+
+    body = JSON.parse(response.body)
+    expect(body).must_be_kind_of expected_type
+    return body
+  end
 
   # describe "index" do 
   #   it "responds with an array of pet hashes" do
@@ -31,10 +37,16 @@ describe MoviesController do
       must_respond_with :ok
     end
 
-    it "responds with info about that movie in a nested array" do
+    it "responds with info about that movie" do
+      get movie_path(movies(:movie1))
+
+      body = check_response(expected_type: Hash, expected_status: :success)
+      expect(body["title"]).must_equal "Titanic 2"
+      expect(body["overview"]).must_equal "The door wasn't big enough for two."
     end
 
     it "sends back a not found when the movie doesn't exist" do
+
     end
   end
 
