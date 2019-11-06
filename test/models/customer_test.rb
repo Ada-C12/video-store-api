@@ -9,7 +9,7 @@ describe Customer do
     it "can have one or many rentals" do
       @customer.must_respond_to :rentals
       @customer.rentals.each do |rental|
-        rental.must_be_kind_of rental
+        rental.must_be_kind_of Rental
       end
     end    
   end
