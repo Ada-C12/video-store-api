@@ -18,9 +18,9 @@ describe CustomersController do
       expect(body).must_be_instance_of Array
       expect(body.size).must_equal Customer.count
 
-      body.each do |pet_hash| 
-        expect(pet_hash).must_be_instance_of Hash
-        expect(pet_hash.keys.sort).must_equal CUSTOMER_FIELDS
+      body.each do |customer_hash| 
+        expect(customer_hash).must_be_instance_of Hash
+        expect(customer_hash.keys.sort).must_equal CUSTOMER_FIELDS
       end 
     end
 
