@@ -44,6 +44,7 @@ describe MoviesController do
   describe "show" do
     it "responds with a JSON and a success" do
       get movie_path(movies(:movie1))
+      must_respond_with :success
     end
 
     it "responds with info about that movie" do
@@ -100,7 +101,7 @@ describe MoviesController do
     end
 
 
-    
+
   end
 
 
