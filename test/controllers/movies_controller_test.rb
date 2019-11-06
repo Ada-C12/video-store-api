@@ -22,8 +22,8 @@ describe MoviesController do
   end
 
   describe "show" do
-    it "responds with one customer's hash" do
-      
+    it "responds with one movie's hash" do
+
     end
   end
 end
