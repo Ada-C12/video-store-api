@@ -17,6 +17,13 @@ require 'minitest/reporters'
 
 Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 
+require "minitest"
+require "minitest/rails"
+require "minitest/autorun"
+require "minitest/reporters"
+
+Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
+
 class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
   fixtures :all
