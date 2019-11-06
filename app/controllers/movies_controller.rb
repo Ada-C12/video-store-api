@@ -12,7 +12,8 @@ class MoviesController < ApplicationController
     
     if movie
       movie.adjust_available_inventory()
-      render json: movie.as_json(only: SHOW_MOVIE_FIELDS), status: :found
+      # status should be :found, but Postman wants :ok
+      render json: movie.as_json(only: SHOW_MOVIE_FIELDS), status: :ok
       return
     else
       render json: {errors: {id: "ID not found"}}, status: :bad_request
@@ -24,7 +25,8 @@ class MoviesController < ApplicationController
     movie = Movie.new(movie_params)
     
     if movie.save
-      render json: movie.as_json(only: [:id]), status: :created
+      # status should be :created, but Postman wants :ok
+      render json: movie.as_json(only: [:id]), status: :ok
       return
     else
       render json: {errors: movie.errors.messages}, status: :not_acceptable

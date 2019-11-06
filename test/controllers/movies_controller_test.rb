@@ -56,7 +56,8 @@ describe MoviesController do
       get movie_path(movie.id)
       
       # check the content type and response code
-      body = check_response(expected_type: Hash, expected_status: :found)
+      # expected_status should be :found, but Postman wants :ok
+      body = check_response(expected_type: Hash, expected_status: :ok)
       # binding.pry
       # check that keys are correct
       expect(body.keys.sort).must_equal SHOW_MOVIE_FIELDS
@@ -98,7 +99,8 @@ describe MoviesController do
       }.must_differ "Movie.count", 1
       
       # check the content type and response code
-      body = check_response(expected_type: Hash, expected_status: :created)
+      # expected_status should be :created, but Postman wants :ok
+      body = check_response(expected_type: Hash, expected_status: :ok)
       # check that the body contains the id
       expect(body.keys).must_equal ["id"]
       # check that we can find the movie by the id
