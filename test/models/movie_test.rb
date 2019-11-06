@@ -53,4 +53,24 @@ describe Movie do
       expect(new_movie.errors.messages[:inventory]).must_include "can't be blank"
     end
   end
+
+  describe "custom methods" do
+    describe "check_inventory" do
+      it "will return true if there is more than 0 inventory" do
+        movie = movies(:movie1)
+        expect(movie.check_inventory).must_equal true
+      end
+
+      it "will return false if there is 0 inventory" do
+        movie = Movie.create(
+          title: "title",
+          overview: "Description", 
+          release_date: Time.new(2018, 1, 1) ,
+          inventory: 0,
+        )
+
+        expect(movie.check_inventory).must_equal false
+      end
+    end
+  end
 end

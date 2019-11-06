@@ -41,5 +41,7 @@ describe RentalsController do
       expect(body).must_be_kind_of Hash
       expect(body["errors"].keys).must_include "movie"
     end
+
   end
+
 end

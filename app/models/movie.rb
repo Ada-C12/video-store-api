@@ -4,4 +4,15 @@ class Movie < ApplicationRecord
   validates :overview, presence: true
   validates :release_date, presence: true
   validates :inventory, presence: true
+
+
+  def check_inventory
+    if self.inventory > 0
+      return true
+    else
+      return false
+    end
+  end
+
+  
 end
