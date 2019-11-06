@@ -61,12 +61,10 @@ describe MoviesController do
   describe "create" do
     let(:movie_data) {
       {
-        movie: {
-          title: "new movie",
-          overview: "a movie",
-          release_date: Date.today,
-          inventory: 10,
-        },
+        title: "new movie",
+        overview: "a movie",
+        release_date: Date.today,
+        inventory: 10,
       }
     }
     
@@ -76,11 +74,11 @@ describe MoviesController do
       expect {
         post movies_path, params: movie_data
       }.must_differ "Movie.count", 1
-      must_respond_with :created
+      must_respond_with :ok
     end
     
     it "will respond with bad_request for invalid data" do
-      movie_data[:movie][:title] = nil
+      movie_data[:title] = nil
       
       expect {
         post movies_path, params: movie_data
