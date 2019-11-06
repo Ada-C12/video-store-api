@@ -8,7 +8,7 @@ class RentalsController < ApplicationController
     
     if rental.movie.available_inventory > 0 && rental.save
       rental.check_out_rental
-      render json: rental.as_json(only: [:id]), status: :ok
+      render json: rental.as_json(only: [:id]), status: :created
       return
     else
       render json: { "errors" => ["unable to create rental"]}, status: :bad_request
