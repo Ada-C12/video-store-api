@@ -1,11 +1,11 @@
 require "test_helper"
 
 describe Movie do
-  describe "validations" do
-    before do
-      @movie = Movie.create(title: "Movie1", overview: "Amazing", release_date: Date.today, inventory: 111)
-    end
-    
+  before do
+    @movie = movies(:one)
+  end
+  
+  describe "validations" do  
     it "is valid when all fields are present" do
       result = @movie.valid?
       expect(result).must_equal true
@@ -35,4 +35,14 @@ describe Movie do
       expect(result).must_equal false
     end
   end
-end 
+  
+  describe "relationships" do   
+    it "can have many rentals" do
+      expect(@movie.rentals.count).must_equal 2
+    end
+    
+    it "can have many customers" do
+      expect(@movie.customers.count).must_equal 2
+    end 
+  end 
+end
