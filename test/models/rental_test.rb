@@ -1,7 +1,13 @@
 require "test_helper"
 
 describe Rental do
-  # it "does a thing" do
-  #   value(1+1).must_equal 2
-  # end
+  describe 'relations' do
+    it 'belongs to a movie' do
+      expect(Rental.new).must_respond_to(:movie)
+    end 
+
+    it 'belongs to a customer' do
+      expect(Rental.new).must_respond_to(:customer)
+    end
+  end
 end
