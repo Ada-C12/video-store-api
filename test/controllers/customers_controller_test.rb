@@ -1,5 +1,7 @@
 require "test_helper"
 
+CUSTOMER_FIELDS = ["id", "name", "phone", "postal_code", "registered_at"]
+
 describe CustomersController do
   describe "index" do
     it "responds with JSON and success" do
@@ -17,7 +19,7 @@ describe CustomersController do
       expect(body).must_be_instance_of Array
       body.each do |customer|
         expect(customer).must_be_instance_of Hash
-        expect(customer.keys.sort).must_equal ["id", "name", "phone", "postal_code", "registered_at"]
+        expect(customer.keys.sort).must_equal CUSTOMER_FIELDS.sort
       end
     end
     

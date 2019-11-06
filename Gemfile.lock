@@ -84,8 +84,6 @@ GEM
       builder
       minitest (>= 5.0)
       ruby-progressbar
-    minitest-skip (0.0.1)
-      minitest (~> 5.0)
     minitest-spec-rails (5.4.0)
       minitest (~> 5.0)
       rails (>= 4.1)
@@ -165,7 +163,6 @@ DEPENDENCIES
   listen (>= 3.0.5, < 3.2)
   minitest-rails
   minitest-reporters
-  minitest-skip
   minitest-spec-rails
   pg (>= 0.18, < 2.0)
   pry-rails
