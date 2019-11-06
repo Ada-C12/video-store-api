@@ -1,5 +1,7 @@
 require "test_helper"
 
+REQUIRED_KEYS = ["inventory", "release_date", "title"]
+
 describe MoviesController do
   describe "index" do
     it "responds with JSON and success" do
@@ -59,6 +61,46 @@ describe MoviesController do
       expect _(body).must_be_instance_of Hash
       must_respond_with :not_found
       expect _(body.keys).must_include "errors"
+    end
+  end
+
+  describe "create" do
+    before do
+      @movie_data = {
+          title: "Test movie",
+          release_date: Date.today,
+          inventory: 2
+        }
+    end
+
+    it "can create a new movie with valid input and responds with :created" do
+      expect { post movies_path, params: @movie_data }.must_differ "Movie.count", 1
+
+      new_movie = Movie.last
+      expect _(new_movie.title).must_equal @movie_data[:title]
+      expect _(new_movie.release_date).must_equal @movie_data[:release_date]
+      expect _(new_movie.inventory).must_equal @movie_data[:inventory]
+
+      body = JSON.parse(response.body)
+
+      expect _(body).must_be_instance_of Hash
+      expect _(body.keys).must_include "id"
+      must_respond_with :ok
+    end
+
+    it "won't create a new movie with invalid input and responds with :bad_request" do
+      REQUIRED_KEYS.each do |key|
+        data = @movie_data.deep_dup
+
+        data[key.to_sym] = nil
+        expect { post movies_path, params: data }.wont_change "Movie.count"
+
+        must_respond_with :bad_request
+
+        body = JSON.parse(response.body)
+        expect(body.keys).must_include "errors"
+        expect(body["errors"].keys).must_include key
+      end
     end
   end
 end
