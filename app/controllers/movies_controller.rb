@@ -14,7 +14,7 @@ class MoviesController < ApplicationController
       render json: movie.as_json(only: [:id, :title, :release_date, :overview, :inventory, :available_inventory]), status: :ok
       return
     else
-      render json: { "errors" => ["not found"] }, status: :not_found
+      render json: { ok: false, "errors" => ["not found"] }, status: :not_found
       return
     end
   end
@@ -27,7 +27,7 @@ class MoviesController < ApplicationController
       render json: movie.as_json(only: [:id]), status: :ok
       return
     else
-      render json: { "errors" => ["unable to create movie"] }, status: :bad_request
+      render json: { ok: false, "errors" => ["unable to create movie"] }, status: :bad_request
       return
     end
   end
