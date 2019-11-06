@@ -7,3 +7,6 @@ rental_2:
 rental_3:
   customer: dominique 
   movie: inception
+rental_4:
+  customer: eminique
+  movie: signs

@@ -7,6 +7,10 @@ describe Customer do
       @customer = customers(:eminique)
     end
 
+    it 'can be instantiated' do
+      assert(@customer.valid?)
+    end
+
     it "can have the all customer fields" do
       @customers.each do |customer|
         [:name, :registered_at, :postal_code, :movies_checked_out_count, :city, :state, :address, :phone].each do |field|
@@ -14,6 +18,15 @@ describe Customer do
         end
       end
     end
+
+      it "wont respond to non-customer fields" do
+        @customers.each do |customer|
+          [:title, :author, :driver].each do |field|
+            expect(customer).wont_respond_to field
+          end
+        end
+      end
+  
     
     it 'must have a name' do
       @customer.name = nil
@@ -50,8 +63,21 @@ describe Customer do
   end
   
   describe "relationships" do
+    before do
+      @customer = customers(:eminique)
+    end
     it "can have many rentals" do
-      
+      expect(@customer.rentals.count).must_equal 2
+      @customer.rentals.each do |rental|
+        expect(rental).must_be_instance_of Rental
       end
     end
+
+    it "returns [] if no rentals for user" do
+      customer = customers(:gretchen)
+      
+      expect(customer.rentals.count).must_equal 0
+      expect(customer.rentals).must_equal []
+    end
+  end
 end
