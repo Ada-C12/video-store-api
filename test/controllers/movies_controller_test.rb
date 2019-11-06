@@ -67,4 +67,36 @@ describe MoviesController do
       must_respond_with :not_found
     end
   end
+  
+  before do 
+    @movie = {
+      title: "This is a movie title",
+      overview: "This is it's overview",
+      release_date: "2019-12-25", 
+      inventory: 5
+    }
+  end
+  
+  it "can create a new movie" do
+    expect {
+      post movies_path, params: @movie
+    }.must_differ 'Movie.count', 1
+    must_respond_with :ok
+    body = JSON.parse(response.body)
+    expect(body.keys).must_equal (['id'])
+  end
+  
+  it "will respond with bad_request for invalid data" do
+    # Arrange - using let from above
+    @movie[:title] = nil
+    expect {
+      # Act
+      post movies_path, params: @movie
+      # Assert
+    }.wont_change "Movie.count"
+    must_respond_with :bad_request
+    expect(response.header['Content-Type']).must_include 'json'
+    body = JSON.parse(response.body)
+    expect(body["errors"].keys).must_include "title"
+  end
 end
