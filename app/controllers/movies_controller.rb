@@ -1,7 +1,6 @@
+MOVIE_KEYS = ["id", "title", "overview", "release_date", "inventory", "inventory_available"]
+
 class MoviesController < ApplicationController
-  
-  MOVIE_KEYS = ["id", "title", "overview", "release_date", "inventory", "inventory_available"]
-  
   def index
     movies = Movie.all.as_json(only: MOVIE_KEYS)
     render json: movies, status: :ok
@@ -23,7 +22,11 @@ class MoviesController < ApplicationController
   private
   
   def movie_params
+    <<<<<<< HEAD
     params.require(:movie).permit("title", "overview", "release_date", "inventory", "inventory_available")
+    =======
+    params.require(:movie).permit(:title, :overview, :release_date, :inventory, :available_inventory)
+    >>>>>>> master
   end
 end
 
