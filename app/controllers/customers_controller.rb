@@ -2,10 +2,10 @@ KEYS = [:id, :name, :address, :city, :state, :postal_code, :phone, :movies_check
 
 class CustomersController < ApplicationController
 
-  def zomg
-    working = "it works!"
-    render json: working, status: :ok
-  end
+  # def zomg
+  #   working = "it works!"
+  #   render json: working, status: :ok
+  # end
 
   def index
   customers = Customer.all.as_json(only: KEYS)
