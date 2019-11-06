@@ -27,6 +27,16 @@ describe MoviesController do
       expect(body.keys.sort).must_equal MOVIE_KEYS.sort
       expect(body["title"]).must_equal movie.title
     end
+
+    it "will respond with bad_request for invalid data" do
+      get movie_path(-1)
+      body = JSON.parse(response.body)
+
+      must_respond_with :not_found
+      expect(response.header['Content-Type']).must_include 'json'
+      expect(body).must_be_instance_of Hash
+      expect(body.keys).must_include "errors"
+    end
   end
 
   describe "create" do
