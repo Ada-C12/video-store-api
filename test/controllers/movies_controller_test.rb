@@ -80,4 +80,58 @@ describe MoviesController do
       expect(body['errors'].keys).must_include "id"
     end
   end
+  
+  describe "create" do
+    it "creates a movie with valid parameters, returns new movie id" do
+      # parameters
+      movie_params = {
+        movie: {
+          title: "The Martian Elf",
+          overview: "Elf brings holiday cheer to the people stranded on Mars",
+          release_date: "2018-12-25",
+          inventory: 2
+        }
+      }
+      
+      # the route
+      # check that database was updated by one
+      expect {
+        post movies_path, params: movie_params
+      }.must_differ "Movie.count", 1
+      
+      # check the content type and response code
+      body = check_response(expected_type: Hash, expected_status: :created)
+      # check that the body contains the id
+      expect(body.keys).must_equal ["id"]
+      # check that we can find the movie by the id
+      new_movie = Movie.find_by(id: body["id"])
+      # and its variables match the parameters
+      expect(new_movie.title).must_equal movie_params[:movie][:title]
+      expect(new_movie.overview).must_equal movie_params[:movie][:overview]
+      expect(new_movie.release_date).must_equal Date.parse(movie_params[:movie][:release_date])
+      expect(new_movie.inventory).must_equal movie_params[:movie][:inventory]
+    end
+    
+    it "gives appropriate response if attempting to create invalid movie" do
+      # invalid parameters
+      movie_params = {
+        movie: {
+          overview: "Elf brings holiday cheer to the people stranded on Mars",
+          release_date: "2018-12-25",
+          inventory: 2
+        }
+      }
+      
+      # the route
+      # check that the database does not change count
+      expect {
+        post movies_path, params: movie_params
+      }.wont_differ "Movie.count"
+      
+      # check the content type and response code, :not_acceptable
+      body = check_response(expected_type: Hash, expected_status: :not_acceptable)
+      # check the message that's returned
+      expect(body['errors'].keys).must_include "title"
+    end
+  end
 end
