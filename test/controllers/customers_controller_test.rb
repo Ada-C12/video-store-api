@@ -16,7 +16,7 @@ describe CustomersController do
 
       expect(body).must_be_instance_of Array
 
-      names = Customer.columns.map { |column| column.name }
+      names = ["id", "name", "registered_at", "postal_code", "phone"]
       body.each do |customer|
         expect(customer).must_be_instance_of Hash
         expect(customer.keys.sort).must_equal names.sort
