@@ -8,7 +8,7 @@ class CustomersController < ApplicationController
   # end
 
   def index
-  customers = Customer.all.as_json(only: KEYS)
+  customers = Customer.all.as_json(only: [:id, :name, :address, :city, :state, :postal_code, :phone, :movies_checked_out_count])
   render json: customers, status: :ok
   end
 
