@@ -1,0 +1,13 @@
+one:
+  title: "Babe 2: Pig in the City"
+  inventory: 2
+  overview: "This post-modern gothic addresses themes of loyalty and sacrifice."
+  release_date: 1998-10-15
+  inventory: 2
+
+two:
+  title: "So I Married an Axe Murderer"
+  inventory: 4
+  overview: "A parable about trust, friendship, and the strong bonds of family in San Francisco."
+  release_date: 1993-10-15
+  inventory: 4
