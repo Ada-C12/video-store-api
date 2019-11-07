@@ -19,7 +19,7 @@ class MoviesController < ApplicationController
   end
   
   def create
-    movie = Movie.new(title:, overview:, release_date:, inventory:)
+    movie = Movie.new(title: params[:title], overview: params[:overview], release_date:params[:release_date], inventory:params[:inventory])
     
     if movie.save 
       render json: movie.as_json(only: [:id, :title, :overview, :release_date, :inventory]), status: :ok

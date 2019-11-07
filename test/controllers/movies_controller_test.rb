@@ -86,12 +86,10 @@ describe MoviesController do
     before do 
       # Arrange
       @movie_params = {
-        movie: {
           title: "The Grinch Who Stole Christmas",
           overview: "His heart is 2 sizes too small",
-          release_date: 12-01-1008,
+          release_date: "December 1, 2008",
           inventory: 45
-        }
       }
     end
     it "can create a new movie" do 
@@ -105,13 +103,13 @@ describe MoviesController do
 
       # Assert
       body = JSON.parse(response.body)
-      must_respond_with :created 
+      must_respond_with :ok 
       expect(body).must_be_instance_of Hash 
     end
 
     it "will respond with a bad request for invalid data" do 
       # Arrange
-      @movie_params[:movie][:title] = nil
+      @movie_params[:title] = nil
 
       # Act/ Assert
       expect {post movies_path(params: @movie_params)}.wont_change "Movie.count"
