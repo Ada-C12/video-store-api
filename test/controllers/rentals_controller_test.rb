@@ -30,7 +30,8 @@ describe RentalsController do
       expect(response.header['Content-Type']).must_include 'json'
       must_respond_with :ok
 
-      binding.pry
+      customer.reload
+      movie.reload
       expect(customer.movies_checked_out_count).must_equal 1
       expect(movie.available_inventory).must_equal 19
     end
