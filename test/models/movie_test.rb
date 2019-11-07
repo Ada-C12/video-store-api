@@ -1,16 +1,16 @@
 require "test_helper"
 
 describe Movie do
-  describe "validations" do
-    before do 
-      @movie = Movie.new(
-        title: "fake movie",
-        overview: "summary",
-        release_date: Date.today,
-        inventory: 1
-      )
-    end
+  before do 
+    @movie = Movie.new(
+      title: "fake movie",
+      overview: "summary",
+      release_date: Date.today,
+      inventory: 1
+    )
+  end
 
+  describe "validations" do
     it "is avlid when all fields are present" do
       result = @movie.valid?
 
@@ -51,5 +51,25 @@ describe Movie do
 
       expect(result).must_equal false
     end
+  end
+
+  describe "relationship" do
+    before do 
+      @rental = Rental.new(
+        checkout_date: Date.today,
+        due_date: Date.today + 7,
+        movie_id: movies(:movie1).id,
+        customer_id: customers(:customer3).id
+      )
+    end
+
+    it "can have many movies through rental" do
+      @rental.save
+
+      movie = Movie.find_by(id: movies(:movie1).id)
+
+      expect(movie.customers.count).must_be :>=, 0
+      expect(movie.customers).must_include customers(:customer3)
+    end 
   end
 end
