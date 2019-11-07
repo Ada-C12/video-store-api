@@ -18,7 +18,6 @@ describe RentalsController do
     
     it "responds with JSON and success when passed in valid params and creates new rental" do
       
-
       body = JSON.parse(response.body)
       
       expect(body["id"]).must_be_instance_of Integer
