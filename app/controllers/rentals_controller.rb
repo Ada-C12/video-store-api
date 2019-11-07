@@ -1,11 +1,10 @@
 class RentalsController < ApplicationController
   def checkout
     rental = Rental.new(rental_params)
-    rental.check_out = Date.today if !rental.movie.available_inventory
-    rental.check_in = Date.today + 7
-    rental.movie.set_inventory
 
-    if rental.movie.available_inventory > 0
+    rental.setup_dates
+
+    if rental.movie.check_inventory
       if rental.save
         rental.movie.decrease_inventory
         rental.customer.increase_movies_checkout
