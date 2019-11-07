@@ -3,14 +3,11 @@ class RentalsController < ApplicationController
     movie = Movie.find_by(id: rental_params[:movie_id])
     if movie && movie.available_inventory > 0
       rental = Rental.new(rental_params)
-      # TO DO: rental.due_date = created_at + 1 week
-      if rental.save
-        customer = Customer.find_by(id: rental.customer.id)
-        customer.movies_checked_out_count += 1
+      # TO DO: rental.due_date = created_at + 1 week  
+      rental.customer.movies_checked_out_count += 1
+      rental.movie.available_inventory -= 1
 
-        movie.available_inventory -= 1
-
-        
+      if rental.save && rental.customer.save && rental.movie.save
         render json: rental.as_json(only: [:id]), status: :ok
         return
       else
