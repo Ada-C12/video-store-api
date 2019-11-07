@@ -3,7 +3,6 @@ class Movie < ApplicationRecord
   validates :title, presence: true, uniqueness: true
   validates :inventory, presence: true
 
-
   def check_inventory
     if self.inventory > 0
       return true
@@ -11,6 +10,4 @@ class Movie < ApplicationRecord
       return false
     end
   end
-
-  
 end
