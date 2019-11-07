@@ -1,7 +1,7 @@
 require "test_helper"
 
 describe RentalsController do
-  describe "checkout" do 
+  describe "check_out" do 
     it "creates a new instance of Rental if the movie is available" do 
       movie = movies(:movie1)
       customer = customers(:customer1)
@@ -14,6 +14,8 @@ describe RentalsController do
       post check_out_path(new_rental)
       }.must_differ "Rental.count", 1
 
+      expect(new_rental[:customer_id]).must_equal customer.id
+      expect(new_rental[:movie_id]).must_equal movie.id
       body = JSON.parse(response.body)
       expect(body).must_be_instance_of Hash
     end
@@ -36,5 +38,18 @@ describe RentalsController do
     #   expect(body).must_be_instance_of Hash
     #   expect(body.keys).must_include "errors"
     # end 
+  end
+
+  describe "check_in" do 
+    it "changes the status of the given rental to checked in" do 
+    customer = customers(:customer1)
+    movie = movies(:movie1)
+
+    test_rental = rentals(:rental1)
+
+    post check_in_path(test_rental)
+
+    expect(test_rental.status).must_equal "checked in"
+    end
   end
 end

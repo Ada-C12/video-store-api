@@ -23,7 +23,23 @@ class RentalsController < ApplicationController
   end
 
   def check_in
-    rental = Rental.update(customer_id, movie_id, status: "checked in")
+    customer = Customer.find_by(id: rental_params[:customer_id])
+    movie = Movie.find_by(id: rental_params[:movie_id])
+    if rental = Rental.find_by(customer_id: customer.id, movie_id: movie.id)
+  
+      # rental.update(inventory: rental.inventory + 1)
+      movie.update(inventory: movie.inventory + 1)
+      
+      #rental.save
+      movie.save
+
+      render json: rental.as_json(only: [:customer_id,:movie_id]) 
+      return
+    else
+      render json: { errors: ["Bad Request - Not checked out"] }, status: :bad_request
+      return
+    end
+
     #increment available count
   end
 
