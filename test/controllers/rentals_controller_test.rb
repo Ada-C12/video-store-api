@@ -16,7 +16,7 @@ describe RentalsController do
   }
   
   describe "checkout" do
-    it "responds with JSON and success when passed in valid params and creates new rental" do
+    it "responds with JSON and success when passed in valid params and creates new rental and updates movies_checkout and available_inventory" do
       expect(customer.movies_checked_out_count).must_equal 0
       expect(movie.available_inventory).must_equal 20
       
@@ -74,7 +74,7 @@ describe RentalsController do
   end
 
   describe "checkin" do
-    it "responds with JSON and success when passed in valid params and creates new rental" do
+    it "responds with JSON and success when passed in valid params and updates movies_checkout and available_inventory" do
       post checkout_path, params: rental_data
       
       expect {
