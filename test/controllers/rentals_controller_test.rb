@@ -83,4 +83,61 @@ describe RentalsController do
       expect(body['errors'].keys).must_include 'customer'
     end
   end
+  
+  describe "check-in" do
+    it "renders JSON and success when given valid movie id and customer id" do
+      # params
+      rental_params = {
+        customer_id: customers(:c_3).id,
+        movie_id: movies(:m_1).id
+      }
+      
+      # the route
+      # expect that it won't change rental count
+      expect {
+        post checkin_path, params: rental_params
+      }.wont_differ "Rental.count"
+      
+      # returns JSON, status bad_request, and ok
+      check_response(expected_type: Hash, expected_status: :ok)
+    end
+    
+    it "renders JSON and bad_request when given invalid movie id" do
+      # params
+      rental_params = {
+        customer_id: customers(:c_3).id,
+        movie_id: -1
+      }
+      
+      # the route
+      # expect that it won't change rental count
+      expect {
+        post checkin_path, params: rental_params
+      }.wont_differ "Rental.count"
+      
+      # returns JSON, status bad_request, and ok
+      body = check_response(expected_type: Hash, expected_status: :bad_request)
+      expect(body.keys).must_include 'errors'
+      expect(body['errors'].keys).must_include 'movie'
+    end
+    
+    it "renders JSON and bad_request when given invalid customer id" do
+      # params
+      rental_params = {
+        customer_id: -1,
+        movie_id: movies(:m_1).id
+      }
+      
+      # the route
+      # expect that it won't change rental count
+      expect {
+        post checkin_path, params: rental_params
+      }.wont_differ "Rental.count"
+      
+      # returns JSON, status bad_request, and ok
+      body = check_response(expected_type: Hash, expected_status: :bad_request)
+      expect(body.keys).must_include 'errors'
+      expect(body['errors'].keys).must_include 'customer'
+    end
+  end
 end
