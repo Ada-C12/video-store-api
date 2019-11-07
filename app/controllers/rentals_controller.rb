@@ -1,8 +1,8 @@
 class RentalsController < ApplicationController
   def checkout
     rental = Rental.new(rental_params)
-    p "KRISTINA"
-    p rental.movie
+    # p "KRISTINA"
+    # p rental.movie
     if rental.movie.check_inventory == true
       rental.checkout_date = Time.now
       rental.due_date = Time.now + 7

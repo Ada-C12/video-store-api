@@ -24,6 +24,8 @@ class Rental < ApplicationRecord
 
 
   def checkout_movie
+    rental.checkout_date = Time.now
+    rental.due_date = Time.now + 7
     self.movie.inventory -= 1
     self.customer.movies_checked_out_count += 1
     return
