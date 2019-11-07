@@ -16,6 +16,9 @@ describe RentalsController do
       new_rental = Rental.last
       expect _(new_rental.customer_id).must_equal rental_data[:customer_id]
       expect _(new_rental.movie_id).must_equal rental_data[:movie_id]
+      expect _(new_rental.returned).must_equal false
+      expect _(new_rental.checkout_date).must_equal Date.today
+      expect _(new_rental.due_date).must_equal Date.today + 7
       
       body = JSON.parse(response.body)
       
