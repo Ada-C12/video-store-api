@@ -11,7 +11,7 @@ class MoviesController < ApplicationController
     movie = Movie.find_by(id: movie_id)
     
     if movie
-      render json: movie.as_json(only: KEYS)
+      render json: movie.as_json(only: KEYS), status: :ok
     else 
       render json: { ok: false, errors: "Not Found"}, status: :not_found
       return
@@ -19,10 +19,10 @@ class MoviesController < ApplicationController
   end
   
   def create
-    movie = Movie.new(movie_params)
+    movie = Movie.new(title:, overview:, release_date:, inventory:)
     
     if movie.save 
-      render json: movie.as_json(only: [:title, :overview, :release_date, :inventory]), status: :created
+      render json: movie.as_json(only: [:id, :title, :overview, :release_date, :inventory]), status: :ok
       return 
     else 
       render json: { ok: false, "errors" => ["Not Found"]}, status: :not_found
