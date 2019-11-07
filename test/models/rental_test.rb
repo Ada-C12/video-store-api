@@ -65,7 +65,24 @@ describe Rental do
         expect(movie_1.inventory).must_equal 9
         expect(customer_1.movies_checked_out_count).must_equal 5
       end
+    end
 
+    describe "checkin_movie" do
+      it "will increase the inventory for a movie by 1 and decrease the count for a customers checked out movies count by 1" do 
+        movie_1 = movies(:movie1)
+        customer_1 = customers(:customer1)
+        rental = Rental.create(
+          checkout_date: Time.new(2018, 1, 1),
+          due_date: Time.new(2018, 1, 7),
+          movie: movie_1,
+          customer: customer_1,
+        )
+
+        rental.checkout_movie
+        rental.checkin_movie
+        expect(movie_1.inventory).must_equal 10
+        expect(customer_1.movies_checked_out_count).must_equal 4
+      end
     end
 
   end
