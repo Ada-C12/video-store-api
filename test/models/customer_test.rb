@@ -1,6 +1,15 @@
 require "test_helper"
 
 describe Customer do
+  describe "initialize" do
+    before do
+      @new_customer = Customer.new
+    end
+
+    it "can be instantiated" do
+      expect(@new_customer.valid?).must_equal true
+    end
+  end
   
   describe "relationships" do
     it "can have many rentals" do
