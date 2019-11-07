@@ -1,7 +1,7 @@
 class CustomersController < ApplicationController
   def index
     if params[:sort] || params[:n]
-      customers = Customer.group_by_n(params[:n], params[:sort], params[:p])
+      customers = Customer.group_by_n(params[:sort], params[:n], params[:p])
     else
       customers = Customer.all
     end
