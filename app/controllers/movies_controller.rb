@@ -1,4 +1,5 @@
 class MoviesController < ApplicationController
+  
   MOVIE_FIELDS = ['id', 'title', 'release_date']
 
   def index

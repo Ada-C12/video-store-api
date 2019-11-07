@@ -36,11 +36,12 @@ describe MoviesController do
   end 
 
   describe "create" do
-    # let(:movie_data) {
-    #   { movie: { title: "Everything cool", release_date: "2019-09-09", overview: "Best movie ever!" }}
-    # }
+    let(:movie_data) {
+      { movie: { title: "Everything cool", release_date: Time.now, overview: "Best movie ever!" }}
+    }
 
     # it "responds with created status when request is good" do
+    #   # binding.pry
     #   expect{ post movies_path, params: movie_data }.must_differ "Movie.count", 1
     #   must_respond_with :created
     
@@ -48,17 +49,14 @@ describe MoviesController do
     #   expect(body.keys).must_equal ['id']
     # end
 
-    # it "responds with bad_request when request has no name" do 
-    #   # make bad request
-    #   pet_data[:pet][:name] = nil 
-    #   # call 
-    #   # verify count doesn't change
-    #   expect{post pets_path, params: pet_data}.wont_change "Pet.count"
-    #   # verify bad_request status
-    #   must_respond_with :bad_request
-    #   # body contains errors which contain string 'name'
-    #   body = JSON.parse(response.body)
-    #   expect(body['errors'].keys).must_include 'name'
-    # end 
+    it "responds with bad_request when request has no name" do 
+      movie_data[:movie][:title] = nil 
+
+      expect{post movies_path, params: movie_data}.wont_change "Movie.count"
+      must_respond_with :bad_request
+
+      body = JSON.parse(response.body)
+      expect(body['errors'].keys).must_include 'title'
+    end 
   end
 end
