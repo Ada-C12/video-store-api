@@ -3,7 +3,7 @@ require "test_helper"
 describe Movie do
   before do 
     @valid_movie = movies(:m1)
-    @missing_title_movie = movies(:m2)
+    # @missing_title_movie = movies(:m2)
     @missing_release_date_movie = movies(:m3)
     @invalid_release_date_movie = movies(:m4)
     @missing_inventory_movie = movies(:m5)
@@ -27,7 +27,8 @@ describe Movie do
       end 
   
       it "should not validate movie without title (presence)" do 
-        result = @missing_title_movie.valid?
+        @valid_movie.title = nil 
+        result = @valid_movie.valid?
         expect(result).must_equal false
       end 
     end 
