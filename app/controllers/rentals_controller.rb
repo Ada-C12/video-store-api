@@ -34,14 +34,12 @@ class RentalsController < ApplicationController
   end
   
   def checkout
-    @movie = Movie.find_by(id: rental_params[:movie_id])
-    @customer = Customer.find_by(id: rental_params[:customer_id])
-    # binding.pry
+    @movie = Movie.find_by(id: params[:movie_id])
+    @customer = Customer.find_by(id: params[:customer_id])
     if @movie.movie_checkout && @customer.customer_checkout
-      rental = Rental.create(movie: @movie, customer: @customer, checkout_date: Time.now, due_date: (Time.now + 604800))
+      rental = Rental.new(movie_id: @movie.id, customer_id: @customer.id)
       if rental.save!
-        # binding.pry
-        render json: rental.as_json(only: [:id]), status: :created
+        render json: rental.as_json(only: [:id]), status: :ok
         return
       else
         render json: {"errors"=>["Unable to Create Rental"]}, status: :bad_request
@@ -57,7 +55,7 @@ class RentalsController < ApplicationController
     @customer = Customer.find_by(id: rental_params[:customer_id])
     @rental = Rental.find_by(id: rental_params[:id])
     if @movie.movie_checkin && @customer.customer_checkin
-      render json: @rental.as_json(only: [:id]), status: :updated
+      render json: @rental.as_json(only: [:id]), status: :ok
       return
     else
       render json: {"errors"=>["Unable to Checkin Rental"]}, status: :bad_request
@@ -68,7 +66,7 @@ class RentalsController < ApplicationController
   private
   
   def rental_params
-    return params.permit("checkout_date", "due_date", "movie_id", "customer_id")
+    return params.permit("movie_id", "customer_id")
   end
   
   def find_movie

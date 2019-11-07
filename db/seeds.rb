@@ -6,4 +6,4 @@ JSON.parse(File.read('db/seeds/movies.json')).each do |movie|
   Movie.create!(movie)
 end
 
-Rental.create(customer_id: Customer.first.id, movie_id: Movie.first.id, checkout_date: Time.now, due_date: (Time.now + 5))
+Rental.create(customer_id: Customer.first.id, movie_id: Movie.first.id)

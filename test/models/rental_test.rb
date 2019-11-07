@@ -9,7 +9,7 @@ describe Rental do
     end
     
     it "requires checkout_date, due_date, customer, movie" do
-      required_fields = [:customer_id, :movie_id, :checkout_date, :due_date]
+      required_fields = [:customer_id, :movie_id]
       
       required_fields.each do |field|
         rental[field] = nil

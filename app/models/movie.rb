@@ -13,7 +13,7 @@ class Movie < ApplicationRecord
     if checkout_movie != nil && checkout_movie.available_inventory >= 1
       checkout_movie.available_inventory -= 1
       checkout_movie.save!
-      return checkout_movie
+      # return checkout_movie
     elsif checkout_movie.available_inventory < 1
       #render json: {"errors"=>["no inventory available"]}, status: :bad_request
       return checkout_movie

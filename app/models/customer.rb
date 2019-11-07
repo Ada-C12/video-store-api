@@ -15,6 +15,7 @@ class Customer < ApplicationRecord
     if checkout_customer != nil 
       checkout_customer.movies_checked_out_count += 1
       checkout_customer.save!
+      # binding.pry
       return checkout_customer
     else
       render json: {"errors"=>["customer does not exist"]}, status: :not_found

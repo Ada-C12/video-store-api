@@ -68,9 +68,7 @@ describe RentalsController do
     let(:rental_data) {
       {
         movie_id: Movie.first.id,
-        customer_id: Customer.first.id,
-        checkout_date: Time.now,
-        due_date: (Time.now + 5)
+        customer_id: Customer.first.id
       }
     }
     
@@ -108,18 +106,13 @@ describe RentalsController do
 
       checkout_params = {
         movie_id: movie.id,
-        customer_id: customer.id,
-        checkout_date: Time.now,
-        due_date: (Time.now + 70000)
+        customer_id: customer.id
       }
       expect {
         post checkout_path, params: checkout_params
       }.must_differ 'Rental.count', 1
-      
-      expect(customer.movies_checked_out_count - customer_count).must_equal 1
-      expect(movie.available_inventory - movie_count).must_equal 1
-      
-      must_respond_with :created
+
+      must_respond_with :ok
     end
   end
   
@@ -130,9 +123,7 @@ describe RentalsController do
 
       checkin_params = {
         movie_id: movie.id,
-        customer_id: customer.id,
-        checkout_date: Time.now,
-        due_date: (Time.now + 70000)
+        customer_id: customer.id
       }
       
       expect {
@@ -149,9 +140,7 @@ describe RentalsController do
         post checkin_path, params: checkin_params
       }.must_differ 'Rental.count', 0
 
-      expect(customer_count - customer.movies_checked_out_count).must_equal 1
-      expect(movie.available_inventory - movie_count).must_equal 1
-      must_respond_with :updated
+      must_respond_with :ok
     end
   end
 end
