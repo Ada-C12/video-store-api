@@ -44,7 +44,30 @@ describe Rental do
         rental = Rental.create(customer: customers(:shelley), movie: movies(:second))
 
         refute rentals(:two).checkout
+      end
+      
+      it "should set the checkout date to today" do
+        rental = Rental.create(customer: customers(:shelley), movie: movies(:first))
 
+        rental.checkout
+      
+        today = Date.today
+
+        expect(rental.checkout_date).must_equal today
+      end
+
+      it "should set the due date upon creation (equal to 7 days plus checkout date)" do
+        rental = Rental.create(customer: customers(:shelley), movie: movies(:first))
+
+        rental.checkout
+
+        today = Date.today
+
+        expect(rental.checkout_date).must_equal today
+      
+        next_week = (Date.today + 7)
+
+        expect(rental.due_date).must_equal next_week 
       end
     end
 

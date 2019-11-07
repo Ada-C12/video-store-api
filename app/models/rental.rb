@@ -14,7 +14,7 @@ class Rental < ApplicationRecord
     self.customer.movies_checked_out_count += 1
     self.checkout_date = Date.today
     # make this work 
-    self.due_date = self.checkout_date + 7 
+    self.due_date = (Date.today + 7)
 
     return self.save
   end

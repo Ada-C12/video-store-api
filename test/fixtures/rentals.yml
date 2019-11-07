@@ -1,6 +1,10 @@
 one:
   customer: shelley
   movie: first
+  checkout_date: Date.today
+  due_date: (Date.today + 7)
 two:
   customer: shelley
   movie: second
+  checkout_date: Date.today
+  due_date: (Date.today + 7)
