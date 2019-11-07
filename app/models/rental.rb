@@ -5,8 +5,7 @@ class Rental < ApplicationRecord
   validates :due_date, presence: true
 
   def checkout_movie
-    self.checkout_date = Time.now
-    self.due_date = Time.now + 7
+
     self.movie.inventory -= 1
     self.customer.movies_checked_out_count += 1
     return

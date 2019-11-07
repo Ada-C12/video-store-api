@@ -22,11 +22,11 @@ describe RentalsController do
     end
 
     it "will not create a rental with missing attributes" do
-      customer = customers(:customer1)
+      movie = movies(:movie1)
       rental_data = {
         rental: {
-          movie_id: nil,
-          customer_id: customer.id,
+          movie_id: movie.id,
+          customer_id: nil,
         }
       }
 
@@ -39,7 +39,7 @@ describe RentalsController do
       body = JSON.parse(response.body)
 
       expect(body).must_be_kind_of Hash
-      expect(body["errors"].keys).must_include "movie"
+      expect(body["errors"].keys).must_include "customer"
     end
 
     it "won't create a rental for a movie with 0 inventory" do
@@ -70,10 +70,13 @@ describe RentalsController do
   end
 
   describe "checkin" do
-    
+    # it will find a rental by it's id
+    # it will increment the rental's movie's inventory by 1
+    # it will decrement the rental's customer's movies_checked_out_count by 1
 
 
 
   end
 
 end
+
