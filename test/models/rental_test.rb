@@ -11,4 +11,17 @@ describe Rental do
       expect(current_rental.customer).must_be_instance_of Customer
     end
   end
+
+  describe "due_date" do 
+    it "will set the due date to the correct date given valid data" do
+      new_rental = Rental.new(
+        customer_id: customers(:customer1),
+        movie_id: movies(:movie1) 
+      )
+      results = Rental.due_date(new_rental)
+
+      expect(results).wont_be_nil
+      expect(results.due_date).must_equal Date.today + 7.days
+    end
+  end
 end
