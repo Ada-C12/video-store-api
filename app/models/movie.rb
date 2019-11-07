@@ -29,7 +29,7 @@ class Movie < ApplicationRecord
       return checkin_movie
     else
       render json: {"errors"=>["movie does not exist"]}, status: :not_found
-      return checkin_movie
+      return 
     end
   end
 end

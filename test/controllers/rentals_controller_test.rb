@@ -113,11 +113,17 @@ describe RentalsController do
   describe "checkin" do
     it "can return a movie" do
       customer = customers(:customer_one)
-      movie = movies(:movie_one)
-      expect {
-        post checkout_path
-      }.must_differ 'Rental.count', -1
+      customer_count = customer.movies_checked_out_count
       
+      movie = movies(:movie_one)
+      movie_count = movie.available_inventory
+      
+      rental = Rental.new(customer_id: customer.id, movie_id: movie.id)
+      
+      post checkin_path
+      binding.pry
+      expect(customer_count - customer.movies_checked_out_count).must_equal 1
+      expect(movie.available_inventory - movie_count).must_equal 1
       must_respond_with :updated
     end
   end

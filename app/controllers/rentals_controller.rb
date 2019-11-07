@@ -50,9 +50,12 @@ class RentalsController < ApplicationController
     end
   end
   
-  def checkin(movie, customer)
-    if movie_checkin(movie) && customer_checkin(customer)
-      render json: rental.as_json(only: [:id]), status: :updated
+  def checkin
+    @movie = Movie.find_by(rental_params[:movie_id])
+    @customer = Customer.find_by(rental_params[:customer_id])
+    @rental = Rental.find_by(rental_params[:id])
+    if @movie.movie_checkin && @customer.customer_checkin
+      render json: @rental.as_json(only: [:id]), status: :updated
       return
     else
       render json: {"errors"=>["Unable to Checkin Rental"]}, status: :bad_request
