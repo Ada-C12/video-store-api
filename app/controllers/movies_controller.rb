@@ -24,14 +24,27 @@ class MoviesController < ApplicationController
   
   def check_out
     movie = Movie.find_by(id: params[:movie_id])
-    movie = Movie.find_by(id: params[:movie_id])
+    customer = Customer.find_by(id: params[:customer_id])
     rental = Rental.new(movie: movie.id, customer: customer.id)
     rental.checkout_date = DateTime.now
-    rental.set_due_date    
+    rental.set_due_date
+
+    if rental.save
+      render json: { id: rental.id }, status: :created
+    else
+      render json: { ok: false, errors: rental.errors.messages }, status: :bad_request
+    end
+
   end
   
   def check_in
-    
+    rental = Rental.find_by(customer_id: params[customer_id], movie_id: [movie_id])
+    if rental
+      rental.check_in
+      render json: { id: rental.id }, status: :ok
+    else
+      render json: { ok: false, errors: "Rental not found"}, status: :not_found
+    end    
   end
   
   private
