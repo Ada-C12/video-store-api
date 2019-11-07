@@ -10,7 +10,9 @@ class Rental < ApplicationRecord
   end
 
   def checkout 
-    if self.valid?(:checkout)
+    # self.save
+
+    if self.save && self.valid?(:checkout)
       self.movie.available_inventory -= 1
       self.customer.movies_checked_out_count += 1
       self.checkout_date = Date.today

@@ -1,15 +1,13 @@
 class RentalsController < ApplicationController
   def checkout
 
-    rental = Rental.new(customer_id: params[:customer_id], movie_id: params[:movie_id])
+    rental = Rental.new(rental_params)
 
-    if rental.save
-      
-      rental.checkout
-
+    if rental.checkout
       render json: rental.as_json(only: [:id]), status: :ok
       return
     else
+      # binding.pry
       render json: {
         ok: false,
         errors: rental.errors.messages
@@ -29,5 +27,10 @@ class RentalsController < ApplicationController
 
 
   def checkin 
+  end
+
+  private 
+  def rental_params
+    params.permit(:customer_id, :movie_id)
   end
 end
