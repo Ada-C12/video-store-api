@@ -1,8 +1,9 @@
 require "test_helper"
 
 describe CustomersController do
-  CUSTOMER_FIELDS = %w(address city id name phone postal_code registered_at state)
-  
+  CUSTOMERS_INDEX_FIELDS = %w(id movies_checked_out_count name phone postal_code registered_at)
+  CUSTOMER_SHOW_FIELDS = %w(address city id movies_checked_out_count name phone postal_code registered_at state)
+
   def check_response(expected_type:, expected_status: :success)
     must_respond_with expected_status
     expect(response.header['Content-Type']).must_include 'json'
@@ -23,7 +24,7 @@ describe CustomersController do
       body = check_response(expected_type: Array)
       
       body.each do |customer|
-        expect(customer.keys.sort).must_equal CUSTOMER_FIELDS
+        expect(customer.keys.sort).must_equal CUSTOMERS_INDEX_FIELDS
       end
     end
     
@@ -42,10 +43,10 @@ describe CustomersController do
     it "retrieves one customer" do
       customer = Customer.first
       
-      get customer_path(customer)
+      get customer_path(customer.id)
       body = check_response(expected_type: Hash)
       
-      expect(body.keys.sort).must_equal CUSTOMER_FIELDS
+      expect(body.keys.sort).must_equal CUSTOMER_SHOW_FIELDS
     end 
     
     it "sends back not_found if customer doesn't exist" do 
@@ -54,44 +55,4 @@ describe CustomersController do
       expect(body.keys).must_include "errors"
     end 
   end
-  
-  describe "create" do
-    let(:customer_data) { 
-    { 
-    customer: {
-    name: "lisa",
-    address: "1250 3th Ave.",
-    registered_at: Date.new(11-1-20),
-    city: "Seattle",
-    state: "WA",
-    postal_code: "98102",
-    phone: "313-444-4444"
-  }
-}
-} 
-
-it "can create a new customer" do
-  expect {
-  post customers_path, params: customer_data
-}.must_differ "Customer.count", 1
-
-body = check_response(expected_type: Hash, expected_status: :created)
-new_customer = Customer.find(body["id"])
-
-customer_data[:customer].each do |key, value|
-  expect(new_customer[key.to_s]).must_equal value
-end 
-end
-
-it "will respond with bad_request for invalid data" do
-  customer_data[:customer][:name] = nil
-  
-  expect {
-  post customers_path, params: customer_data
-}.wont_change "Customer.count"
-
-body = check_response(expected_type: Hash, expected_status: :bad_request)
-expect(body["errors"].keys).must_include "name"
-end 
-end
 end 

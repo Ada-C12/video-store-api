@@ -9,4 +9,5 @@ class Customer < ApplicationRecord
   validates :state, presence: true
   validates :postal_code, presence: true
   validates :phone, presence: true
+  validates :movies_checked_out_count, presence: true
 end

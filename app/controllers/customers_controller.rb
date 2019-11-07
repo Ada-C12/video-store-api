@@ -16,21 +16,4 @@ class CustomersController < ApplicationController
     end 
   end 
   
-  def create
-    customer = Customer.new(customer_params)
-    
-    if customer.save
-      render json: customer.as_json(only: [:id]), status: :created
-      return
-    else 
-      bad_request(customer)
-    end 
-  end 
-  
-  private 
-  
-  def customer_params
-    params.permit(:name, :registered_at, :address, :city, :state, :postal_code, :phone, :movies_checked_out_count)
-  end 
-  
 end
