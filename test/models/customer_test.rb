@@ -10,7 +10,7 @@ describe Customer do
       Rental.create(movie_id: movie.id, customer_id: customer.id)
       Rental.create(movie_id: movie2.id, customer_id: customer.id)
       
-      expect(customer.rentals.length).must_equal 2
+      expect(customer.rentals.length).must_equal 3
     end
     
     it "can have zero rentals" do
