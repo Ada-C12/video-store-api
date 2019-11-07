@@ -1,4 +1,4 @@
-CUSTOMER_KEYS = ["id", "name", "address", "city", "state", "postal_code", "phone", "movies_checked_out_count"]
+CUSTOMER_KEYS = ["id", "name", "address", "city", "state", "postal_code", "phone", "movies_checked_out_count", "registered_at"]
 
 class CustomersController < ApplicationController
 
