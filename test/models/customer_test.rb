@@ -39,9 +39,32 @@ describe Customer do
       expect(customer.movies.first.title).must_equal movie.title
     end
   end
-
+  
   describe "customer_checkout" do
-    it "customer can checkout a movie and increase movies checked out quantity" do
+    it "can checkout a movie and reduce available inventory" do
+      customer = Customer.first
+      previous_checked_out_count = customer.movies_checked_out_count
+      customer = customer.customer_checkout
+      updated_checked_out_count = customer.movies_checked_out_count
+      
+      expect(updated_checked_out_count - previous_checked_out_count).must_equal 1
+    end
+    
+    it "should not allow a movie to be checked out if the customer does not exist" do
+    end
+    
+    it "should not allow a movie to be checked out if the movie does not exist" do
+    end
+    
+  end
+  describe "customer_checkin" do
+    it "can checkin a movie and add reduce qty checked out" do
+      customer = customers(:customer_one)
+      movie_checked_out_start_count = customer.movies_checked_out_count
+      
+      customer = customer.customer_checkin
+      
+      expect(movie_checked_out_start_count - customer.movies_checked_out_count).must_equal 1
     end
   end
 end

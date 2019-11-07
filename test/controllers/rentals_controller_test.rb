@@ -63,6 +63,7 @@ describe RentalsController do
       must_respond_with :not_found
     end
   end
+  
   describe "create" do
     let(:rental_data) {
       {
@@ -79,6 +80,30 @@ describe RentalsController do
       }.must_differ 'Rental.count', 1
       
       must_respond_with :created
+    end
+  end
+  
+  describe "checkout" do
+    it "can create a new rental" do
+      customer = customers(:customer_one)
+      movie = movies(:movie_one)
+      expect {
+        post checkout_path(movie, customer)
+      }.must_differ 'Rental.count', 1
+      
+      must_respond_with :created
+    end
+  end
+  
+  describe "checkin" do
+    it "can return a movie" do
+      customer = customers(:customer_one)
+      movie = movies(:movie_one)
+      expect {
+        post checkout_path(movie, customer)
+      }.must_differ 'Rental.count', -1
+      
+      must_respond_with :updated
     end
   end
 end
