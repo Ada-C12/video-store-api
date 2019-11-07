@@ -58,6 +58,27 @@ describe RentalsController do
   end
   
   describe "checkin" do 
+    before do 
+      movie = Movie.first
+      customer = Customer.first
+      @rental = {
+        movie_id: movie.id, 
+        customer_id: customer.id
+      }
+    end
     
+    it "can assign a checkin_date" do
+      expect {
+        post checkin_path, params: @rental
+      }.wont_change 'Rental.count'
+      
+      body = JSON.parse(response.body)
+      
+      rental = Rental.find_by(id: body["id"])
+      expect(rental.checkin_date).must_equal Date.today
+    end
+    
+    it "will respond with bad_request for invalid data" do
+    end
   end
 end

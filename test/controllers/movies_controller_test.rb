@@ -20,7 +20,7 @@ describe MoviesController do
       expect(body).must_be_instance_of Array
       body.each do |movie|
         expect(movie).must_be_instance_of Hash
-        expect(movie.keys.sort).must_equal ["id", "release_date", "title"]
+        expect(movie.keys.sort).must_equal ["available_inventory", "id", "release_date", "title"]
       end
     end
     
@@ -55,7 +55,7 @@ describe MoviesController do
       get movie_path(movie.id)
       body = JSON.parse(response.body)
       
-      expect(body.keys.sort).must_equal ["id", "inventory", "overview", "release_date", "title"]
+      expect(body.keys.sort).must_equal ["available_inventory", "id", "inventory", "overview", "release_date", "title"]
       expect(body["title"]).must_equal "Blacksmith Of The Banished"
     end
     
