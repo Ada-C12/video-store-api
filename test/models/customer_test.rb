@@ -39,4 +39,9 @@ describe Customer do
       expect(customer.movies.first.title).must_equal movie.title
     end
   end
+
+  describe "customer_checkout" do
+    it "customer can checkout a movie and increase movies checked out quantity" do
+    end
+  end
 end

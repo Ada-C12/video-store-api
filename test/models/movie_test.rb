@@ -51,5 +51,12 @@ describe Movie do
       
       expect(movie.inventory - updated_movie.available_inventory).must_equal 1
     end
+
+    it "should not allow a movie to be checked out if the inventory is less than 1" do
+    end
+
+    it "should not allow a movie to be checked out if the movie does not exist" do
+    end
+    
   end
 end
