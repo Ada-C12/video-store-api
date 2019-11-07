@@ -14,7 +14,7 @@ class RentalsController < ApplicationController
     
     rental = Rental.check_out(customer, movie)
     if rental
-      render json: rental.as_json(only: [:id]), status: :created
+      render json: rental.as_json(only: [:id]), status: :ok
       return
     else
       render json: { ok: false, errors: 'No available inventory'}, status: :bad_request
@@ -35,7 +35,7 @@ class RentalsController < ApplicationController
     
     rental = Rental.check_in(rental)
     if rental
-      render json: rental.as_json(only: [:id]), status: :created
+      render json: rental.as_json(only: [:id]), status: :ok
       return
     else
       render json: { ok: false, errors: 'Could not return'}, status: :bad_request
