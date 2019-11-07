@@ -4,7 +4,7 @@ class RentalsController < ApplicationController
     rental.check_out = Date.today if !rental.movie.available_inventory
     rental.check_in = Date.today + 7
     rental.movie.set_inventory
-    
+
     if rental.movie.available_inventory > 0
       if rental.save
         rental.movie.decrease_inventory
@@ -19,7 +19,7 @@ class RentalsController < ApplicationController
       render json: { ok: false, errors: "Stock unavailable!" }, status: :bad_request
     end
   end
-  
+
   def checkin
     rental = Rental.new(rental_params)
     if rental.save
@@ -32,9 +32,9 @@ class RentalsController < ApplicationController
       return
     end
   end
-  
+
   private
-  
+
   def rental_params
     params.permit(:customer_id, :movie_id)
   end
