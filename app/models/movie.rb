@@ -14,11 +14,11 @@ class Movie < ApplicationRecord
       checkout_movie.available_inventory -= 1
       return checkout_movie
     elsif checkout_movie.available_inventory < 1
-      render json: {"errors"=>["no inventory available"]}, status: :bad_request
-      return
+      #render json: {"errors"=>["no inventory available"]}, status: :bad_request
+      return checkout_movie
     else
-      render json: {"errors"=>["movie does not exist"]}, status: :not_found
-      return
+      #render json: {"errors"=>["movie does not exist"]}, status: :not_found
+      return checkout_movie
     end
   end
 end

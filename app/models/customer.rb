@@ -10,13 +10,14 @@ class Customer < ApplicationRecord
   validates :phone, presence: true
   validates :movies_checked_out_count, presence: true
   
-  # def checkout(customer)
-  #   Checkout_Customer = Customer.find_by(customer.id)
-  #   if Checkout_Customer == nil
-  #     Customer.movies_checked_out_count += 1 
-  #   else
-  #     raise error
-  #     render json: {"errors"=>["no inventory available"]}, status: :error
-  #   end
-  # end
+  def customer_checkout
+    checkout_customer = Customer.find_by(id: self.id)
+    if checkout_customer != nil 
+      checkout_customer.movies_checked_out_count += 1
+      return checkout_customer
+    else
+      render json: {"errors"=>["customer does not exist"]}, status: :not_found
+      return
+    end
+  end
 end
