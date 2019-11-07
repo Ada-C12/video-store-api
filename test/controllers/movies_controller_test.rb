@@ -43,7 +43,7 @@ describe MoviesController do
       must_respond_with :success
       expect(response.header['Content-Type']).must_include 'json'
       expect(body).must_be_instance_of Hash
-      expect(body.keys.sort).must_equal ["id", "inventory", "overview", "release_date", "title"]
+      expect(body.keys.sort).must_equal ["available_inventory", "id", "inventory", "overview", "release_date", "title"]
     end
     
     it "sends back not found if the movie does not exist" do
