@@ -4,8 +4,10 @@ Rails.application.routes.draw do
 
   post "/rentals/check-in", to: "rentals#checkin", as: 'checkin'
   post "/rentals/check-out", to: "rentals#checkout", as: 'checkout'
-  
+
   resources :customers, only: [:index]
   resources :movies, only: [:index, :show, :create]
-
+  
+  post "/rentals/check-in", to: "rentals#checkin", as: 'checkin'
+  post "/rentals/check-out", to: "rentals#checkout", as: 'checkout'
 end
