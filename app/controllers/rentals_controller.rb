@@ -2,6 +2,9 @@ class RentalsController < ApplicationController
   def checkout 
     # find movie that customer wants to check out
     movie = Movie.find_by(id: params[:id])
+    customer = Customer.find_by(id: params[:id])
+
+    movie.rentals.create(customer_id: customer.id, movie_id: movie.id)
 
     # make check out date to today
     movie.checkout_date = Time.now
