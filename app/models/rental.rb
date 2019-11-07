@@ -14,5 +14,7 @@ class Rental < ApplicationRecord
     self.movie.save
     self.customer.movies_checked_out_count -= 1
     self.customer.save
+    self.returned = true
+    self.save
   end
 end

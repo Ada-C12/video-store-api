@@ -1,6 +1,21 @@
 require "test_helper"
 
 describe Movie do
+  describe "initialize" do
+    before do
+      @new_movie = Movie.new(title: "new movie", inventory: 10)
+    end
+
+    it "movie can be instantiated" do
+      expect(@new_movie.valid?).must_equal true
+    end
+
+    it "will have the required fields" do
+      expect(@new_movie).must_respond_to :title
+      expect(@new_movie).must_respond_to :inventory
+    end
+  end
+
   describe "validation" do
     it "will create movie if title and inventory are present" do
       movie = Movie.new(title: "valid movie", inventory: 20)
@@ -40,5 +55,4 @@ describe Movie do
       expect(movie.rentals.length).must_equal 1
     end
   end
-  
 end
