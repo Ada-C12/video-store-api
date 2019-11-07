@@ -3,19 +3,22 @@ class RentalsController < ApplicationController
     rental = Rental.new(rental_params)
 
     rental.setup_dates
-
-    if rental.movie.check_inventory
-      if rental.save
-        rental.movie.decrease_inventory
-        rental.customer.increase_movies_checkout
-        render json: rental.as_json(only: [:customer_id, :movie_id]), status: :ok
-        return
+    if rental.valid?
+      if rental.movie.check_inventory
+        if rental.save
+          rental.movie.decrease_inventory
+          rental.customer.increase_movies_checkout
+          render json: rental.as_json(only: [:customer_id, :movie_id]), status: :ok
+          return
+        else
+          render json: { ok: false, errors: "Rental cannot be created!" }, status: :bad_request
+          return
+        end
       else
-        render json: { ok: false, errors: rental.errors.messages }, status: :bad_request
-        return
+        render json: { ok: false, errors: "Stock unavailable!" }, status: :bad_request
       end
     else
-      render json: { ok: false, errors: "Stock unavailable!" }, status: :bad_request
+      render json: { ok: false, errors: rental.errors.messages }, status: :bad_request
     end
   end
 
@@ -27,7 +30,7 @@ class RentalsController < ApplicationController
       render json: rental.as_json(only: [:customer_id, :movie_id]), status: :ok
       return
     else
-      render json: { ok: false, errors: rental.errors.messages }, status: :bad_request
+      render json: { ok: false, errors: "Rental is not found!" }, status: :bad_request
       return
     end
   end
