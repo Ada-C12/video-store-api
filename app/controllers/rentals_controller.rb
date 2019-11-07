@@ -26,7 +26,6 @@ class RentalsController < ApplicationController
   end
 
   def checkin
-    # consider doing a .updateattribute method?
     rental = Rental.find_by(id: params[:id])
     if rental 
       rental.checkin_movie
