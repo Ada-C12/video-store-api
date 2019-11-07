@@ -6,7 +6,7 @@ one:
   state: "WA"
   postal_code: "98101"
   phone: "206-555-55555"
-  # movies_checked_out_count: 2
+  movies_checked_out_count: 2
 
 two:
   name: "ada"
@@ -16,7 +16,7 @@ two:
   state: "WA"
   postal_code: "98102"
   phone: "313-444-4444"
-  # movies_checked_out_count: 10
+  movies_checked_out_count: 10
 
 three:
   name: "grace"
@@ -26,4 +26,4 @@ three:
   state: "WA"
   postal_code: "98102"
   phone: "310-111-1111"
-  # movies_checked_out_count: 0
+  movies_checked_out_count: 0
