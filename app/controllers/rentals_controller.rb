@@ -37,11 +37,12 @@ class RentalsController < ApplicationController
     else
       render json: {"errors"=>["Unable to Checkout"]}, status: :bad_request
     end
-    
-    private
-    
-    def rental_params
-      return params.permit("checkout_date", "due_date", "movie_id", "customer_id")
-    end
   end
+    
+  private
+    
+  def rental_params
+    return params.permit("checkout_date", "due_date", "movie_id", "customer_id")
+  end
+end
   

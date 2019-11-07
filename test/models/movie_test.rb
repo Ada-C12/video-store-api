@@ -43,13 +43,13 @@ describe Movie do
       expect(movie.customers.first.name).must_equal customer.name
     end
   end
+
   describe "movie_checkout" do
     it "can checkout a movie and reduce available inventory" do
       movie = Movie.first
-      inventory = Movie.first.available_inventory
-      movie.movie_checkout
-      expect(inventory - movie.available_inventory).must_equal 1
+      updated_movie = movie.movie_checkout
       
+      expect(movie.inventory - updated_movie.available_inventory).must_equal 1
     end
   end
 end
