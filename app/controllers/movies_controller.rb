@@ -1,6 +1,6 @@
 class MoviesController < ApplicationController
   
-  MOVIE_FIELDS = ['id', 'title', 'release_date']
+  MOVIE_FIELDS = ['id','inventory','overview','release_date','title']
   
   def index
     movies = Movie.all
@@ -10,17 +10,17 @@ class MoviesController < ApplicationController
   def show
     movie = Movie.find_by(id: params[:id])
     if movie 
-      render json: movie, status: :ok
+      render json: movie.as_json(only: MOVIE_FIELDS), status: :ok
       return 
     else
       render json: {ok: false, errors: ["Not found"]}, status: :not_found 
       return
     end
   end
-
+  
   def create
     new_movie = Movie.new(movie_params)
-
+    
     if new_movie.save
       render json: new_movie.as_json(only: [:id]), status: :created 
       return
@@ -29,12 +29,11 @@ class MoviesController < ApplicationController
       return
     end 
   end 
-
+  
   private
-
-    def movie_params
-      params.permit(:title, :release_date, :overview, :inventory)
-    end
+  
+  def movie_params
+    params.permit(:title, :release_date, :overview, :inventory)
+  end
 end
-  
-  
+

@@ -1,7 +1,8 @@
 require "test_helper"
+require 'pry'
 
 describe MoviesController do
-  MOVIE_FIELDS = ['id', 'release_date', 'title']
+  MOVIE_FIELDS = ['id','inventory','overview','release_date','title']
   
   describe "index" do 
     it "responds with JSON and success" do
@@ -19,6 +20,7 @@ describe MoviesController do
       expect(body.length).must_equal Movie.count
       
       body.each do |movie_hash| 
+        # binding.pry
         expect(movie_hash).must_be_instance_of Hash
         expect(movie_hash.keys.sort).must_equal MOVIE_FIELDS
       end 
@@ -34,7 +36,6 @@ describe MoviesController do
       expect(body).must_equal []
     end
   end 
-<<<<<<< HEAD
   
   describe "show" do 
     it "retrieves one movie" do 
@@ -49,41 +50,7 @@ describe MoviesController do
       expect(body.keys.sort).must_equal MOVIE_FIELDS
     end
   end
-
-  describe "create" do
-    let(:movie_data) {
-      {
-        movie: {
-          age: 13,
-          name: 'Stinker',
-          human: 'Grace'
-        }
-      }
-    }
-    it "can create a new movie" do
-      expect {
-        post movies_path, params: movie_data
-      }.must_change 'Movie.count', 1
-      
-      must_respond_with :created
-    end
-    
-    
-    it "sends back not found if the movie does not exist" do
-      # Act
-      get movie_path(-1)
-      body = JSON.parse(response.body)
-      
-      # Assert
-      must_respond_with :not_found
-      expect(response.header['Content-Type']).must_include 'json'
-      expect(body).must_be_instance_of Hash
-      expect(body.keys).must_include "errors"
-    end
-  end
   
-=======
-
   describe "create" do
     let(:movie_data) {
       { 
@@ -91,25 +58,25 @@ describe MoviesController do
         release_date: Date.today, 
         overview: "Best movie ever!", 
         inventory: 4 }
-    }
-
-    it "responds with created status when request is good" do
-      expect{ post movies_path, params: movie_data }.must_differ "Movie.count", 1
-      must_respond_with :created
-    
-      body = JSON.parse(response.body)
-      expect(body.keys).must_equal ['id']
+      }
+      
+      it "responds with created status when request is good" do
+        expect{ post movies_path, params: movie_data }.must_differ "Movie.count", 1
+        must_respond_with :created
+        
+        body = JSON.parse(response.body)
+        expect(body.keys).must_equal ['id']
+      end
+      
+      it "responds with bad_request when request has no name" do 
+        movie_data[:title] = nil 
+        
+        expect{post movies_path, params: movie_data}.wont_change "Movie.count"
+        must_respond_with :bad_request
+        
+        body = JSON.parse(response.body)
+        expect(body['errors'].keys).must_include 'title'
+      end 
     end
-
-    it "responds with bad_request when request has no name" do 
-      movie_data[:title] = nil 
-
-      expect{post movies_path, params: movie_data}.wont_change "Movie.count"
-      must_respond_with :bad_request
-
-      body = JSON.parse(response.body)
-      expect(body['errors'].keys).must_include 'title'
-    end 
   end
->>>>>>> master
-end
+  
