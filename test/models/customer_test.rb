@@ -1,10 +1,10 @@
 require "test_helper"
 
 describe Customer do 
-  let (:new_customer) {
-    Customer.new(name: "Janice")
-  }
-  
+  let (:new_customer) { Customer.new(name: "Janice") }
+  let (:new_movie1) { Movie.create(title: "Gone", inventory: 2) }
+  let (:new_movie2) { Movie.create(title: "American Beauty", inventory: 3) }
+
   describe "initialize" do
     it "can be instantiated" do
       expect(new_customer.valid?).must_equal true
@@ -34,8 +34,16 @@ describe Customer do
     it "can have many rentals" do
       # Arrange
       new_customer.save
-      new_movie1 = Movie.create(title: "Gone", inventory: 2)
-      new_movie2 = Movie.create(title: "American Beauty", inventory: 3) 
+      new_rental1 = Rental.create(customer_id: new_customer.id, movie_id: new_movie1.id)
+      new_rental2 = Rental.create(customer_id: new_customer.id, movie_id: new_movie2.id)
+      
+      # Assert
+      expect(new_customer.rentals.count).must_equal 2
+    end
+
+    it "can have many movies" do
+      # Arrange
+      new_customer.save
       new_rental1 = Rental.create(customer_id: new_customer.id, movie_id: new_movie1.id)
       new_rental2 = Rental.create(customer_id: new_customer.id, movie_id: new_movie2.id)
       
