@@ -22,3 +22,9 @@ batman:
   release_date: "2012-11-01"
   inventory: 20
   available_inventory: 20
+chappie:
+  title: chappie
+  overview: robot
+  release_date: "2012-11-01"
+  inventory: 20
+  available_inventory: 0
