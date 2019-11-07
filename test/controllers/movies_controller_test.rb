@@ -110,8 +110,6 @@ describe MoviesController do
       it "responds with a bad request when missing a required field" do
         movie_data[:title] = nil
 
-        # binding.pry
-
         expect { post movies_path, params: movie_data}.must_differ 'Movie.count', 0
 
         must_respond_with :bad_request
