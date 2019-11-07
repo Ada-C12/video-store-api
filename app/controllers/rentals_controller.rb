@@ -29,8 +29,8 @@ class RentalsController < ApplicationController
     # consider doing a .updateattribute method?
     rental = Rental.find_by(id: params[:id])
     if rental 
+      rental.checkin_movie
       found_rental = rental.as_json(only: [:id])
-      found_rental.checkin_movie
       render json: found_rental, status: :ok
       return
     else

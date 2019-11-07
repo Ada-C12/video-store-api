@@ -70,6 +70,24 @@ describe RentalsController do
   end
 
   describe "checkin" do
+    it "will return the checked in rental's id and status of ok" do
+      movie = movies(:movie1)
+      customer = customers(:customer1)
+      rental = Rental.create(movie: movie, customer: customer, checkout_date: Time.now, due_date: Time.now + 7)
+      
+      rental_data = {
+        rental: {
+          id: rental.id,
+        }
+      }
+      
+      post rental_checkin_path(rental.id), params: rental_data
+      body = JSON.parse(response.body)
+      expect(body.keys).must_include "id"
+      must_respond_with :ok
+    end
+
+
     # it will find a rental by it's id
     # it will increment the rental's movie's inventory by 1
     # it will decrement the rental's customer's movies_checked_out_count by 1
