@@ -4,9 +4,6 @@ class RentalsController < ApplicationController
     # p "KRISTINA"
     # p rental.movie
     if rental.movie.check_inventory == true
-      rental.checkout_date = Time.now
-      rental.due_date = Time.now + 7
-
       if rental.save
         rental.checkout_movie
         render json: rental.as_json(only: [:id]), status: :ok
@@ -28,10 +25,16 @@ class RentalsController < ApplicationController
   end
 
   def checkin
-    
+    rental = Rental.find_by(id: params[:id]).as_json(only: [:id])
+    if rental 
+      rental.checkin_movie
+      render json: rental, status: :ok
+      return
+    else
+      render json: {"errors" => ["not found"]}, status: :not_found
+    end
   end
   
-
   private
 
   def rental_params

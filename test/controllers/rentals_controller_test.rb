@@ -69,4 +69,11 @@ describe RentalsController do
     end
   end
 
+  describe "checkin" do
+    
+
+
+
+  end
+
 end
