@@ -39,6 +39,19 @@ describe Movie do
       end
     end
 
+    describe "check_inventory" do
+      it "will return true when available inventory is greater than 0" do
+        movie.set_inventory
+        assert(movie.check_inventory)
+      end
+
+      it "will return false when available inventory is less than or equal to 0" do
+        movie.set_inventory
+        10.times { movie.decrease_inventory }
+        refute(movie.check_inventory)
+      end
+    end
+
     describe "decrease_inventory" do
       it "will decrease the movie's inventory" do
         movie.set_inventory
