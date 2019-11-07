@@ -34,21 +34,21 @@ describe MoviesController do
       expect(body).must_equal []
     end
   end 
-end
-
-describe "show" do 
-  it "retrieves one movie" do 
-    movie = Movie.first
-    
-    get movie_path(movie)
-    body = JSON.parse(response.body)
-    
-    must_respond_with :success
-    expect(response.header['Content-Type']).must_include 'json'
-    expect(body).must_be_instance_of Hash
-    expect(body.keys.sort).must_equal MOVIE_FIELDS
-  end
   
+  describe "show" do 
+    it "retrieves one movie" do 
+      movie = movies(:m1)
+      
+      get movie_path(movie.id)
+      body = JSON.parse(response.body)
+      
+      must_respond_with :success
+      expect(response.header['Content-Type']).must_include 'json'
+      expect(body).must_be_instance_of Hash
+      expect(body.keys.sort).must_equal MOVIE_FIELDS
+    end
+  end
+
   describe "create" do
     let(:movie_data) {
       {
@@ -66,18 +66,19 @@ describe "show" do
       
       must_respond_with :created
     end
+    
+    
+    it "sends back not found if the movie does not exist" do
+      # Act
+      get movie_path(-1)
+      body = JSON.parse(response.body)
+      
+      # Assert
+      must_respond_with :not_found
+      expect(response.header['Content-Type']).must_include 'json'
+      expect(body).must_be_instance_of Hash
+      expect(body.keys).must_include "errors"
+    end
   end
   
-  it "sends back not found if the movie does not exist" do
-    # Act
-    get movie_path(-1)
-    body = JSON.parse(response.body)
-    
-    # Assert
-    must_respond_with :not_found
-    expect(response.header['Content-Type']).must_include 'json'
-    expect(body).must_be_instance_of Hash
-    expect(body.keys).must_include "errors"
-  end
 end
-
