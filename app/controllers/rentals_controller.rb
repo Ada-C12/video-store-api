@@ -21,8 +21,8 @@ class RentalsController < ApplicationController
   end
   
   def checkin
-    rental = Rental.new(rental_params)
-    if rental.save
+    rental = Rental.find_by(rental_params)
+    if rental
       rental.movie.increase_inventory
       rental.customer.decrease_movies_checkout
       render json: rental.as_json(only: [:customer_id, :movie_id]), status: :ok

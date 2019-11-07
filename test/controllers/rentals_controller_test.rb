@@ -1,7 +1,14 @@
 require "test_helper"
 
 describe RentalsController do
-  # it "does a thing" do
-  #   value(1+1).must_equal 2
-  # end
+  describe "checkout" do 
+
+  end
+
+  describe "checkin" do 
+    it "finds the existing rental" do 
+      rental = rentals(:one)
+      post checkin_path(rental)
+    end
+  end
 end
