@@ -43,4 +43,52 @@ describe RentalsController do
     end
     
   end
+
+  describe "checkin" do
+    before do
+      post checkout_path, params: rental_data
+    end
+
+    it "can update with valid data" do
+      rental = Rental.find_by(customer_id: valid_customer.id, movie_id: valid_movie.id)
+      expect(rental.returned).must_equal false
+
+      expect {
+        post checkin_path, params: rental_data
+      }.wont_change 'Rental.count'
+
+      rental = Rental.find_by(customer_id: valid_customer.id, movie_id: valid_movie.id)
+      expect(rental.returned).must_equal true
+    end 
+
+    it "won't update with invalid data" do
+      ["customer_id", "movie_id"].each do |key|
+        data = rental_data.deep_dup
+        
+        data[key.to_sym] = -1
+        expect { post checkin_path, params: data }.wont_change "Rental.count"
+        
+        must_respond_with :bad_request
+        
+        body = JSON.parse(response.body)
+        expect(body.keys).must_include "errors"
+        expect(body["errors"].keys).must_include key
+      end
+    end
+
+    it "won't update if rental doesn't exist" do
+      data = {
+        movie_id: movies(:movie1).id,
+        customer_id: valid_customer.id
+      }
+
+      expect { post checkin_path, params: data }.wont_change "Rental.count"
+        
+      must_respond_with :bad_request
+      
+      body = JSON.parse(response.body)
+      expect(body.keys).must_include "errors"
+      expect(body["errors"].keys).must_include 'rental_id'
+    end
+  end
 end

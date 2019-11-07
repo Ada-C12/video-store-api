@@ -27,6 +27,37 @@ class RentalsController < ApplicationController
   end
 
   def update
+    customer = Customer.find_by(id: params[:customer_id])
+    if customer.nil?
+      render json: {
+        ok: false,
+        errors: { customer_id: "Invalid customer id" }
+      }, status: :bad_request
+      return
+    end
+
+    movie = Movie.find_by(id: params[:movie_id])
+    if movie.nil?
+      render json: {
+        ok: false,
+        errors: { movie_id: "Invalid movie id" }
+      }, status: :bad_request
+      return
+    end
+
+    rental = Rental.find_by(movie_id: params[:movie_id], customer_id: params[:customer_id])
+    if rental.nil?
+      render json: {
+        ok: false,
+        errors: { rental_id: "Invalid rental id" }
+      }, status: :bad_request
+      return
+    else
+      rental.returned = true
+      rental.save
+      render json: rental.as_json(only: [:id]), status: :ok
+      return
+    end
   end
 
   private
