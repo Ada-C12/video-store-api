@@ -12,4 +12,9 @@ class Customer < ApplicationRecord
     self.movies_checked_out_count += 1
     self.save
   end
+
+  def decrease_movies_checkout
+    self.movies_checked_out_count -= 1
+    self.save
+  end
 end
