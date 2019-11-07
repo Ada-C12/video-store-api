@@ -20,4 +20,15 @@ class Customer < ApplicationRecord
       return
     end
   end
+  
+  def customer_checkin
+    checkin_customer = Customer.find_by(id: self.id)
+    if checkin_customer != nil 
+      checkin_customer.movies_checked_out_count -= 1
+      return checkin_customer
+    else
+      render json: {"errors"=>["customer does not exist"]}, status: :not_found
+      return
+    end
+  end
 end

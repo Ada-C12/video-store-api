@@ -57,4 +57,14 @@ describe Customer do
     end
     
   end
+  describe "customer_checkin" do
+    it "can checkin a movie and add reduce qty checked out" do
+      customer = customers(:customer_one)
+      movie_checked_out_start_count = customer.movies_checked_out_count
+      
+      customer = customer.customer_checkin
+      
+      expect(movie_checked_out_start_count - customer.movies_checked_out_count).must_equal 1
+    end
+  end
 end

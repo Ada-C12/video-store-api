@@ -21,4 +21,15 @@ class Movie < ApplicationRecord
       return checkout_movie
     end
   end
+  
+  def movie_checkin
+    checkin_movie = Movie.find_by(id: self.id)
+    if checkin_movie != nil 
+      checkin_movie.available_inventory += 1
+      return checkin_movie
+    else
+      render json: {"errors"=>["movie does not exist"]}, status: :not_found
+      return checkin_movie
+    end
+  end
 end

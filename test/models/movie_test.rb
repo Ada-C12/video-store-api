@@ -56,12 +56,26 @@ describe Movie do
       movie = movies(:movie_two)
       updated_movie = movie.movie_checkout
       
-      # body = JSON.parse(response.body)
-      # expect(body).must_be_instance_of Hash
-      # expect(body["errors"]).must_equal ["no inventory available"]
-      # must_respond_with :bad_request
-      
       expect(movie.available_inventory - updated_movie.available_inventory).must_equal 0
+    end
+    
+    it "should not allow a movie to be checked out if the movie does not exist" do
+    end
+    
+  end
+  
+  describe "movie_checkin" do
+    it "can checkin a movie and add to available inventory" do
+      movie = movies(:movie_one)
+      movie_inv_start_count = movie.available_inventory
+      
+      movie = movie.movie_checkin
+      
+      expect(movie.available_inventory - movie_inv_start_count).must_equal 1
+    end
+    
+    it "should not allow a movie to be checked in if the checkin value would be greater than inventory" do
+      
     end
     
     it "should not allow a movie to be checked out if the movie does not exist" do

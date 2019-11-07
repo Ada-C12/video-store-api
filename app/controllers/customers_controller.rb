@@ -1,36 +1,35 @@
 CUSTOMER_KEYS = ["address", "city", "id", "movies_checked_out_count", "name", "phone", "postal_code", "registered_at", "state"] 
 
 class CustomersController < ApplicationController
-  def zomg
-    customers = Customer.all.as_json(only: CUSTOMER_KEYS)
-    render json: customers, status: :ok
-  end
+  before_action :find_customer, only: [:show]
+  
   def index
     customers = Customer.all.as_json(only: CUSTOMER_KEYS)
     render json: customers, status: :ok
   end
   
   def show
-    customer_id = params[:id]
-    customer = Customer.find_by(id: customer_id)
-    
-    if customer
-      render json: customer.as_json(only: CUSTOMER_KEYS), status: :ok
+    if @customer.nil?
+      render json: {"errors"=>["not found"]}, status: :not_found
       return
     else
-      render json: {"errors"=>["not found"]}, status: :not_found
-      # {
-      #   "errors": {
-      #     "title": ["Movie 'Revenge of the Gnomes' not found"]
-      #   }
-      # }
+      render json: @customer.as_json(only: CUSTOMER_KEYS), status: :ok
       return
     end
+    # {
+    #   "errors": {
+    #     "title": ["Movie 'Revenge of the Gnomes' not found"]
+    #   }
+    # }
   end
   
   private
   
   def customer_params
     params.require(:customer).permit("id", "name", "address", "city", "state", "postal_code", "phone", "registered_at", "movies_checked_out_count")
+  end
+  
+  def find_customer
+    @customer = Customer.find_by(id: params[:id])
   end
 end
