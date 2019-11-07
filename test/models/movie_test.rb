@@ -48,7 +48,7 @@ describe Movie do
       movie = Movie.first
       inventory = Movie.first.available_inventory
       movie.movie_checkout
-      expect(inventory-movie.available_inventory).must_equal 1
+      expect(inventory - movie.available_inventory).must_equal 1
       
     end
   end

@@ -10,7 +10,9 @@ class Movie < ApplicationRecord
   
   def movie_checkout
     checkout_movie = Movie.find_by(id: self.id)
-    if checkout_movie
+    if checkout_movie != nil
+      puts checkout_movie
+      puts checkout_movie.available_inventory
       if checkout_movie.available_inventory >= 1
         checkout_movie.available_inventory -= 1
         return 
