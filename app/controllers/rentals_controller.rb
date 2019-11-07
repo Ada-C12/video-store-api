@@ -1,6 +1,8 @@
 RENTAL_KEYS = ["id", "checkout_date", "due_date", "movie_id", "customer_id"]
 
 class RentalsController < ApplicationController
+  before_action :find_movie, only: [:checkout, :checkin]
+  before_action :find_customer, only: [:checkout, :checkin]
   def index
     rentals = Rental.all.as_json(only: RENTAL_KEYS)
     render json: rentals, status: :ok
@@ -31,11 +33,11 @@ class RentalsController < ApplicationController
     end
   end
   
-  def checkout(movie, customer)
-    binding.pry
-    if movie_checkout(movie) && customer_checkout(customer)
-      rental = Rental.create(movie: movie, customer: customer, checkout_date: Time.now, due_date: (Time.now + 604800))
-      binding.pry
+  def checkout
+    @movie = Movie.find_by(rental_params[:movie_id])
+    @customer = Customer.find_by(rental_params[:customer_id])
+    if @movie.movie_checkout && @customer.customer_checkout
+      rental = Rental.create(movie: @movie, customer: @customer, checkout_date: Time.now, due_date: (Time.now + 604800))
       if rental.save
         render json: rental.as_json(only: [:id]), status: :created
         return
@@ -49,7 +51,6 @@ class RentalsController < ApplicationController
   end
   
   def checkin(movie, customer)
-    binding.pry
     if movie_checkin(movie) && customer_checkin(customer)
       render json: rental.as_json(only: [:id]), status: :updated
       return
@@ -63,6 +64,14 @@ class RentalsController < ApplicationController
   
   def rental_params
     return params.permit("checkout_date", "due_date", "movie_id", "customer_id")
+  end
+  
+  def find_movie
+    @movie = Movie.find_by(id: params[:movie])
+  end
+  
+  def find_customer
+    @customer = Customer.find_by(id: params[:customer])
   end
   
 end
