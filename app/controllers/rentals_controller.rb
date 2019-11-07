@@ -12,7 +12,7 @@ class RentalsController < ApplicationController
     end
 
     if movie.available_inventory.nil? || movie.available_inventory < 1
-      render json: {"errors" => ["not in stock"]}, status: :bad_request
+      render json: {"errors" => ["out of stock"]}, status: :bad_request
       return
     end
     rental = Rental.new(rental_params)
@@ -20,9 +20,9 @@ class RentalsController < ApplicationController
     rental.due_date = rental.checkout_date + 7
 
     if rental.save
-      render json: rental.as_json, status: :ok
       movie.available_inventory -= 1
       customer.movies_checked_out_count += 1
+      render json: rental.as_json, status: :ok
     else
       render json: { ok: false, errors: rental.errors.messages }, status: :bad_request
       rental
