@@ -81,6 +81,21 @@ describe RentalsController do
       
       must_respond_with :created
     end
+    
+    it "will return the correct info for new rental" do
+      rental = Rental.last
+      get rental_path(rental)
+      body = JSON.parse(response.body)
+      expect(body).must_be_instance_of Hash
+      # must_respond_with :ok
+      # expect(body.keys.sort).must_equal @KEYS
+      
+      expect(body["id"]).must_equal rental.id
+      expect(body["customer_id"]).must_equal rental.customer.id
+      expect(body["movie_id"]).must_equal rental.movie.id
+      expect(body["checkout_date"]).must_equal rental.checkout_date.to_s
+      expect(body["due_date"]).must_equal rental.due_date.to_s
+    end
   end
   
   describe "checkout" do
@@ -88,7 +103,7 @@ describe RentalsController do
       customer = customers(:customer_one)
       movie = movies(:movie_one)
       expect {
-        post checkout_path(movie, customer)
+        post checkout_path
       }.must_differ 'Rental.count', 1
       
       must_respond_with :created
@@ -98,11 +113,17 @@ describe RentalsController do
   describe "checkin" do
     it "can return a movie" do
       customer = customers(:customer_one)
-      movie = movies(:movie_one)
-      expect {
-        post checkout_path(movie, customer)
-      }.must_differ 'Rental.count', -1
+      customer_count = customer.movies_checked_out_count
       
+      movie = movies(:movie_one)
+      movie_count = movie.available_inventory
+      
+      rental = Rental.new(customer_id: customer.id, movie_id: movie.id)
+      
+      post checkin_path
+      binding.pry
+      expect(customer_count - customer.movies_checked_out_count).must_equal 1
+      expect(movie.available_inventory - movie_count).must_equal 1
       must_respond_with :updated
     end
   end
