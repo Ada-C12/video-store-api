@@ -1,4 +1,4 @@
-CUSTOMER_KEYS = [:name, :registered_at, :address, :city, :state, :postal_code, :phone, :checked_out_count]
+CUSTOMER_KEYS = [:id, :name, :registered_at, :address, :city, :state, :postal_code, :phone, :checked_out_count]
 
 class CustomersController < ApplicationController
 

@@ -1,4 +1,4 @@
-CUSTOMER_KEYS_JSON = ["name", "registered_at", "address", "city", "state", "postal_code", "phone", "checked_out_count"]
+CUSTOMER_KEYS_JSON = ["id", "name", "registered_at", "address", "city", "state", "postal_code", "phone", "checked_out_count"]
 
 require "test_helper"
 
