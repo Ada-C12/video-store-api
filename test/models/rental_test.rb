@@ -14,7 +14,6 @@ describe Rental do
   end
 
   describe 'model methods' do
-
     describe 'checkout' do
       before do
         @rental = Rental.new(customer: customers(:shelley), movie: movies(:first))
@@ -41,9 +40,14 @@ describe Rental do
       end
 
       it "returns false when checking out an unavailable movie" do
+ 
         rental = Rental.create(customer: customers(:shelley), movie: movies(:second))
+        rental_two = Rental.create(customer: customers(:shelley), movie: movies(:second))
+        
+        rental.checkout
+        refute rental_two.checkout
+        expect(rental_two.errors[:availability]).must_equal ["can't check out a movie that is not in stock"]
 
-        refute rentals(:two).checkout
       end
       
       it "should set the checkout date to today" do
@@ -73,6 +77,20 @@ describe Rental do
 
     describe 'checkin' do
 
+    end
+  end
+
+  describe 'validations' do
+    describe 'available' do
+      it 'is valid when movie has available inventory' do
+        assert(rentals(:one).valid?(:checkout))
+        expect(rentals(:one).errors).must_be_empty
+
+      end
+
+      it 'is invalid and returns errors when movie has no availability' do
+
+      end
     end
   end
 end

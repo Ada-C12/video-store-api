@@ -1,7 +1,7 @@
 class Rental < ApplicationRecord
   belongs_to :customer
   belongs_to :movie
-  validate :available
+  validate :available, on: :checkout
   
   def available
     if self.movie.available_inventory == 0 
@@ -10,13 +10,16 @@ class Rental < ApplicationRecord
   end
 
   def checkout 
-    self.movie.available_inventory -= 1
-    self.customer.movies_checked_out_count += 1
-    self.checkout_date = Date.today
-    # make this work 
-    self.due_date = (Date.today + 7)
-
-    return self.save
+    if self.valid?(:checkout)
+      self.movie.available_inventory -= 1
+      self.customer.movies_checked_out_count += 1
+      self.checkout_date = Date.today
+      # make this work 
+      self.due_date = (Date.today + 7)
+      return true
+    else
+      return false
+    end
   end
 
 end
