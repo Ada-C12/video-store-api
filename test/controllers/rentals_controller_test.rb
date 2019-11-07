@@ -101,10 +101,23 @@ describe RentalsController do
   describe "checkout" do
     it "can create a new rental" do
       customer = customers(:customer_one)
+      customer_count = customer.movies_checked_out_count
+
       movie = movies(:movie_one)
+      movie_count = movie.available_inventory
+
+      checkout_params = {
+        movie_id: movie.id,
+        customer_id: customer.id,
+        checkout_date: Time.now,
+        due_date: (Time.now + 70000)
+      }
       expect {
-        post checkout_path
+        post checkout_path, params: checkout_params
       }.must_differ 'Rental.count', 1
+      
+      expect(customer.movies_checked_out_count - customer_count).must_equal 1
+      expect(movie.available_inventory - movie_count).must_equal 1
       
       must_respond_with :created
     end
@@ -113,15 +126,29 @@ describe RentalsController do
   describe "checkin" do
     it "can return a movie" do
       customer = customers(:customer_one)
-      customer_count = customer.movies_checked_out_count
-      
       movie = movies(:movie_one)
+
+      checkin_params = {
+        movie_id: movie.id,
+        customer_id: customer.id,
+        checkout_date: Time.now,
+        due_date: (Time.now + 70000)
+      }
+      
+      expect {
+        post checkout_path, params: checkin_params
+      }.must_differ 'Rental.count', 1
+
+      customer_count = customer.movies_checked_out_count
       movie_count = movie.available_inventory
+      # binding.pry
+
+      # post checkin_path, params: checkin_params
       
-      rental = Rental.new(customer_id: customer.id, movie_id: movie.id)
-      
-      post checkin_path
-      binding.pry
+      expect {
+        post checkin_path, params: checkin_params
+      }.must_differ 'Rental.count', 0
+
       expect(customer_count - customer.movies_checked_out_count).must_equal 1
       expect(movie.available_inventory - movie_count).must_equal 1
       must_respond_with :updated

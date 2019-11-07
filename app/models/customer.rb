@@ -11,9 +11,10 @@ class Customer < ApplicationRecord
   validates :movies_checked_out_count, presence: true
   
   def customer_checkout
-    checkout_customer = Customer.find_by(id: self.id)
+    checkout_customer = self
     if checkout_customer != nil 
       checkout_customer.movies_checked_out_count += 1
+      checkout_customer.save!
       return checkout_customer
     else
       render json: {"errors"=>["customer does not exist"]}, status: :not_found
@@ -22,9 +23,11 @@ class Customer < ApplicationRecord
   end
   
   def customer_checkin
-    checkin_customer = Customer.find_by(id: self.id)
+    checkin_customer = self
     if checkin_customer != nil 
       checkin_customer.movies_checked_out_count -= 1
+      checkin_customer.save!
+      
       return checkin_customer
     else
       render json: {"errors"=>["customer does not exist"]}, status: :not_found

@@ -9,9 +9,10 @@ class Movie < ApplicationRecord
   validates :inventory, presence: true
   
   def movie_checkout
-    checkout_movie = Movie.find_by(id: self.id)
+    checkout_movie = self
     if checkout_movie != nil && checkout_movie.available_inventory >= 1
       checkout_movie.available_inventory -= 1
+      checkout_movie.save!
       return checkout_movie
     elsif checkout_movie.available_inventory < 1
       #render json: {"errors"=>["no inventory available"]}, status: :bad_request
@@ -23,9 +24,10 @@ class Movie < ApplicationRecord
   end
   
   def movie_checkin
-    checkin_movie = Movie.find_by(id: self.id)
+    checkin_movie = self
     if checkin_movie != nil 
       checkin_movie.available_inventory += 1
+      checkin_movie.save!
       return checkin_movie
     else
       render json: {"errors"=>["movie does not exist"]}, status: :not_found

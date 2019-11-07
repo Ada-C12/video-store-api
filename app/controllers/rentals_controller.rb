@@ -34,11 +34,13 @@ class RentalsController < ApplicationController
   end
   
   def checkout
-    @movie = Movie.find_by(rental_params[:movie_id])
-    @customer = Customer.find_by(rental_params[:customer_id])
+    @movie = Movie.find_by(id: rental_params[:movie_id])
+    @customer = Customer.find_by(id: rental_params[:customer_id])
+    # binding.pry
     if @movie.movie_checkout && @customer.customer_checkout
       rental = Rental.create(movie: @movie, customer: @customer, checkout_date: Time.now, due_date: (Time.now + 604800))
-      if rental.save
+      if rental.save!
+        # binding.pry
         render json: rental.as_json(only: [:id]), status: :created
         return
       else
@@ -51,9 +53,9 @@ class RentalsController < ApplicationController
   end
   
   def checkin
-    @movie = Movie.find_by(rental_params[:movie_id])
-    @customer = Customer.find_by(rental_params[:customer_id])
-    @rental = Rental.find_by(rental_params[:id])
+    @movie = Movie.find_by(id: rental_params[:movie_id])
+    @customer = Customer.find_by(id: rental_params[:customer_id])
+    @rental = Rental.find_by(id: rental_params[:id])
     if @movie.movie_checkin && @customer.customer_checkin
       render json: @rental.as_json(only: [:id]), status: :updated
       return

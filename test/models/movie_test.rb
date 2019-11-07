@@ -47,9 +47,10 @@ describe Movie do
   describe "movie_checkout" do
     it "can checkout a movie and reduce available inventory" do
       movie = movies(:movie_one)
-      updated_movie = movie.movie_checkout
+      inventory = movie.available_inventory
+      movie.movie_checkout
       
-      expect(movie.available_inventory - updated_movie.available_inventory).must_equal 1
+      expect(inventory - movie.available_inventory).must_equal 1
     end
     
     it "should not allow a movie to be checked out if the inventory is less than 1" do
