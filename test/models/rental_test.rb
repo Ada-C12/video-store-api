@@ -14,27 +14,32 @@ describe Rental do
   end
 
   describe 'model methods' do
-    describe 'checkout' do
-      it "should respond with JSON, created, & store a rental in the db for an existing customer and movie" do
 
+    describe 'checkout' do
+      before do
+        @rental = Rental.new(customer: customers(:shelley), movie: movies(:first))
       end
 
       it "should decrement the available inventory of movies" do
+        expect{
+          @rental.checkout
+        }.must_change @rental.movie.available_inventory, -1
+
       end
 
       it "should increment the number of movies checked out for a customer" do
+        expect{
+          @rental.checkout
+        }.must_change @rental.customer.movies_checked_out_count, 1
       end
 
-      it "customer but no movie" do
+      it "returns true when when checkout is successful" do
+        expect{
+          @rental.checkout
+        }.must_equal true
       end
 
-      it "movie but no customer" do
-      end
-
-      it "no movie no customer" do
-      end
-
-      it "won't check out an unavailable movie" do
+      it "returns false when checking out an unavailable movie" dolk,
 
       end
     end
