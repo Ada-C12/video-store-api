@@ -29,4 +29,34 @@ describe Movie do
       end
     end
   end
+
+  describe "custom methods" do
+    describe "set_inventory" do
+      it "will set the available inventory to the movie's inventory" do
+        movie.set_inventory
+
+        expect(movie.available_inventory).must_equal movie.inventory
+      end
+    end
+
+    describe "decrease_inventory" do
+      it "will decrease the movie's inventory" do
+        movie.set_inventory
+
+        movie.decrease_inventory
+
+        expect(movie.available_inventory).must_equal 9
+      end
+    end
+
+    describe "increase_inventory" do
+      it "will increase the movie's inventory" do
+        movie.set_inventory
+
+        movie.increase_inventory
+
+        expect(movie.available_inventory).must_equal 11
+      end
+    end
+  end
 end
