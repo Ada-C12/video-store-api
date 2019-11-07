@@ -20,7 +20,7 @@ describe CustomersController do
       expect(body).must_be_instance_of Array
       body.each do |customer|
         expect(customer).must_be_instance_of Hash
-        expect(customer.keys.sort).must_equal ["id", "name", "phone", "postal_code", "registered_at"]
+        expect(customer.keys.sort).must_equal ["id", "movies_checked_out_count", "name", "phone", "postal_code", "registered_at"]
       end
     end
 
