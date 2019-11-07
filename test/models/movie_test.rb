@@ -34,6 +34,12 @@ describe Movie do
       result = @movie.valid?
       expect(result).must_equal false
     end
+    
+    it "is invalid without an available_inventory" do
+      @movie.available_inventory = nil
+      result = @movie.valid?
+      expect(result).must_equal false
+    end
   end
   
   describe "relationships" do   
@@ -44,20 +50,20 @@ describe Movie do
     it "can have many customers" do
       expect(@movie.customers.count).must_equal 2
     end 
-
+    
     it "cannot have customers without rentals" do 
       Rental.destroy_all
-
+      
       expect(@movie.customers).must_be_empty 
     end 
-
+    
     it "can exist without any customers" do 
       Rental.destroy_all
-    Customer.destroy_all
+      Customer.destroy_all
       result = @movie.valid?
       expect(result).must_equal true 
     end 
-
+    
     it "can exist without any rentals" do 
       Rental.destroy_all
       result = @movie.valid?
