@@ -25,7 +25,8 @@ describe RentalsController do
       }.wont_change "Rental.count"
       
       must_respond_with :bad_request
-      check_response(expected_type: Hash, expected_status: :bad_request)
+      body = check_response(expected_type: Hash, expected_status: :bad_request)
+      expect(body["errors"]).must_include "unable to create rental"
     end
   end
   
@@ -48,7 +49,8 @@ describe RentalsController do
       }.wont_change "Rental.count"
       
       must_respond_with :not_found
-      check_response(expected_type: Hash, expected_status: :not_found)
+      body = check_response(expected_type: Hash, expected_status: :not_found)
+      expect(body["errors"]).must_include "rental not found"
     end
   end
 end
