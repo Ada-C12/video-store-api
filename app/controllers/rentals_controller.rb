@@ -15,7 +15,14 @@ class RentalsController < ApplicationController
   
   def checkin
     rental = Rental.find_by(rental_params)
-    rental.checkin_date = Date.today
+    
+    if rental
+      rental.checkin_date = Date.today
+    else
+      render json: { ok: false, errors: "This rental does not exist" }, status: :bad_request
+      return
+    end
+    
     if rental.save
       rental.increase_available()
       render json: rental.as_json(only: [:id]), status: :ok
