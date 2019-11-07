@@ -24,6 +24,7 @@ class RentalsController < ApplicationController
     rental = Rental.new(rental_params)
     if rental.save
       rental.movie.increase_inventory
+      rental.customer.decrease_movies_checkout
       render json: rental.as_json(only: [:customer_id, :movie_id]), status: :ok
       return
     else
