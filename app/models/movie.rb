@@ -1,4 +1,5 @@
 require 'date'
+require 'pry'
 
 class Movie < ApplicationRecord
   has_many :rentals, dependent: :destroy
@@ -7,13 +8,19 @@ class Movie < ApplicationRecord
   validates :title, presence: true
   validates :inventory, presence: true
   
-  def checkout(movie)
-    Checkout_Movie = Movie.find_by(movie.id)
-    if Checkout_Movie.available_inventory > 1
-      Checkout_Movie.available_inventory -= 1 
+  def movie_checkout
+    checkout_movie = Movie.find_by(id: self.id)
+    if checkout_movie
+      if checkout_movie.available_inventory >= 1
+        checkout_movie.available_inventory -= 1
+        return 
+      else
+        render json: {"errors"=>["no inventory available"]}, status: :bad_request
+        return
+      end
     else
-      raise error
-      render json: {"errors"=>["no inventory available"]}, status: :error
+      render json: {"errors"=>["movie does not exist"]}, status: :not_found
+      return
     end
   end
 end
