@@ -31,9 +31,17 @@ class RentalsController < ApplicationController
     end
   end
   
-  private
-  
-  def rental_params
-    return params.permit("checkout_date", "due_date", "movie_id", "customer_id")
+  def checkout(movie_id, customer_id)
+    if movie_checkout(movie_id) && customer_checkout(customer_id)
+      Rental.create(movie_id: movie_id, customer_id: customer_id, checkout_date: Time.now, due_date: (Time.now + 604800))
+    else
+      render json: {"errors"=>["Unable to Checkout"]}, status: :bad_request
+    end
+    
+    private
+    
+    def rental_params
+      return params.permit("checkout_date", "due_date", "movie_id", "customer_id")
+    end
   end
-end
+  
