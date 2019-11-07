@@ -21,25 +21,29 @@ describe Rental do
       end
 
       it "should decrement the available inventory of movies" do
-        expect{
-          @rental.checkout
-        }.must_change @rental.movie.available_inventory, -1
+        movie_inventory = @rental.movie.available_inventory
+        @rental.checkout
+
+        expect(@rental.movie.available_inventory).must_equal movie_inventory - 1
 
       end
 
       it "should increment the number of movies checked out for a customer" do
-        expect{
-          @rental.checkout
-        }.must_change @rental.customer.movies_checked_out_count, 1
+        movies_checked_out_count = @rental.customer.movies_checked_out_count
+
+        @rental.checkout
+
+        expect(@rental.customer.movies_checked_out_count).must_equal movies_checked_out_count + 1
       end
 
       it "returns true when when checkout is successful" do
-        expect{
-          @rental.checkout
-        }.must_equal true
+        assert @rental.checkout
       end
 
-      it "returns false when checking out an unavailable movie" dolk,
+      it "returns false when checking out an unavailable movie" do
+        rental = Rental.create(customer: customers(:shelley), movie: movies(:second))
+
+        refute rentals(:two).checkout
 
       end
     end
