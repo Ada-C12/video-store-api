@@ -33,6 +33,7 @@ describe Movie do
   describe "custom methods" do
     describe "set_inventory" do
       it "will set the available inventory to the movie's inventory" do
+        movie.available_inventory = nil
         movie.set_inventory
 
         expect(movie.available_inventory).must_equal movie.inventory
@@ -54,21 +55,21 @@ describe Movie do
 
     describe "decrease_inventory" do
       it "will decrease the movie's inventory" do
-        movie.set_inventory
+        start_inventory = movie.available_inventory
 
         movie.decrease_inventory
 
-        expect(movie.available_inventory).must_equal 9
+        expect(movie.available_inventory).must_equal start_inventory - 1
       end
     end
 
     describe "increase_inventory" do
       it "will increase the movie's inventory" do
-        movie.set_inventory
+        start_inventory = movie.available_inventory
 
         movie.increase_inventory
 
-        expect(movie.available_inventory).must_equal 11
+        expect(movie.available_inventory).must_equal start_inventory + 1
       end
     end
   end
