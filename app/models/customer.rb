@@ -13,8 +13,8 @@ class Customer < ApplicationRecord
     end
     
     if n
-      iterations = (customers.count)/n.to_i
       groups_of_customers = []
+      iterations = (customers.count)/n.to_i
       
       iterations.times do
         groups_of_customers << customers.shift(n.to_i)

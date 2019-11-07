@@ -28,6 +28,26 @@ describe RentalsController do
       body = check_response(expected_type: Hash, expected_status: :bad_request)
       expect(body["errors"]).must_include "unable to create rental"
     end
+
+    it "will not create rental without valid movie id" do      
+      expect{ 
+        post checkout_path, params: {movie_id: nil, customer_id: @customer.id} 
+      }.wont_change "Rental.count"
+      
+      must_respond_with :bad_request
+      body = check_response(expected_type: Hash, expected_status: :bad_request)
+      expect(body["errors"]).must_include "unable to create rental"
+    end
+
+    it "will not create rental without valid cusotmer id" do      
+      expect{ 
+        post checkout_path, params: {movie_id: @movie.id, customer_id: nil} 
+      }.wont_change "Rental.count"
+      
+      must_respond_with :bad_request
+      body = check_response(expected_type: Hash, expected_status: :bad_request)
+      expect(body["errors"]).must_include "unable to create rental"
+    end
   end
   
   describe "checkin" do
