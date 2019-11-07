@@ -57,4 +57,38 @@ describe MoviesController do
       expect(body["errors"]["id"]).must_equal ["no movie by ID: -1"]
     end
   end
+  
+  describe "create" do
+    let(:movie_data) {
+      {
+        title: "Frozen 2",
+        overview: "Elsa the Snow Queen and her sister Anna embark on an adventure far away from the kingdom of Arendelle.",
+        release_date: "2019-11-22",
+        inventory: 6
+      }
+    }
+    
+    it "can create a new movie" do
+      expect {
+        post movies_path, params: movie_data
+      }.must_differ 'Movie.count', 1
+      
+      must_respond_with :success
+    end
+    
+    # this test would be necessary if validations are added
+    # it "will respond with bad_request for invalid data" do
+    #   movie_data[:title] = nil
+    
+    #   expect {
+    #     post movies_path, params: movie_data
+    #   }.wont_change "Movie.count"
+    
+    #   must_respond_with :bad_request
+    
+    #   expect(response.header['Content-Type']).must_include 'json'
+    #   body = JSON.parse(response.body)
+    #   expect(body["errors"].keys).must_include "title"
+    # end
+  end
 end
