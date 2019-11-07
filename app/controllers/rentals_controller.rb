@@ -10,15 +10,15 @@ class RentalsController < ApplicationController
       render json: {"errors" => ["not found"]}, status: :not_found
       return
     end
-    
+
     if movie.inventory < 1
       render json: {"errors" => ["not in stock"]}, status: :bad_request
       return
     end
     rental = Rental.new(rental_params)
-    rental.checkout_date = Date.now
+    rental.checkout_date = Date.today
     rental.due_date = checkout_date + 7
-    
+
     if rental.save
       render json: rental.as_json, status: :ok
       movie.inventory -= 1
@@ -30,10 +30,9 @@ class RentalsController < ApplicationController
   def checkin
     # add back to inventory
   end
-  
+
   private
-  
+
   def rental_params
     params.require(:rental).permit(:checkout_date, :checkin_date, :customer_id, :movie_id, :due_date)
   end
-  
