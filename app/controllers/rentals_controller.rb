@@ -1,11 +1,11 @@
 class RentalsController < ApplicationController
   def checkout
-    movie = Movie.find_by(id: params[movie_id])
+    movie = Movie.find_by(id: rental_params[:movie_id])
     if movie.nil?
       render json: {"errors" => ["not found"]}, status: :not_found
       return
     end
-    customer = Customer.find_by(id: params[customer_id])
+    customer = Customer.find_by(id: rental_params[:customer_id])
     if customer.nil?
       render json: {"errors" => ["not found"]}, status: :not_found
       return
@@ -24,7 +24,8 @@ class RentalsController < ApplicationController
       movie.inventory -= 1
       customer.movies_checked_out_count += 1
     else
-      render json: { errors: rental.errors.messages }, status: :bad_request
+      render json: { ok: false, errors: rental.errors.messages }, status: :bad_request
+      rental
     end
   end
   def checkin
@@ -36,3 +37,4 @@ class RentalsController < ApplicationController
   def rental_params
     params.require(:rental).permit(:checkout_date, :checkin_date, :customer_id, :movie_id, :due_date)
   end
+end
