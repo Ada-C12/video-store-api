@@ -4,4 +4,6 @@ Rails.application.routes.draw do
   get "/zomg", to: "customers#success", as: "test"
   resources :customers, only: [:index]
   resources :movies, only: [:index, :show, :create]
+  
+  post '/rentals/check-out', to: "rentals#checkout", as: "checkout"
 end

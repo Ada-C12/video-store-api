@@ -78,6 +78,7 @@ describe MoviesController do
       body = check_response(expected_type: Hash, expected_status: :bad_request)
       
       # check the message that's returned
+      expect(body.keys).must_include 'errors'
       expect(body['errors'].keys).must_include "id"
     end
   end
@@ -129,6 +130,7 @@ describe MoviesController do
       # check the content type and response code, :not_acceptable
       body = check_response(expected_type: Hash, expected_status: :not_acceptable)
       # check the message that's returned
+      expect(body.keys).must_include 'errors'
       expect(body['errors'].keys).must_include "title"
     end
   end
