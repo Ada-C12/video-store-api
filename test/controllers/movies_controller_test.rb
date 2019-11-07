@@ -2,36 +2,82 @@ require "test_helper"
 
 describe MoviesController do
   MOVIE_FIELDS = ['id', 'release_date', 'title']
-
+  
   describe "index" do 
     it "responds with JSON and success" do
       get movies_path
       expect(response.header['Content-Type']).must_include 'json'
       must_respond_with :ok
     end
-
+    
     it "will give a list of all movies" do
       get movies_path
-
+      
       body = JSON.parse(response.body)
-  
+      
       expect(body).must_be_instance_of Array
       expect(body.length).must_equal Movie.count
-
+      
       body.each do |movie_hash| 
         expect(movie_hash).must_be_instance_of Hash
         expect(movie_hash.keys.sort).must_equal MOVIE_FIELDS
       end 
     end
-
+    
     it "will respond with an empty array when there are no movies" do
       Movie.destroy_all
-  
+      
       get movies_path
       body = JSON.parse(response.body)
-  
+      
       expect(body).must_be_instance_of Array
       expect(body).must_equal []
     end
   end 
 end
+
+describe "show" do 
+  it "retrieves one movie" do 
+    movie = Movie.first
+    
+    get movie_path(movie)
+    body = JSON.parse(response.body)
+    
+    must_respond_with :success
+    expect(response.header['Content-Type']).must_include 'json'
+    expect(body).must_be_instance_of Hash
+    expect(body.keys.sort).must_equal MOVIE_FIELDS
+  end
+  
+  describe "create" do
+    let(:movie_data) {
+      {
+        movie: {
+          age: 13,
+          name: 'Stinker',
+          human: 'Grace'
+        }
+      }
+    }
+    it "can create a new movie" do
+      expect {
+        post movies_path, params: movie_data
+      }.must_change 'Movie.count', 1
+      
+      must_respond_with :created
+    end
+  end
+  
+  it "sends back not found if the movie does not exist" do
+    # Act
+    get movie_path(-1)
+    body = JSON.parse(response.body)
+    
+    # Assert
+    must_respond_with :not_found
+    expect(response.header['Content-Type']).must_include 'json'
+    expect(body).must_be_instance_of Hash
+    expect(body.keys).must_include "errors"
+  end
+end
+
