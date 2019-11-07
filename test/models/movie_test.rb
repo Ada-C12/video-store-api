@@ -3,11 +3,6 @@ require "test_helper"
 describe Movie do
   before do 
     @valid_movie = movies(:m1)
-    # @missing_title_movie = movies(:m2)
-    @missing_release_date_movie = movies(:m3)
-    @invalid_release_date_movie = movies(:m4)
-    @missing_inventory_movie = movies(:m5)
-    @invalid_inventory_movie = movies(:m6)
   end
   
   describe "relations" do
@@ -40,15 +35,17 @@ describe Movie do
       end 
   
       it "should not validate movie without release_date (presence)" do 
-        result = @missing_release_date_movie.valid?
+        @valid_movie.release_date = nil 
+        result = @valid_movie.valid?
         expect(result).must_equal false
       end 
   
-      it "should validate correct release_date format" do 
-        result = @valid_movie.valid?
-        expect(result).must_equal true
-      end
-  
+      # FOR WHEN WE WANT TO ADD FORMAT VALIDATIONS 
+      # it "should validate correct release_date format" do 
+      #   result = @valid_movie.valid?
+      #   expect(result).must_equal true
+      # end
+      
       # it "should not validate incorrect release_date format" do 
       #   result = @invalid_release_date_movie.valid?
       #   expect(result).must_equal false
@@ -62,15 +59,17 @@ describe Movie do
       end 
   
       it "should not validate movie without inventory (presence)" do 
-        result = @missing_inventory_movie.valid?
+        @valid_movie.inventory = nil 
+        result = @valid_movie.valid?
         expect(result).must_equal false
       end 
   
-      it "should validate inventory with integer" do 
-        result = @valid_movie.valid?
-        expect(result).must_equal true
-      end 
-  
+      # FOR WHEN WE WANT TO ADD NUMERICAL VALIDATION 
+      # it "should validate inventory with integer" do 
+      #   result = @valid_movie.valid?
+      #   expect(result).must_equal true
+      # end 
+
       # it "should not validate inventory not with integer" do 
       #   result = @invalid_inventory_movie.valid?
       #   binding.pry
