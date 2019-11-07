@@ -30,12 +30,12 @@ class RentalsController < ApplicationController
   def checkin
     movie = Movie.find_by(id: rental_params[:movie_id])
     customer = Customer.find_by(id: rental_params[:customer_id])
-
-    customer.movies_checked_out_count -= 1
-    movie.available_inventory += 1
-      
+    
+    if customer && movie
+      customer.movies_checked_out_count -= 1
+      movie.available_inventory += 1
       if customer.save && movie.save
-        render json: rental.as_json(only: [:id]), status: :ok
+        render json: movie.as_json(only: [:available_inventory]), status: :ok
         return
       else
         render json: {
@@ -43,15 +43,13 @@ class RentalsController < ApplicationController
           errors: movie.errors.messages
         }, status: :bad_request
         return
-      end
+      end   
     else
       render json: {
         ok: false,
         errors: "inventory unavailable"
       }, status: :bad_request
-    end
-
-    
+    end 
   end
 
   private
