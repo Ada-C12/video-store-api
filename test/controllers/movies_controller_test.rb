@@ -87,14 +87,12 @@ describe MoviesController do
     describe "create" do 
 
       let(:movie_data) {
-        {
-          movie: {
-            title: 'Momento',
-            overview: 'Mind Fuck',
-            release_date: '2003-01-02',
-            inventory: 20,
+      {
+          title: 'Momento',
+          overview: 'Mind Fuck',
+          release_date: '2003-01-02',
+          inventory: 20,
           }
-        }
       }
 
       it "responds with JSOn and can create a new movie" do
@@ -106,11 +104,11 @@ describe MoviesController do
 
         expect(body["id"]).must_be_instance_of Integer
         expect(response.header['Content-Type']).must_include 'json'
-        must_respond_with :created 
+        must_respond_with :ok
       end 
 
       it "responds with a bad request when missing a required field" do
-        movie_data[:movie][:title] = nil
+        movie_data[:title] = nil
 
         # binding.pry
 
