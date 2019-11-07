@@ -1,7 +1,7 @@
 require "test_helper"
 
 describe MoviesController do
-  MOVIE_FIELDS = ['id', 'title', 'release_date']
+  MOVIE_FIELDS = ['id', 'release_date', 'title']
 
   describe "index" do 
     it "responds with JSON and success" do
@@ -11,13 +11,11 @@ describe MoviesController do
     end
 
     it "will give a list of all movies" do
-      #FIX THIS 
       get movies_path
 
       body = JSON.parse(response.body)
   
       expect(body).must_be_instance_of Array
-      # binding.pry
       expect(body.length).must_equal Movie.count
 
       body.each do |movie_hash| 
