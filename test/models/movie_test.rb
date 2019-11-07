@@ -46,6 +46,11 @@ describe Movie do
       @movie[:inventory] = "x"
       refute @movie.valid?          
     end
+
+    it "will automatically set the available_inventory to equal inventory" do
+      @movie.save
+      expect(@movie.available_inventory).must_equal @movie.inventory
+    end
   end
 
   describe 'relations' do
