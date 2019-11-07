@@ -1,7 +1,7 @@
 class MoviesController < ApplicationController
   
   def index
-    movies = Movie.all.as_json(only: [:id, :title, :release_date])
+    movies = Movie.all.as_json(only: [:id, :title, :release_date, :available_inventory])
     render json: movies, status: :ok
   end
   
@@ -17,6 +17,7 @@ class MoviesController < ApplicationController
   
   def create
     new_movie = Movie.new(movie_params)
+    
     if new_movie.save
       render json: new_movie.as_json(only: [:id]), status: :ok
       return
