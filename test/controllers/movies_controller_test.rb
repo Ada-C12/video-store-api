@@ -45,8 +45,6 @@ describe MoviesController do
     }
 
     it "responds with created status when request is good" do
-      # binding.pry
-      p movie_data
       expect{ post movies_path, params: movie_data }.must_differ "Movie.count", 1
       must_respond_with :created
     
@@ -55,7 +53,7 @@ describe MoviesController do
     end
 
     it "responds with bad_request when request has no name" do 
-      movie_data[:movie][:title] = nil 
+      movie_data[:title] = nil 
 
       expect{post movies_path, params: movie_data}.wont_change "Movie.count"
       must_respond_with :bad_request
