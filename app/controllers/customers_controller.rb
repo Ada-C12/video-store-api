@@ -1,4 +1,3 @@
-
 class CustomersController < ApplicationController
   SORT_CATEGORIES = ["name", "registered_at", "postal_code"]
   

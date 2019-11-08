@@ -106,5 +106,42 @@ describe RentalsController do
       expect(body.length).must_equal 0 
       must_respond_with :ok  
     end
+
+    describe "overdue params" do
+      before do
+        5.times do
+          Rental.create!(customer_id: @customer.id, movie_id: @movie.id)
+        end
+      end
+
+      it "will respond with JSON and success if n param" do
+        get overdue_path, params: { sort: "movie_id", n: "2" }
+      
+        body = check_response(expected_type: Array)
+        body.each do |subarray|
+          expect(subarray).must_be_instance_of Array
+        end
+      end
+
+      it "will respond with JSON and success if p param without n param" do
+        get overdue_path, params: { sort: nil, n: nil, p: "40"}
+      
+        body = check_response(expected_type: Array, expected_status: :ok)
+      end
+
+      it "will respond with error if given invalid p param" do
+        get overdue_path, params: { sort: nil, n: "3", p: -10}
+      
+        body = check_response(expected_type: Hash, expected_status: :not_found)
+        expect(body["errors"]).must_include "not found"
+      end
+
+      it "will respond with error if given invalid sort_type" do 
+        get overdue_path, params: { sort: "banana", n: "3", p: "10"}
+      
+        body = check_response(expected_type: Hash, expected_status: :bad_request)
+        expect(body["errors"]).must_include "invalid sort category"
+      end
+    end
   end
 end
