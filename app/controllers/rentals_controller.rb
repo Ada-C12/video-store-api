@@ -36,17 +36,23 @@ class RentalsController < ApplicationController
   def checkout
     @movie = Movie.find_by(id: params[:movie_id])
     @customer = Customer.find_by(id: params[:customer_id])
-    if @movie.movie_checkout && @customer.customer_checkout
+
+
+    if @movie.available_inventory >= 1
+      @movie.available_inventory -= 1
+      @movie.save!
+
+      @customer.movies_checked_out_count += 1
+      @customer.save!
+      
       rental = Rental.new(movie_id: @movie.id, customer_id: @customer.id)
-      if rental.save!
-        render json: rental.as_json(only: [:id]), status: :ok
-        return
-      else
-        render json: {"errors"=>["Unable to Create Rental"]}, status: :bad_request
-        return
-      end
+      rental.save!
+
+      render json: rental.as_json(only: [:id]), status: :ok
+      return
     else
       render json: {"errors"=>["Unable to Checkout"]}, status: :bad_request
+      return
     end
   end
   
@@ -54,7 +60,14 @@ class RentalsController < ApplicationController
     @movie = Movie.find_by(id: rental_params[:movie_id])
     @customer = Customer.find_by(id: rental_params[:customer_id])
     @rental = Rental.find_by(id: rental_params[:id])
-    if @movie.movie_checkin && @customer.customer_checkin
+
+    if @customer != nil && @movie != nil
+      @movie.available_inventory += 1
+      @movie.save!
+
+      @customer.movies_checked_out_count -= 1
+      @customer.save!
+
       render json: @rental.as_json(only: [:id]), status: :ok
       return
     else

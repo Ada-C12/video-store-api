@@ -16,11 +16,6 @@ class CustomersController < ApplicationController
       render json: @customer.as_json(only: CUSTOMER_KEYS), status: :ok
       return
     end
-    # {
-    #   "errors": {
-    #     "title": ["Movie 'Revenge of the Gnomes' not found"]
-    #   }
-    # }
   end
   
   private
