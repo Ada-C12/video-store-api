@@ -5,4 +5,9 @@ class Movie < ApplicationRecord
 
   has_many :rentals
   has_many :customers, through: :rentals
+
+  def initialize(params)
+    super(params)
+    self.available_inventory = self.inventory
+  end
 end
