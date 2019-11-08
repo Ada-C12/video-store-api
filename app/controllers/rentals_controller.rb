@@ -6,6 +6,7 @@ class RentalsController < ApplicationController
 
     if movie && customer && movie.available_inventory > 0 
       rental = Rental.new(rental_params)
+      # rental.due_date = rental.checkout_date + 7 
       customer = rental.customer
       movie = rental.movie
 
@@ -33,15 +34,23 @@ class RentalsController < ApplicationController
   def checkin 
     movie = Rental.find_movie(rental_params) 
     customer = Rental.find_customer(rental_params)
-
-    customer.update_movies_checked_out(checkin)
-    movie.update_available_inventory(checkin) 
+    rental = Rental.find_by(rental_params)
     
-    if customer.save && movie.save 
-      render json: rental.as_json(only: [:id]), status: :ok 
-      return 
-    else
-      bad_request(rental)
+    if customer && movie 
+      customer.update_movies_checked_out("checkin")
+      movie.update_available_inventory("checkin") 
+
+      if customer.save && movie.save 
+        render json: rental.as_json(only: [:id]), status: :ok 
+        return 
+      else
+        bad_request(rental)
+      end 
+    else 
+      render json: { 
+        ok: false, 
+        errors: "invalid customer or movie", 
+        }, status: :bad_request
     end 
   end 
 

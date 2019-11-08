@@ -305,6 +305,7 @@
 							"",
 							"var expected = Number(postman.getEnvironmentVariable(\"movie_ai\")) - 1;",
 							"tests[\"Movie available_inventory decreased\"] = movie.available_inventory === expected;"
+							"postman.setEnvironmentVariable("new_movie_ai", expected);"
 						]
 					}
 				}
@@ -453,8 +454,7 @@
 							"tests[\"Data is not an array\"] = !Array.isArray(movie);",
 							"",
 							"var expected = Number(postman.getEnvironmentVariable(\"movie_ai\"));",
-							"tests[\"Movie available_inventory increased\"] = movie.available_inventory === expected;"
-						]
+							"tests["Movie available_inventory increased"] = movie.available_inventory === parseInt(postman.getEnvironmentVariable("new_movie_ai")) + 1;"						]
 					}
 				}
 			],

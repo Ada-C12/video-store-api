@@ -5,12 +5,6 @@ class Rental < ApplicationRecord
   validates :customer_id, presence: true 
   validates :movie_id, presence: true
 
-  def check_in
-  end 
-
-  def check_out
-  end 
-
   def self.find_customer(rental_params) 
     return Customer.find_by(id: rental_params[:customer_id])
   end 
