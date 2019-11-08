@@ -1,5 +1,6 @@
 class RentalsController < ApplicationController
-  
+  SORT_CATEGORIES = ["movie_id", "title", "customer_id", "name", "postal_code", "checkout_date", "due_date"]
+
   def create
     if params[:movie_id].nil? || params[:customer_id].nil?
       render json: { ok: false, "errors" => ["unable to create rental"]}, status: :bad_request
@@ -40,8 +41,18 @@ class RentalsController < ApplicationController
   end
   
   def overdue
+    if params[:sort] && SORT_CATEGORIES.include?(params[:sort]) == false
+      render json: {ok: false, "errors" => ["invalid sort category"]}, status: :bad_request
+      return
+    end
+
     if params[:sort] || params[:n] || params[:p]
       rentals = Rental.overdue.group_by_n(params[:sort], params[:n], params[:p])
+
+      if rentals == nil
+        render json: {ok: false, "errors" => ["not found"]}, status: :not_found
+        return
+      end
     else
       rentals = Rental.overdue
     end
