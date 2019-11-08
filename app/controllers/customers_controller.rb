@@ -1,7 +1,6 @@
 class CustomersController < ApplicationController
   def index
     if params[:sort] || params[:n] || params[:p]
-      p params[:sort]
       customers = Customer.group_by_n(params[:sort], params[:n], params[:p])
       
       if customers == nil
