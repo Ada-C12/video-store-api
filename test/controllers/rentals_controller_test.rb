@@ -65,7 +65,7 @@ describe RentalsController do
       }
       
       post checkout_path, params: rental_hash
-
+      
       updates = { rental: { checkin: Time.now } }
       expect {patch checkin_path(rentals(:r1).id), params: updates}.wont_change "Rental.count"  
       must_respond_with :ok
@@ -77,21 +77,24 @@ describe RentalsController do
       movie.reload 
       expect(movie.available_inventory).must_equal 10
     end 
-
+    
     it "returns not_found if rental is not found" do 
       updates = { rental: { checkin: Time.now } }
       expect {patch checkin_path(-100), params: updates}.wont_change "Rental.count"  
       must_respond_with :not_found
     end
     
-      # it "sends response for bad request" do 
-    
-      #   expect{ post checkout_path, params: rental_hash }.wont_change "Rental.count"
-      #   must_respond_with :bad_request
-    
-      #   body = JSON.parse(response.body)
-      #   expect(body['errors'].keys).must_include 'customer_id'
-      # end     
-   
+    # below test is failing - bad_request is actually returning as 'ok' and rental is nil. We used binding.pry and also made a post request through
+    # Postman but that was not successful.
+    it "responds with bad_request when rental is not saved" do 
+      skip
+      updates = { rental: { customer_id: nil} }
+      expect {patch checkin_path(rentals(:r1).id), params: updates}.wont_change "Rental.count"        
+      must_respond_with :bad_request
+      
+      # this would be completed after the above test is working
+      # body = JSON.parse(response.body)
+      # expect(body['errors']).must_include
+    end 
   end
 end

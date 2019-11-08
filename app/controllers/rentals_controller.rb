@@ -1,5 +1,4 @@
 class RentalsController < ApplicationController
-  require 'pry'
   def checkout 
     movie = Movie.find_by(id: rental_params[:movie_id])
     customer = Customer.find_by(id: rental_params[:customer_id])
