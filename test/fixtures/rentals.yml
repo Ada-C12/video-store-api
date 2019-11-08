@@ -1,3 +1,5 @@
 one:
   customer: shelley
   movie: blacksmith
+  checkout_date: 2019-11-08 13:13:12 -0800 
+  due_date: nil

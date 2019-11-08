@@ -2,7 +2,16 @@ class Customer < ApplicationRecord
   has_many :rentals, dependent: :destroy
   
   def movies_checked_out_count
-    return self.rentals.count
+    rentals = self.rentals
+    checked_out_rentals = []
+    
+    rentals.each do |rental|
+      if rental.due_date != nil
+        checked_out_rentals << rental
+      end
+    end
+    
+    return checked_out_rentals.length
   end
   
   
@@ -15,3 +24,6 @@ class Customer < ApplicationRecord
   end
   
 end
+
+
+
