@@ -57,4 +57,19 @@ describe RentalsController do
       expect(test_rental.status).must_equal "checked_in"
     end
   end
+  
+  # it "renders and error if given invalid data" do 
+  #   movie = movies(:movie1)
+    
+  #   returned_rental = {
+  #     customer_id: -1, 
+  #     movie_id: movie.id
+  #   }
+  #   expect{
+  #   post check_in_path(returned_rental)
+  #   }.wont_change "Rental.count"
+  #   expect(response.header["Content-Type"]).must_include "json"
+  #   must_respond_with :bad_request
+  # end 
+
 end

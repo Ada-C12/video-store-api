@@ -30,4 +30,22 @@ describe Customer do
       expect(result).must_equal true
     end
   end
+
+  describe "check_out_movie" do 
+    it "increases the customers movie count if given valid data" do 
+      customer = customers(:customer1)
+      results = Customer.check_out_movie(customer.id)
+     
+      expect(results.movies_checked_out_count).must_equal 1
+    end
+  end 
+
+  describe "check_in_movie" do 
+    it "decreases the customers movie count if given valid data" do 
+      customer = customers(:customer2)
+      results = Customer.check_in_movie(customer)
+     
+      expect(results.movies_checked_out_count).must_equal 0
+    end
+  end 
 end

@@ -25,16 +25,16 @@ describe Rental do
     end
   end
 
-  describe "status_checkout" do 
-    it "set status to checked out" do 
-      new_rental = Rental.new(
-        customer_id: customers(:customer1),
-        movie_id: movies(:movie1) 
-      )
+  # describe "status_checkout" do 
+  #   it "set status to checked out" do 
+  #     new_rental = Rental.new(
+  #       customer_id: customers(:customer1),
+  #       movie_id: movies(:movie1) 
+  #     )
 
-      results = Rental.status_checkout(new_rental)
-      expect(results.status).must_equal "checked out"
+  #     results = Rental.status_checkout(new_rental)
+  #     expect(results.status).must_equal "checked out"
 
-    end
-  end 
+  #   end
+  # end 
 end

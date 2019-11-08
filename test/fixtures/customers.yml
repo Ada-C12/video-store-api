@@ -16,7 +16,7 @@ customer2:
   state: MN
   postal_code: 27078
   phone: (819) 107-0728
-  movies_checked_out_count: 0
+  movies_checked_out_count: 1
 
 customer3:
   name: Leigh Anderson
