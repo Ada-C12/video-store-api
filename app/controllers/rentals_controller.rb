@@ -12,7 +12,7 @@ class RentalsController < ApplicationController
       return
     end
     
-    rental = Rental.new(checkout_date: Date.today, checkin_date: nil, due_date: Date.today + 7, customer: customer, movie: movie)
+    rental = Rental.new(checkout_date: Date.today, checkin_date: nil, due_date: Date.today + 7, customer_id: customer.id, movie_id: movie.id)
     
     if rental.save
       render json: rental.as_json, status: :ok
@@ -24,12 +24,12 @@ class RentalsController < ApplicationController
   end
   
   def checkin
-    customer = Customer.find_by(id: params['customer_id'])
+    customer = Customer.find_by(id: params["rental"]["customer_id"])
     if customer.nil?
       render json: { ok: false, errors: ["Customer not found"] }, status: :bad_request
       return
     end
-    movie = Movie.find_by(id: params['movie_id'])
+    movie = Movie.find_by(id: params["rental"]["movie_id"])
     if movie.nil?
       render json: { ok: false, errors: ["Movie not found"] }, status: :bad_request
       return
