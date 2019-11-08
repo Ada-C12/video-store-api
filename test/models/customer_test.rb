@@ -23,7 +23,6 @@ describe Customer do
 
     it "can have many rentals" do
       valid_customer = customers(:janice)
-
       expect(valid_customer.rentals.count).must_equal 2
       valid_customer.rentals.each do |rental|
         _(rental).must_be_kind_of Rental

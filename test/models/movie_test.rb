@@ -5,6 +5,7 @@ describe Movie do
     before do
       @movie = movies(:movie2)
     end
+    
     it "must be valid with title and non-negative integer inventory" do
       expect(@movie.valid?).must_equal true
     end
