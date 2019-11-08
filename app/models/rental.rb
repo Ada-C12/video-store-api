@@ -4,7 +4,7 @@ class Rental < ApplicationRecord
   
   validates :customer_id, presence: true
   validates :movie_id, presence: true
-  validates :created_at, presence: true
-  validates :updated_at, presence: true
+  # validates :created_at, presence: true
+  # validates :updated_at, presence: true
   
 end

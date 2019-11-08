@@ -1,17 +1,17 @@
 class RentalsController < ApplicationController
   def checkout 
-    movie = Movie.find_by(id: params[:id])
-    customer = Customer.find_by(id: params[:id])
+    movie = Movie.find_by(id: rental_params[:movie_id])
+    customer = Customer.find_by(id: rental_params[:customer_id])
 
     new_rental = Rental.new(rental_params)
-
+    
     if new_rental.save
-      Rental.check_out = Time.now
-      Rental.due_date = movie.check_out + (7*24*60*60)
+      new_rental.check_out = Time.now
+      new_rental.due_date = new_rental.check_out + (7*24*60*60)
 
-      movie.available_inventory -= 1 
+      new_rental.movie.available_inventory -= 1 
       
-      render json: new_rental.as_json(only: [:id]), status: :created 
+      render json: new_rental.as_json(only: [:customer_id, :movie_id]), status: :created 
       return
     else 
       render json: {ok: false, errors: new_rental.errors.messages}, status: :bad_request
