@@ -1,4 +1,5 @@
 class RentalsController < ApplicationController
+  require 'pry'
   def checkout 
     movie = Movie.find_by(id: rental_params[:movie_id])
     customer = Customer.find_by(id: rental_params[:customer_id])
@@ -21,26 +22,30 @@ class RentalsController < ApplicationController
       render json: {ok: false, errors: new_rental.errors.messages}, status: :bad_request
       return
     end 
+  end
+  
+  def checkin 
+    found_rental = Rental.find_by(id: params[:id])
+    if found_rental.nil?
+      render json: {ok: false, errors: "Not found"}, status: :not_found
+      return
+    end
+
+    found_rental.check_in = Time.now
+    found_rental.movie.available_inventory += 1
     
-    def checkin 
-      rental = Rental.find_by(id: rental_params[:customer_id])
-      
-      new_rental.check_in = Time.now
-      new_rental.movie.available_inventory += 1
-      
-      if new_rental.save && new_rental.movie.save
-        render json: new_rental.as_json(only: [:check_in]), status: :ok 
-        return
-      else 
-        render json: {ok: false, errors: new_rental.errors.messages}, status: :bad_request
-        return
-      end 
-      
+    if found_rental.save && found_rental.movie.save
+      render json: found_rental.as_json(only: [:check_in]), status: :ok 
+      return
+    else 
+      render json: {ok: false, errors: found_rental.errors.messages}, status: :bad_request
+      return
     end 
     
-    private
-    def rental_params
-      params.permit(:customer_id, :movie_id, :checkout, :check_in, :check_out, :due_date)
-    end
+  end 
+  
+  private
+  def rental_params
+    params.permit(:customer_id, :movie_id, :checkout, :check_in, :check_out, :due_date)
   end
-end 
+end
