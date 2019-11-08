@@ -20,7 +20,6 @@ describe Customer do
   describe "validations" do
     describe "name" do
       it "must have a name" do
-        new_customer.save
         new_customer.name = nil
         
         expect(new_customer.valid?).must_equal false
