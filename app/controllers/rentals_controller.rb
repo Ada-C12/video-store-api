@@ -30,7 +30,10 @@ class RentalsController < ApplicationController
     
     if movie && customer
       rental = Rental.where(movie_id: movie.id, customer_id: customer.id, checkin_date: nil).first
-      
+      if rental.nil?
+        render json: {errors: {rental: "Rental is not for this location"}}, status: :bad_request
+        return
+      end
       movie.available_inventory += 1
       movie.save
       render json: rental.as_json(only: [:id]), status: :ok

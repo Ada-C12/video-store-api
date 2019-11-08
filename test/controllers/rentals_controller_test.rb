@@ -126,8 +126,7 @@ describe RentalsController do
   end
   
   describe "check-in" do
-    
-    it "renders JSON and success when given valid movie id and customer id" do
+    it "renders JSON and success when given valid movie id, customer id WITH that rental being checked out" do
       # params
       test_movie = movies(:m_2)
       rental_params = {
@@ -147,7 +146,32 @@ describe RentalsController do
       check_response(expected_type: Hash, expected_status: :ok)
       
       expect(Movie.find_by(id: test_movie.id).available_inventory).must_equal initial_available_inventory + 1
-
+    end
+    
+    it "renders JSON and success when given valid movie id, customer id WITHOUT that rental being checked out aka person returns a movie from another store" do
+      #r_1 is being rereturned 
+      # params
+      test_movie = movies(:m_1)
+      rental_params = {
+        customer_id: customers(:c_1).id,
+        movie_id: test_movie.id
+      }
+      
+      initial_available_inventory = test_movie.available_inventory
+      
+      # the route
+      # expect that it won't change rental count
+      expect {
+        post checkin_path, params: rental_params
+      }.wont_differ "Rental.count"
+      
+      # returns JSON, status bad_request, and ok
+      body = check_response(expected_type: Hash, expected_status: :bad_request)
+      expect(body.keys).must_include 'errors'
+      expect(body['errors'].keys).must_include 'rental'
+      
+      # checks rental from movie perspective
+      expect(Movie.find_by(id: test_movie.id).available_inventory).must_equal initial_available_inventory 
     end
     
     it "renders JSON and bad_request when given invalid movie id" do
