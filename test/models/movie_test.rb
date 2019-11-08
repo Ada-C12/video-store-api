@@ -27,6 +27,16 @@ describe Movie do
         expect(new_movie.errors.messages).must_include :title
         expect(new_movie.errors.messages[:title]).must_equal ["can't be blank"]
       end
+
+      it "must be unique" do
+        new_movie.save
+        duplicate_title = new_movie.title   
+        duplicate_movie = Movie.create(title: duplicate_title, inventory: 5)
+        
+        expect(duplicate_movie.valid?).must_equal false
+        expect(duplicate_movie.errors.messages).must_include :title
+        expect(duplicate_movie.errors.messages[:title]).must_equal ["has already been taken"]
+      end
     end
     
     describe "inventory" do
