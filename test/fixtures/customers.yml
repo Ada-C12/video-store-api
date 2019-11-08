@@ -6,7 +6,7 @@ janice:
   phone: doh
   postal_code: somewhere
   state: doh
-  movies_checked_out_count: 0
+  movies_checked_out_count: 2
 
 dora:
   name: "Dora"

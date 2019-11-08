@@ -55,12 +55,17 @@ describe RentalsController do
 
     it "if rental successfully created, movie inventory is decreased by one" do
       post checkout_path, params: rental_data
-      expect(movies(:movie1).available_inventory).must_equal 2
+      movie = Movie.find_by(id: movies(:movie1).id)
+
+      expect(movie.available_inventory).must_equal 2
     end
 
     it "if rental succesfully created, custoer's movies checked out count increased by one" do
+      rental_data[:movie_id] = movies(:movie4).id
       post checkout_path, params: rental_data
-      expect(customers(:janice).movies_checked_out_count).must_equal 1
+      customer = Customer.find_by(id: customers(:janice).id)
+
+      expect(customer.movies_checked_out_count).must_equal 3
     end
   end
 

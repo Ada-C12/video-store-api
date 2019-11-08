@@ -23,7 +23,9 @@ class RentalsController < ApplicationController
 
     if rental.save
       movie.available_inventory -= 1
+      movie.save
       customer.movies_checked_out_count += 1
+      customer.save
       render json: rental.as_json, status: :ok
     else
       render json: { ok: false, errors: rental.errors.messages }, status: :bad_request

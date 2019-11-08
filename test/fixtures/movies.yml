@@ -12,3 +12,8 @@ movie3:
   title: "Godzilla"
   inventory: 1
   available_inventory: 0
+
+movie4:
+  title: "Batman"
+  inventory: 1
+  available_inventory: 1
