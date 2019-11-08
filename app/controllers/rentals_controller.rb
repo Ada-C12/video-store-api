@@ -27,6 +27,8 @@ class RentalsController < ApplicationController
     if rental
       rental.movie.increase_inventory
       rental.customer.decrease_movies_checkout
+      rental.rental_overdue
+      
       render json: rental.as_json(only: [:customer_id, :movie_id]), status: :ok
       return
     else
@@ -46,34 +48,33 @@ class RentalsController < ApplicationController
     
     rentals.each do |rental|
       json_body << {
-        "movie_id" => rental.movie_id,
-        "title" => rental.movie.title,
-        "customer_id" => rental.customer_id,
-        "name" => rental.customer.name,
-        "postal_code" => rental.customer.postal_code,
-        "checkout_date" => rental.check_out,
-        "due_date" => rental.check_in}  
-      end
-      
-      if params[:sort]
-        json_body = json_body.sort_by{|rental| rental[params[:sort]]}
-      end
-      
-      if json_body.empty?
-        render json: { messages: "No overdue rental is found!" }, status: :ok
-        return
-      else
-        render json: json_body, status: :ok
-        return
-      end
-      
+      "movie_id" => rental.movie_id,
+      "title" => rental.movie.title,
+      "customer_id" => rental.customer_id,
+      "name" => rental.customer.name,
+      "postal_code" => rental.customer.postal_code,
+      "checkout_date" => rental.check_out,
+      "due_date" => rental.check_in}  
     end
     
-    private
+    if params[:sort]
+      json_body = json_body.sort_by{|rental| rental[params[:sort]]}
+    end
     
-    def rental_params
-      params.permit(:customer_id, :movie_id)
+    if json_body.empty?
+      render json: { messages: "No overdue rental is found!" }, status: :ok
+      return
+    else
+      render json: json_body, status: :ok
+      return
     end
     
   end
   
+  private
+  
+  def rental_params
+    params.permit(:customer_id, :movie_id)
+  end
+  
+end

@@ -1,14 +1,21 @@
 one: 
   customer: one
   movie: croods
-  is_overdue: true
-
+  check_out: <%= 9.day.ago.to_date %>
+  check_in: <%= 2.day.ago.to_date %>
+  is_overdue: false
+  
 two:
   customer: one
   movie: ghibli
-  is_overdue: true
-
+  check_out: <%= 5.day.ago.to_date %>
+  check_in: <%= Date.tomorrow %>
+  is_overdue: false
+  
 three:
   customer: two
   movie: croods
+  check_out: <%= 5.day.ago.to_date %>
+  check_in: <%= Date.tomorrow %>
   is_overdue: true
+    

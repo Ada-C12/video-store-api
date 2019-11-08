@@ -58,5 +58,23 @@ describe Rental do
         expect(rental.check_in).must_equal Date.today + 7
       end
     end
+
+    describe "rental overdue" do
+      it "changes the is_overdue status to true" do
+        rental = rentals(:one)
+
+        rental.rental_overdue
+
+        expect(rental.is_overdue).must_equal true
+      end
+
+      it "doesn't change the is_overdue status" do
+        rental = rentals(:two)
+
+        rental.rental_overdue
+
+        expect(rental.is_overdue).must_equal false
+      end
+    end
   end
 end
