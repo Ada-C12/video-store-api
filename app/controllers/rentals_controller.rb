@@ -1,19 +1,11 @@
 class RentalsController < ApplicationController
+  before_action :find_customer, only: [:check_out]
+  before_action :find_movie, only: [:check_out]
+  before_action :find_rental, only: [:check_in]
   
   def check_out
-    customer_id = params[:customer_id]
-    movie_id = params[:movie_id]
-    
-    movie = Movie.find_by(id: movie_id)
-    customer = Customer.find_by(id: customer_id)
-    
-    if movie.nil? || customer.nil?
-      render json: { ok: false, errors: 'Invalid customer or movie ID!'}, status: :bad_request
-      return
-    end
-    
-    rental = Rental.check_out(customer, movie)
-    if rental
+    rental = Rental.check_out(@customer, @movie)
+    if rental != nil
       render json: rental.as_json(only: [:id]), status: :ok
       return
     else
@@ -23,17 +15,7 @@ class RentalsController < ApplicationController
   end
   
   def check_in
-    customer_id = params[:customer_id]
-    movie_id = params[:movie_id]
-    
-    rental = Rental.find_by(customer_id: customer_id, movie_id: movie_id)
-    
-    if rental.nil?
-      render json: { ok: false, errors: 'Invalid customer or movie ID!'}, status: :bad_request
-      return
-    end
-    
-    rental = Rental.check_in(rental)
+    rental = Rental.check_in(@rental)
     if rental
       render json: rental.as_json(only: [:id]), status: :ok
       return
@@ -41,7 +23,34 @@ class RentalsController < ApplicationController
       render json: { ok: false, errors: 'Could not return'}, status: :bad_request
       return
     end
-    
   end
-  
+
+  private
+
+  def find_customer
+    @customer = Customer.find_by(id: params[:customer_id])
+    
+    if @customer.nil?
+      render json: { ok: false, errors: 'Invalid customer or movie ID!'}, status: :bad_request
+      return
+    end
+  end
+
+  def find_movie
+    @movie = Movie.find_by(id: params[:movie_id])
+
+    if @movie.nil?
+      render json: { ok: false, errors: 'Invalid customer or movie ID!'}, status: :bad_request
+      return
+    end
+  end
+
+  def find_rental
+    @rental = Rental.find_by(customer_id: params[:customer_id], movie_id: params[:movie_id])
+    
+    if @rental.nil?
+      render json: { ok: false, errors: 'Invalid customer or movie ID!'}, status: :bad_request
+      return
+    end
+  end
 end
