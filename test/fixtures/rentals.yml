@@ -1,3 +1,6 @@
 r1:
   movie: m1
   customer: c1
+  check_in:
+  check_out:
+  due_date:
