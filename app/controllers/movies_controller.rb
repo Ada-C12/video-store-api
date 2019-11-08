@@ -22,18 +22,6 @@ class MoviesController < ApplicationController
     end 
   end
   
-  def check_out
-    movie = Movie.find_by(id: params[:movie_id])
-    movie = Movie.find_by(id: params[:movie_id])
-    rental = Rental.new(movie: movie.id, customer: customer.id)
-    rental.checkout_date = DateTime.now
-    rental.set_due_date    
-  end
-  
-  def check_in
-    
-  end
-  
   private
   
   def movie_params
