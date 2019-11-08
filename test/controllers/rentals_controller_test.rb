@@ -47,6 +47,24 @@ describe RentalsController do
       
     end
     
+    it "responds with a bad request when a movie id is nil" do
+      bad_rental = {
+        customer_id: customer.id,
+        movie_id: nil,
+      }
+      
+      expect {
+        post check_out_path, params: bad_rental
+      }.must_differ 'Rental.count', 0
+      
+      must_respond_with :bad_request
+      
+      body = JSON.parse(response.body)
+      
+      expect(body["errors"]).must_equal "Invalid customer or movie ID!"
+      
+    end
+    
     it 'responds with bad request when movie doesnt have available inventory' do 
       bad_movie = movies(:four)
       bad_rental = {
@@ -88,6 +106,24 @@ describe RentalsController do
       bad_rental = {
         customer_id: 9999999999,
         movie_id: movie.id,
+      }
+      
+      expect {
+        post check_in_path, params: bad_rental
+      }.must_differ 'Rental.count', 0
+      
+      must_respond_with :bad_request
+      
+      body = JSON.parse(response.body)
+      
+      expect(body["errors"]).must_equal "Invalid customer or movie ID!"
+      
+    end
+    
+    it "responds with a bad request when a movie id is invalid" do
+      bad_rental = {
+        customer_id: customer.id,
+        movie_id: 999999999,
       }
       
       expect {

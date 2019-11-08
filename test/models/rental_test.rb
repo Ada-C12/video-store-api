@@ -25,7 +25,7 @@ describe Rental do
   
   describe "check_out" do
     before do
-      new_rental = Rental.create(customer_id: customer.id, movie_id: movie.id)
+      new_rental = Rental.check_out(customer, movie)
     end
     
     it "decrements the inventory of a movie if inventory is greater than 0" do
@@ -33,12 +33,12 @@ describe Rental do
     end
     
     it "does not decrement the inventory of a movie if inventory is less than 1" do
-      
+      movie.available_inventory = 0
+      expect(movie.available_inventory).must_equal 0
     end
     
     it "increments the number of movies a customer has checked out" do
       expect(customer.movies_checked_out_count).must_equal 1
-      
     end
   end
 end
