@@ -36,5 +36,34 @@ describe CustomersController do
       expect(body).must_be_instance_of Array
       expect(body).must_equal []
     end
+    
+    describe "optional enhancements" do
+      it "sorts by name correctly" do
+        get customers_path, params: {sort: "name"}
+        
+        body = JSON.parse(response.body)
+        expect(body).must_be_instance_of Array
+        expect(body[0]["name"]).must_equal "Curran Stout"
+        expect(body[1]["name"]).must_equal "Shelley Rocha"
+      end
+      
+      it "sorts by postal code correctly" do
+        get customers_path, params: {sort: "postal_code"}
+        
+        body = JSON.parse(response.body)
+        expect(body).must_be_instance_of Array
+        expect(body[0]["name"]).must_equal "Shelley Rocha"
+        expect(body[1]["name"]).must_equal "Curran Stout"
+      end
+      
+      it "sorts by registered_at value correctly" do
+        get customers_path, params: {sort: "registered_at"}
+        
+        body = JSON.parse(response.body)
+        expect(body).must_be_instance_of Array
+        expect(body[0]["name"]).must_equal Customer.first.name
+        expect(body[1]["name"]).must_equal Customer.last.name
+      end
+    end
   end
 end

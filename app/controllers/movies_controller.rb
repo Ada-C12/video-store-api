@@ -1,7 +1,13 @@
 class MoviesController < ApplicationController
   
   def index
-    movies = Movie.all.as_json(only: [:id, :title, :release_date, :available_inventory])
+    if ["title","release_date"].include? params[:sort]
+      sort_value = params[:sort]
+    else
+      sort_value = "id"
+    end
+    
+    movies = Movie.order(sort_value).as_json(only: [:id, :title, :release_date, :available_inventory])
     render json: movies, status: :ok
   end
   
