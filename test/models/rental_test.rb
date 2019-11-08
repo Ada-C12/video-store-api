@@ -65,6 +65,23 @@ describe Rental do
         expect(movie_1.inventory).must_equal 9
         expect(customer_1.movies_checked_out_count).must_equal 5
       end
+
+      it "if movie isn't available won't reduce the inventory for a movie and won't increase the count for a customers checked out movies" do
+        movie_1 = movies(:movie1)
+        movie_1.inventory = 0
+        customer_1 = customers(:customer1)
+
+        rental = Rental.create(
+          checkout_date: Time.new(2018, 1, 1),
+          due_date: Time.new(2018, 1, 7),
+          movie: movie_1,
+          customer: customer_1,
+        )
+
+        rental.checkout_movie
+        expect(movie_1.inventory).must_equal 0
+        expect(customer_1.movies_checked_out_count).must_equal 4
+      end
     end
 
     describe "checkin_movie" do

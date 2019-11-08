@@ -22,11 +22,11 @@ describe RentalsController do
     end
 
     it "will not create a rental with missing attributes" do
-      movie = movies(:movie1)
+      customer = customers(:customer1)
       rental_data = {
         rental: {
-          movie_id: movie.id,
-          customer_id: nil,
+          movie_id: nil,
+          customer_id: customer.id,
         }
       }
 
@@ -39,7 +39,7 @@ describe RentalsController do
       body = JSON.parse(response.body)
 
       expect(body).must_be_kind_of Hash
-      expect(body["errors"].keys).must_include "customer"
+      expect(body["errors"].keys).must_include "movie"
     end
 
     it "won't create a rental for a movie with 0 inventory" do
@@ -65,7 +65,7 @@ describe RentalsController do
       expect(response.header['Content-Type']).must_include 'json'
       body = JSON.parse(response.body)
       expect(body).must_be_kind_of Hash
-      expect(body["errors"]).must_include "movie not available"
+      expect(body["errors"]).must_include "movie"
     end
   end
 

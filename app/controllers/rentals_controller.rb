@@ -4,14 +4,6 @@ class RentalsController < ApplicationController
     rental.checkout_date = Time.now
     rental.due_date = Time.now + 7
 
-    if rental.movie.check_inventory == false
-      render json: {
-        ok: false,
-        errors: ["movie not available"],
-        }, status: :bad_request
-      return
-    end
-
     if rental.save
       rental.checkout_movie
       render json: rental.as_json(only: [:id]), status: :ok
