@@ -1,16 +1,26 @@
 class RentalsController < ApplicationController
   def checkout 
-    # find movie that customer wants to check out
-    movie = Movie.find_by(id: params[:id])
-    customer = Customer.find_by(id: params[:id])
+    movie = Movie.find_by(id: rental_params[:movie_id])
+    customer = Customer.find_by(id: rental_params[:customer_id])
 
-    movie.rentals.create(customer_id: customer.id, movie_id: movie.id)
-
-    # make check out date to today
-    movie.checkout_date = Time.now
-    # make due date in one week from check out date
-    movie.due_date = movie.checkout_date + (7*24*60*60)
+    new_rental = Rental.new(rental_params)
+    new_rental.check_out = Time.now
+    new_rental.due_date = new_rental.check_out + (7*24*60*60)
     
-    # reduce inventory/available count -1
+    new_rental.movie.available_inventory -= 1 
+    
+    if new_rental.save && new_rental.movie.save
+      render json: new_rental.as_json(only: [:customer_id, :movie_id]), status: :created 
+      return
+    else 
+      render json: {ok: false, errors: new_rental.errors.messages}, status: :bad_request
+      return
+    end 
+
   end 
+
+  private
+  def rental_params
+    params.permit(:customer_id, :movie_id, :checkout, :check_in, :check_out, :due_date)
+  end
 end
