@@ -1,12 +1,18 @@
 a:
   customer_id: 1
   movie_id: 2
-  created_at: Wed, 29 Apr 2015
+  check_out_date: 04-01-2015
+  due_date: 04-08-2015
+  check_in_date: nil
 b:
   customer_id: 2
   movie_id: 2
-  created_at: Fri, 28 Nov 2014
+  check_out_date: 11-1-2019
+  due_date: 11-8-2019
+  check_in_date: 11-5-2019
 c:
   customer_id: 1
   movie_id: 2
-  created_at: Wed, 29 Apr 2015
+  check_out_date: 10-1-2019
+  due_date:  10-8-2019
+  check_in_date: 10-8-2019

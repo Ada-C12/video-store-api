@@ -1,10 +1,27 @@
 require "test_helper"
 
 describe Movie do
-  describe "relationships" do 
+  describe "relationships" do
+    before do 
+      mariya = customers(:mariya)
+      cloudy = customers(:cloudy)
+      sara = customers(:sara)
+      @up = movies(:up)
+      
+      rental = Rental.create(customer_id: mariya.id, movie_id: @up.id, check_out_date: Date.today, due_date: Date.today + 7, check_in_date: nil)
+      rental2 = Rental.create(customer_id: sara.id, movie_id: @up.id, check_out_date: Date.today, due_date: Date.today + 7, check_in_date: nil)
+      rental3 = Rental.create(customer_id: cloudy.id, movie_id: @up.id, check_out_date: Date.today, due_date: Date.today + 7, check_in_date: nil)
+      rental4 = Rental.create(customer_id: sara.id, movie_id: @up.id, check_out_date: Date.today, due_date: Date.today + 7, check_in_date: nil)
+    end
     
+    it "has customers" do 
+      expect(@up.customers.count).must_equal 4
+    end
+    
+    it "has rentals" do
+      expect(@up.rentals.count).must_equal 4
+    end
   end
-  
   
   describe "validations" do 
     before do 

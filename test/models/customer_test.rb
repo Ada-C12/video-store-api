@@ -13,15 +13,13 @@ describe Customer do
       rental = Rental.create(customer_id: mariya.id, movie_id: up.id, check_out_date: Date.today, due_date: Date.today + 7, check_in_date: nil)
       rental = Rental.create(customer_id: mariya.id, movie_id: avengers.id, check_out_date: Date.today, due_date: Date.today + 7, check_in_date: nil)
       rental = Rental.create(customer_id: mariya.id, movie_id: zootopia.id, check_out_date: Date.today, due_date: Date.today + 7, check_in_date: nil)
-
-
       
       # Assert
       expect(mariya.movies.count).must_equal 3
       
     end
     
-    it "can checkout the movies" do 
+    it "has rentals [customer]" do 
       # Arrange
       mariya = customers(:mariya)
       up = movies(:up)
@@ -31,7 +29,6 @@ describe Customer do
       
       # Assert
       expect(mariya.movies.count).must_equal 1
-
     end
   end
   
