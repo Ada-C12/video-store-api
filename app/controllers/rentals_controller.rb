@@ -36,8 +36,7 @@ class RentalsController < ApplicationController
   end
   
   def overdue
-    rentals = Rental.where(check_in: )
-    rentals = Rental.all.map{|rental| rental if rental.check_in > Date.today - 1 }
+    rentals = Rental.where(is_overdue: true)
     
     if params[:p] || params[:n]
       rentals = rentals.paginate(page: params[:p], per_page: params[:n])
@@ -47,30 +46,35 @@ class RentalsController < ApplicationController
     
     rentals.each do |rental|
       json_body << {
-      "customer_id" => rental.customer_id,
-      "movie_id" => rental.movie_id,
-      "name" => rental.customer.name}  
+        "movie_id" => rental.movie_id,
+        "title" => rental.movie.title,
+        "customer_id" => rental.customer_id,
+        "name" => rental.customer.name,
+        "postal_code" => rental.customer.postal_code,
+        "checkout_date" => rental.check_out,
+        "due_date" => rental.check_in}  
+      end
+      
+      if params[:sort]
+        json_body = json_body.sort_by{|rental| rental[params[:sort]]}
+      end
+      
+      
+      if json_body.empty?
+        render json: {messages: "No overdue rentals!"}, status: :ok
+        return
+      else
+        render json: json_body, status: :ok
+        return
+      end
+      
     end
     
-    if params[:sort]
-      json_body = json_body.sort_by{|rental| rental[params[:sort]]}
-    end
+    private
     
-    
-    if json_body.empty?
-      render json: {messages: "No overdue rentals!"}, status: :ok
-      return
-    else
-      render json: json_body, status: :ok
-      return
+    def rental_params
+      params.permit(:customer_id, :movie_id)
     end
     
   end
   
-  private
-  
-  def rental_params
-    params.permit(:customer_id, :movie_id)
-  end
-  
-end
