@@ -2,18 +2,18 @@ class RentalsController < ApplicationController
   def checkout
     movie = Movie.find_by(id: rental_params[:movie_id])
     if movie.nil?
-      render json: {"errors" => ["not found"]}, status: :not_found
+      render json: {"errors" => ["movie not found"]}, status: :not_found
       return
     end
     
     customer = Customer.find_by(id: rental_params[:customer_id])
     if customer.nil?
-      render json: {"errors" => ["not found"]}, status: :not_found
+      render json: {"errors" => ["customer not found"]}, status: :not_found
       return
     end
     
     if movie.available_inventory.nil? || movie.available_inventory < 1
-      render json: {"errors" => ["out of stock"]}, status: :bad_request
+      render json: {"errors" => ["movie out of stock"]}, status: :bad_request
       return
     end
     
@@ -36,16 +36,25 @@ class RentalsController < ApplicationController
   def checkin
     
     movie = Movie.find_by(id: rental_params[:movie_id])
+    if movie.nil?
+      render json: {"errors" => ["movie not found"]}, status: :not_found
+      return
+    end
     customer = Customer.find_by(id: rental_params[:customer_id])
+    if customer.nil?
+      render json: {"errors" => ["customer not found"]}, status: :not_found
+      return
+    end
     if rental = Rental.find_by(customer_id: customer.id, movie_id: movie.id)
       rental.checkin_date = Date.today
+      rental.save
       movie.available_inventory += 1
       movie.save
       customer.movies_checked_out_count -= 1
       customer.save
       render json: rental.as_json, status: :ok
     else
-      render json: { ok: false, errors: rental.errors.messages }, status: :bad_request
+      render json: { ok: false, "errors" => ["rental not found"] }, status: :not_found
       rental
     end
     
