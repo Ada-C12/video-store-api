@@ -5,16 +5,33 @@ describe Customer do
     it "has movies" do 
       # Arrange
       mariya = customers(:mariya)
+      up = movies(:up)
+      avengers = movies(:avengers)
+      zootopia = movies(:zootopia)
       
-      # Act
-      mariya.movies 
+      #Act
+      rental = Rental.create(customer_id: mariya.id, movie_id: up.id, check_out_date: Date.today, due_date: Date.today + 7, check_in_date: nil)
+      rental = Rental.create(customer_id: mariya.id, movie_id: avengers.id, check_out_date: Date.today, due_date: Date.today + 7, check_in_date: nil)
+      rental = Rental.create(customer_id: mariya.id, movie_id: zootopia.id, check_out_date: Date.today, due_date: Date.today + 7, check_in_date: nil)
+
+
       
       # Assert
-      expect(mariya.movies).must_equal []
+      expect(mariya.movies.count).must_equal 3
       
     end
     
     it "can checkout the movies" do 
+      # Arrange
+      mariya = customers(:mariya)
+      up = movies(:up)
+      
+      # Act
+      rental = Rental.create(customer_id: mariya.id, movie_id: up.id, check_out_date: Date.today, due_date: Date.today + 7, check_in_date: nil)
+      
+      # Assert
+      expect(mariya.movies.count).must_equal 1
+
     end
   end
   
