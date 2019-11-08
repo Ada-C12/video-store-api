@@ -17,4 +17,8 @@ class Rental < ApplicationRecord
     self.returned = true
     self.save
   end
+
+  def overdue
+
+  end
 end
