@@ -36,6 +36,29 @@ describe MoviesController do
       expect(body).must_be_instance_of Array
       expect(body).must_equal []
     end
+    
+    describe "optional enhancements" do
+      it "sorts by title correctly" do
+        get movies_path, params: {sort: "title"}
+        
+        body = JSON.parse(response.body)
+        expect(body).must_be_instance_of Array
+        expect(body[0]["title"]).must_equal "Blacksmith Of The Banished"
+        expect(body[1]["title"]).must_equal "Savior Of The Curse"
+        expect(body[2]["title"]).must_equal "Women Of Destruction"
+      end
+      
+      it "sorts by release date correctly" do
+        get movies_path, params: {sort: "release_date"}
+        
+        body = JSON.parse(response.body)
+        expect(body).must_be_instance_of Array
+        expect(body[0]["title"]).must_equal "Blacksmith Of The Banished"
+        expect(body[1]["title"]).must_equal "Women Of Destruction"
+        expect(body[2]["title"]).must_equal "Savior Of The Curse"
+      end
+      
+    end
   end
   
   describe "show" do
