@@ -1,6 +1,5 @@
 class RentalsController < ApplicationController
   def checkout
-
     rental = Rental.new(rental_params)
 
     if rental.checkout

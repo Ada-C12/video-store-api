@@ -14,17 +14,10 @@ class Rental < ApplicationRecord
       self.movie.available_inventory -= 1
       self.customer.movies_checked_out_count += 1
       self.checkout_date = Date.today
-      # make this work 
       self.due_date = (Date.today + 7)
       return true
     else
       return false
     end
   end
-
-  def checkin 
-    self.movie.available_inventory += 1
-    self.customer.movies_checked_out_count -= 1
-  end
-
 end
