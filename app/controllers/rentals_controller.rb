@@ -12,6 +12,7 @@ class RentalsController < ApplicationController
        
     if rental.movie.available_inventory > 0 && rental.save
       rental.check_out_rental
+
       render json: rental.as_json(only: [:id]), status: :ok
       return
     else
@@ -22,6 +23,7 @@ class RentalsController < ApplicationController
   
   def update
     rental = Rental.find_by(movie_id: params[:movie_id], customer_id: params[:customer_id])
+    
     if rental
       rental.check_in_rental
       render json: rental.as_json(only: [:id]), status: :ok

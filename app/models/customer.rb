@@ -9,16 +9,21 @@ class Customer < ApplicationRecord
     end
     
     if n
-      groups_of_customers = []
       iterations = (customers.count)/n.to_i
       
+      groups_of_customers = []
+
+      # separates customers into page groups based on n
       iterations.times do
         groups_of_customers << customers.shift(n.to_i)
       end
       
-      groups_of_customers << customers unless customers.empty?
-      
-      groups_of_customers = groups_of_customers[page.to_i - 1] if page
+      groups_of_customers << customers unless customers.empty?  
+
+      # selects array to be displayed to user
+      if page
+        groups_of_customers = groups_of_customers[page.to_i - 1]
+      end
       
       return groups_of_customers
     else 
@@ -30,5 +35,4 @@ class Customer < ApplicationRecord
     sort_type = sort_type.to_sym
     return Customer.order(sort_type => :asc)
   end
-  
 end
