@@ -97,4 +97,10 @@ describe MoviesController do
       expect(body['errors']).must_include "release_date"
     end
   end
+
+  describe "check_out" do
+  end
+
+  describe "check_in" do
+  end
 end

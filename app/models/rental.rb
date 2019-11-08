@@ -7,7 +7,7 @@ class Rental < ApplicationRecord
     self.due_date = self.checkout_date + 7
   end
   
-  def change_due_date
+  def check_in
     self.due_date = nil
   end
   

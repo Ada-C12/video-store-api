@@ -30,7 +30,7 @@ describe Rental do
         one.checkout_dates
         expect(one.due_date).must_equal one.checkout_date + 7
         
-        one.change_due_date
+        one.check_in
         assert_nil(one.due_date)
       end
     end
