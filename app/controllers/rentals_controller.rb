@@ -8,8 +8,9 @@ class RentalsController < ApplicationController
       if rental.save
         Rental.due_date(rental)
         Rental.status_checkout(rental)
+
+        Customer.check_out_movie(rental_params[:customer_id])
         #decrement available_count
-        #increment customer movie_checked_out_coun
   
         render json: rental.as_json(only: [:customer_id, :movie_id]) 
         return
