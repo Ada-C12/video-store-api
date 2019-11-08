@@ -41,24 +41,24 @@ describe MoviesController do
 
   describe "create" do
     let(:movie_data) {
-    {
-    title: "Birds",
-    overview: "Lots of birds",
-    release_date: Date.new,
-    inventory: 5}}
+      {
+        title: "Birds",
+        overview: "Lots of birds",
+        release_date: Date.new,
+        inventory: 5}}
 
-    it "can create a new movie" do
-      expect{post movies_path, params: movie_data}.must_change 'Movie.count', 1
-      must_respond_with :ok
-    end
+        it "can create a new movie" do
+          expect{post movies_path, params: movie_data}.must_change 'Movie.count', 1
+          must_respond_with :ok
+        end
 
-    it "will respond with bad_request for invalid data" do
-      movie_data[:title] = nil
-      expect {post movies_path, params: movie_data}.wont_change "Movie.count"
-      must_respond_with :bad_request
-      expect(response.header['Content-Type']).must_include 'json'
-      body = JSON.parse(response.body)
-      expect(body["errors"].keys).must_include "title"
+        it "will respond with bad_request for invalid data" do
+          movie_data[:title] = nil
+          expect {post movies_path, params: movie_data}.wont_change "Movie.count"
+          must_respond_with :bad_request
+          expect(response.header['Content-Type']).must_include 'json'
+          body = JSON.parse(response.body)
+          expect(body["errors"].keys).must_include "title"
+        end
+      end
     end
-  end
-end
