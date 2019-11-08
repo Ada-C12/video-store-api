@@ -1,0 +1,384 @@
+{
+	"info": {
+		"_postman_id": "892e7ad2-13f7-4d89-873b-e8bbe28188be",
+		"name": "VideoStoreAPI Optional",
+		"description": "Optional tests!",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Sort Customers By Name",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "21780182-d694-4396-beba-b13b2535c622",
+						"exec": [
+							"// Check headers",
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"var contentType = postman.getResponseHeader(\"Content-Type\");",
+							"tests[\"Content-Type is present\"] = contentType;",
+							"tests[\"Content-Type is application/json\"] = contentType.has('application/json');",
+							"",
+							"// Check data format",
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Data is an array\"] = Array.isArray(jsonData);",
+							"tests[\"Many customers were sent\"] = jsonData.length > 0;",
+							"",
+							"// Check required fields",
+							"var hasId = true;",
+							"var hasName = true;",
+							"var hasRegisteredAt = true;",
+							"var hasPostalCode = true;",
+							"var hasPhone = true;",
+							"var hasMoviesCheckedOutCount = true;",
+							"",
+							"jsonData.forEach(function(customer) {",
+							"  hasId = hasId && \"id\" in customer;",
+							"  hasName = hasName && \"name\" in customer;",
+							"  hasRegisteredAt = hasRegisteredAt && \"registered_at\" in customer;",
+							"  hasPostalCode = hasPostalCode && \"postal_code\" in customer;",
+							"  hasPhone = hasPhone && \"phone\" in customer;",
+							"  hasMoviesCheckedOutCount = hasMoviesCheckedOutCount && \"movies_checked_out_count\" in customer;",
+							"});",
+							"",
+							"var customerId = postman.getEnvironmentVariable(\"customer_id\");",
+							"",
+							"tests[\"All customers have id\"] = hasId;",
+							"tests[\"All customers have name\"] = hasName;",
+							"tests[\"All customers have registered_at\"] = hasRegisteredAt;",
+							"tests[\"All customers have postal_code\"] = hasPostalCode;",
+							"tests[\"All customers have phone\"] = hasPhone;",
+							"tests[\"All customers have movies_checked_out_count\"] = hasMoviesCheckedOutCount;",
+							"tests[\"First customer's name starts with 'A'\"] = jsonData[0].name[0] == \"A\";",
+							"tests[\"First customer's id is not 1\"] = jsonData[0].id != \"1\";"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "sort",
+							"value": "name",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/customers/?sort=name",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"customers",
+						""
+					],
+					"query": [
+						{
+							"key": "sort",
+							"value": "name"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Group Customers by n",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ee343710-c9ea-4e4c-b37d-0e03881e8b1a",
+						"exec": [
+							"// Check headers",
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"var contentType = postman.getResponseHeader(\"Content-Type\");",
+							"tests[\"Content-Type is present\"] = contentType;",
+							"tests[\"Content-Type is application/json\"] = contentType.has('application/json');",
+							"",
+							"// Check data format",
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Data is an array of arrays\"] = Array.isArray(jsonData[0]);",
+							"tests[\"'n' customers per array were sent\"] = jsonData[0].length === parseInt(postman.getEnvironmentVariable(\"group_by_n\"));",
+							"",
+							"// Check required fields",
+							"var hasId = true;",
+							"var hasName = true;",
+							"var hasRegisteredAt = true;",
+							"var hasPostalCode = true;",
+							"var hasPhone = true;",
+							"var hasMoviesCheckedOutCount = true;",
+							"",
+							"jsonData[0].forEach(function(customer) {",
+							"  hasId = hasId && \"id\" in customer;",
+							"  hasName = hasName && \"name\" in customer;",
+							"  hasRegisteredAt = hasRegisteredAt && \"registered_at\" in customer;",
+							"  hasPostalCode = hasPostalCode && \"postal_code\" in customer;",
+							"  hasPhone = hasPhone && \"phone\" in customer;",
+							"  hasMoviesCheckedOutCount = hasMoviesCheckedOutCount && \"movies_checked_out_count\" in customer;",
+							"});",
+							"",
+							"tests[\"All customers have id\"] = hasId;",
+							"tests[\"All customers have name\"] = hasName;",
+							"tests[\"All customers have registered_at\"] = hasRegisteredAt;",
+							"tests[\"All customers have postal_code\"] = hasPostalCode;",
+							"tests[\"All customers have phone\"] = hasPhone;",
+							"tests[\"All customers have movies_checked_out_count\"] = hasMoviesCheckedOutCount;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/customers/?n={{group_by_n}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"customers",
+						""
+					],
+					"query": [
+						{
+							"key": "n",
+							"value": "{{group_by_n}}"
+						}
+					]
+				},
+				"description": "Groups customers in subarrays of n length"
+			},
+			"response": []
+		},
+		{
+			"name": "Group Customers by n & p",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ee343710-c9ea-4e4c-b37d-0e03881e8b1a",
+						"exec": [
+							"// Check headers",
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"var contentType = postman.getResponseHeader(\"Content-Type\");",
+							"tests[\"Content-Type is present\"] = contentType;",
+							"tests[\"Content-Type is application/json\"] = contentType.has('application/json');",
+							"",
+							"// Check data format",
+							"var jsonData = JSON.parse(responseBody);",
+							"var n = jsonData;",
+							"tests[\"Data is an array\"] = Array.isArray(jsonData);",
+							"tests[\"'n' customers were sent\"] = jsonData.length === parseInt(postman.getEnvironmentVariable(\"group_by_n\"));",
+							"",
+							"// Check required fields",
+							"var hasId = true;",
+							"var hasName = true;",
+							"var hasRegisteredAt = true;",
+							"var hasPostalCode = true;",
+							"var hasPhone = true;",
+							"var hasMoviesCheckedOutCount = true;",
+							"",
+							"jsonData.forEach(function(customer) {",
+							"  hasId = hasId && \"id\" in customer;",
+							"  hasName = hasName && \"name\" in customer;",
+							"  hasRegisteredAt = hasRegisteredAt && \"registered_at\" in customer;",
+							"  hasPostalCode = hasPostalCode && \"postal_code\" in customer;",
+							"  hasPhone = hasPhone && \"phone\" in customer;",
+							"  hasMoviesCheckedOutCount = hasMoviesCheckedOutCount && \"movies_checked_out_count\" in customer;",
+							"});",
+							"",
+							"tests[\"All customers have id\"] = hasId;",
+							"tests[\"All customers have name\"] = hasName;",
+							"tests[\"All customers have registered_at\"] = hasRegisteredAt;",
+							"tests[\"All customers have postal_code\"] = hasPostalCode;",
+							"tests[\"All customers have phone\"] = hasPhone;",
+							"tests[\"All customers have movies_checked_out_count\"] = hasMoviesCheckedOutCount;",
+							"",
+							"// Check first customer in array is not first customer in db",
+							"tests[\"First customer is not first in db\"] = jsonData[0].id != postman.getEnvironmentVariable(\"customer_id\")"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/customers/?n={{group_by_n}}&p={{group_by_p}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"customers",
+						""
+					],
+					"query": [
+						{
+							"key": "n",
+							"value": "{{group_by_n}}"
+						},
+						{
+							"key": "p",
+							"value": "{{group_by_p}}"
+						}
+					]
+				},
+				"description": "Groups customers in subarrays of n length"
+			},
+			"response": []
+		},
+		{
+			"name": "List Overdue Rentals",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "91115dff-c924-4f8d-ad99-4d766835e4cc",
+						"exec": [
+							"// Check headers",
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"var contentType = postman.getResponseHeader(\"Content-Type\");",
+							"tests[\"Content-Type is present\"] = contentType;",
+							"tests[\"Content-Type is application/json\"] = contentType.has('application/json');",
+							"",
+							"// Check data format",
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Data is an array\"] = Array.isArray(jsonData);",
+							"",
+							"// Check required fields",
+							"var hasId = true;",
+							"var hasMovieId = true;",
+							"var hasCustomerId = true;",
+							"var hasCheckoutDate = true;",
+							"var hasDueDate = true;",
+							"var hasName = true;",
+							"var hasTitle = true;",
+							"var hasPostalCode = true;",
+							"",
+							"jsonData.forEach(function(rental) {",
+							"  hasId = hasId && \"id\" in rental;",
+							"  hasMovieId = hasMovieId && \"movie_id\" in rental;",
+							"  hasCustomerId = hasCustomerId && \"customer_id\" in rental;",
+							"  hasCheckoutDate = hasCheckoutDate && \"checkout_date\" in rental;",
+							"  hasDueDate = hasDueDate && \"due_date\" in rental;",
+							"  hasName = hasName && \"name\" in rental;",
+							"  hasTitle = hasTitle && \"title\" in rental;",
+							"  hasPostalCode = hasPostalCode && \"postal_code\" in rental;",
+							"});",
+							"",
+							"tests[\"All rentals have id\"] = hasId;",
+							"tests[\"All rentals have movie id\"] = hasMovieId;",
+							"tests[\"All rentals have customer id\"] = hasCustomerId;",
+							"tests[\"All rentals have checkout date\"] = hasCheckoutDate;",
+							"tests[\"All rentals have due date\"] = hasDueDate;",
+							"tests[\"All rentals have name\"] = hasName;",
+							"tests[\"All rentals have title\"] = hasTitle;",
+							"tests[\"All rentals have postal_code\"] = hasPostalCode;",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/rentals/overdue",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"rentals",
+						"overdue"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sort Overdue Rentals by Due Date",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "91115dff-c924-4f8d-ad99-4d766835e4cc",
+						"exec": [
+							"// Check headers",
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"var contentType = postman.getResponseHeader(\"Content-Type\");",
+							"tests[\"Content-Type is present\"] = contentType;",
+							"tests[\"Content-Type is application/json\"] = contentType.has('application/json');",
+							"",
+							"// Check data format",
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Data is an array\"] = Array.isArray(jsonData);",
+							"",
+							"// Check required fields",
+							"var hasId = true;",
+							"var hasMovieId = true;",
+							"var hasCustomerId = true;",
+							"var hasDueDate = true;",
+							"",
+							"// Set local variables",
+							"var firstRental = jsonData[0];",
+							"var secondRental = jsonData.length > 1 && jsonData[1];",
+							"",
+							"jsonData.forEach(function(rental) {",
+							"  hasId = hasId && \"id\" in rental;",
+							"  hasMovieId = hasMovieId && \"movie_id\" in rental;",
+							"  hasCustomerId = hasCustomerId && \"customer_id\" in rental;",
+							"  hasDueDate = hasDueDate && \"due_date\" in rental;",
+							"});",
+							"",
+							"tests[\"First rental due date is earlier than second rental due date\"] = firstRental.due_date < secondRental.due_date;",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/rentals/overdue/?sort=due_date",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"rentals",
+						"overdue",
+						""
+					],
+					"query": [
+						{
+							"key": "sort",
+							"value": "due_date"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
