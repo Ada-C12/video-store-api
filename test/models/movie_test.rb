@@ -49,6 +49,9 @@ describe Movie do
 
   describe "custom methods" do
   it "populates available_inventory field to inventory value upon creation" do
+    new_movie = Movie.new(title: "Mary Poppins", overview: "Magical nanny floats in with a gust of wind", inventory: 3)
+    new_movie.save
+    expect(new_movie.available_inventory).must_equal 3
   end
   end
 end
