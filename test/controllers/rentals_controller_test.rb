@@ -20,24 +20,18 @@ describe RentalsController do
       expect(body).must_be_instance_of Hash
     end
 
-    # it "returns an error and doesn't make in instance of Rental if movie is not available" do
-    #   movie = movies(:movie3)
-    #   customer = customers(:customer1)
 
-    #   new_rental = {
-    #     customer_id: customer.id,
-    #     movie_id: movie.id
-    #   }
-    #   expect{
-    #   post check_out_path(new_rental)
-    #   }.wont_change "Rental.count"
-    #   body = JSON.parse(response.body)
+    it "returns an error of Bad Request given bad rental data" do
+      new_rental = nil
 
-    #   must_respond_with :bad_request
-    #   expect(response.header["Content-Type"]).must_include "json"
-    #   expect(body).must_be_instance_of Hash
-    #   expect(body.keys).must_include "errors"
-    # end
+      expect { 
+        post check_out_path(new_rental)
+      }.wont_change "Rental.count"
+
+      must_respond_with :bad_request
+      body = JSON.parse(response.body)
+      expect(body['errors']).must_include "Bad Request"
+    end
   end
 
   describe "check_in" do
@@ -56,20 +50,11 @@ describe RentalsController do
 
       expect(test_rental.status).must_equal "checked_in"
     end
+
+    
+    #tests negative case in validations
   end
   
-  # it "renders and error if given invalid data" do 
-  #   movie = movies(:movie1)
-    
-  #   returned_rental = {
-  #     customer_id: -1, 
-  #     movie_id: movie.id
-  #   }
-  #   expect{
-  #   post check_in_path(returned_rental)
-  #   }.wont_change "Rental.count"
-  #   expect(response.header["Content-Type"]).must_include "json"
-  #   must_respond_with :bad_request
-  # end 
+
 
 end

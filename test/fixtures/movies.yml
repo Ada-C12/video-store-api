@@ -15,4 +15,4 @@ movie3:
   overview: But what if this strange woman is a con artist. Or what if everything told is completely true. How could an ordinary boy be relied upon in something this big. Time will tell.
   release_date: 2006-10-01
   inventory: 1
-  available_inventory: 0
+  available_inventory: nil

@@ -25,16 +25,60 @@ describe Rental do
     end
   end
 
-  # describe "status_checkout" do 
-  #   it "set status to checked out" do 
-  #     new_rental = Rental.new(
-  #       customer_id: customers(:customer1),
-  #       movie_id: movies(:movie1) 
-  #     )
+  describe "validations" do 
 
-  #     results = Rental.status_checkout(new_rental)
-  #     expect(results.status).must_equal "checked out"
+    it "is invalid without a customer_id" do 
+      rental = rentals(:rental1)
+      rental.customer_id = nil
 
-  #   end
-  # end 
+      result = rental.valid?
+
+      expect(result).must_equal false
+    end
+
+    it "is valid with a numeric customer_id" do 
+      rental = rentals(:rental1)
+
+      result = rental.valid?
+
+      expect(result).must_equal true
+    end
+
+    it "is invalid with a customer_id that is not a number" do
+     rental = rentals(:rental1)
+
+      rental.customer_id =  "cat"
+
+      result = rental.valid?
+
+      expect(result).must_equal false
+    end
+
+    it "is invalid without a movie_id" do 
+      rental = rentals(:rental1)
+      rental.movie_id = nil
+
+      result = rental.valid?
+
+      expect(result).must_equal false
+    end
+
+    it "is valid with a numeric movie_id" do 
+      rental = rentals(:rental1)
+
+      result = rental.valid?
+
+      expect(result).must_equal true
+    end
+
+    it "is invalid with a movie_id that is not a number" do
+     rental = rentals(:rental1)
+
+      rental.movie_id =  "cat"
+
+      result = rental.valid?
+
+      expect(result).must_equal false
+    end
+  end
 end

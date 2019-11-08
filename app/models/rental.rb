@@ -1,6 +1,8 @@
 class Rental < ApplicationRecord
   belongs_to :customer
   belongs_to :movie
+  validates :customer_id, presence: true, numericality: true
+  validates :customer_id, presence: true, numericality: true
 
   def self.due_date(rental)
    due_date = Date.today + 7.days

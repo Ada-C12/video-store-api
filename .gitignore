@@ -22,5 +22,9 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 
+#ignore simplecov
+/coverage.data
+/coverage
+
 
 .DS_Store
