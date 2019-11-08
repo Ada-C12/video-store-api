@@ -83,6 +83,8 @@ describe RentalsController do
       }
     }
     it "can successfully check a rental back in with valid input" do
+      expect{post checkout_path, params: rental_data}.must_change 'Rental.count', 1
+
       expect{post checkin_path, params: rental_data}.wont_change 'Rental.count'
       must_respond_with :ok
     end

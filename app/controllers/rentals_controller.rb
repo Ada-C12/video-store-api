@@ -34,18 +34,11 @@ class RentalsController < ApplicationController
   end
   
   def checkin
-    # find rental from rental id
-    puts "*************************************"
-    rental = Rental.find_by(id: rental_params[:id])
-    p rental
-    # update checkin_date
-    rental.checkin_date = Date.today
-    puts "#####################################"
+    
     movie = Movie.find_by(id: rental_params[:movie_id])
     customer = Customer.find_by(id: rental_params[:customer_id])
-    
-    # update rental
-    if rental.update
+    if rental = Rental.find_by(customer_id: customer.id, movie_id: movie.id)
+      rental.checkin_date = Date.today
       movie.available_inventory += 1
       movie.save
       customer.movies_checked_out_count -= 1
