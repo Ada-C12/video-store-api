@@ -40,7 +40,16 @@ describe RentalsController do
     end 
 
     it "should not allow rental if available inventory is 0" do 
-      #INVENTORY DECREMENT IS NOT WORKING RIGHT NOW, COME BACK TO THIS
+      rental_hash = {
+        customer_id: customer.id, 
+        movie_id: movies(:m2).id
+      }
+        
+      expect{ post checkout_path, params: rental_hash }.wont_change "Rental.count"
+      must_respond_with :bad_request
+        
+      body = JSON.parse(response.body)
+      expect(body['errors']).must_equal "available inventory is 0"
     end 
 
   end 
