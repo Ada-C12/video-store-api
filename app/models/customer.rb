@@ -10,7 +10,6 @@ class Customer < ApplicationRecord
         checked_out_rentals << rental
       end
     end
-    
     return checked_out_rentals.length
   end
   

@@ -52,9 +52,13 @@ describe RentalsController do
       
       customer = Customer.find_by(id: @params[:customer_id])
       end_count = customer.movies_checked_out_count
+      rental = Rental.last
       
       expect(end_count).must_equal start_count-1
+      assert_nil(rental.due_date)
     end
+    
+    
   end
   
 end
