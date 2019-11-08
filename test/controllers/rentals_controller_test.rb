@@ -82,19 +82,28 @@ describe RentalsController do
         movie_id: movie.id
       }
     }
+    let(:invalid_movie) {
+      movies(:movie3)
+    }
+    let(:invalid_rental_data) {
+      {
+        customer_id: customer.id,
+        movie_id: invalid_movie.id
+      }
+    }
     it "can successfully check a rental back in with valid input" do
       expect{post checkout_path, params: rental_data}.must_change 'Rental.count', 1
 
       expect{post checkin_path, params: rental_data}.wont_change 'Rental.count'
       must_respond_with :ok
     end
-    
+
     it "increases movie's inventory by one if successfully checked back in" do
       post checkout_path(rental_data)
       movie = Movie.find_by(id: movies(:movie1).id)
       expect(movie.available_inventory).must_equal 2
 
-      post checkin_path, params: rental_data
+      post checkin_path(rental_data)
       movie = Movie.find_by(id: movies(:movie1).id)
       expect(movie.available_inventory).must_equal 3
     end
@@ -104,9 +113,41 @@ describe RentalsController do
       customer = Customer.find_by(id: customers(:janice).id)
       expect(customer.movies_checked_out_count).must_equal 3
 
-      post checkin_path, params: rental_data
+      post checkin_path(rental_data)
       customer = Customer.find_by(id: customers(:janice).id)
       expect(customer.movies_checked_out_count).must_equal 2
+    end
+
+    it "throws an error if invalid movie" do
+      post checkout_path(rental_data)
+      movie = Movie.find_by(id: movies(:movie1).id)
+      expect(movie.available_inventory).must_equal 2
+
+      rental_data[:movie_id] = nil
+      post checkin_path(rental_data)
+      must_respond_with :not_found
+      expect(response.header['Content-Type']).must_include 'json'
+    end
+
+    it "throws an error if invalid customer" do
+      post checkout_path(rental_data)
+      customer = Customer.find_by(id: customers(:janice).id)
+      expect(customer.movies_checked_out_count).must_equal 3
+
+      rental_data[:customer_id] = nil
+      post checkin_path(rental_data)
+      must_respond_with :not_found
+      expect(response.header['Content-Type']).must_include 'json'
+    end
+
+    it "throws an error if rental cannot be found" do
+      post checkout_path(rental_data)
+      movie = Movie.find_by(id: movies(:movie1).id)
+      expect(movie.available_inventory).must_equal 2
+
+      post checkin_path(invalid_rental_data)
+      must_respond_with :not_found
+      expect(response.header['Content-Type']).must_include 'json'
     end
   end
 end
