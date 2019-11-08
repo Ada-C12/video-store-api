@@ -7,3 +7,8 @@ movie2:
   title: "Clue"
   inventory: 3
   available_inventory: 3
+
+movie3:
+  title: "Godzilla"
+  inventory: 1
+  available_inventory: 0

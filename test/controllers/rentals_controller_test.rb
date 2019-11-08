@@ -31,25 +31,36 @@ describe RentalsController do
       rental = Rental.last
       expect(rental.due_date).must_equal (Date.today + 7)
     end
-    
+
     it "throws an error if invalid movie" do
       rental_data[:movie_id] = nil
       expect {post checkout_path, params: rental_data}.wont_change "Rental.count"
       must_respond_with :not_found
       expect(response.header['Content-Type']).must_include 'json'
     end
+
     it "throws an error if invalid customer" do
       rental_data[:customer_id] = nil
       expect {post checkout_path, params: rental_data}.wont_change "Rental.count"
       must_respond_with :not_found
       expect(response.header['Content-Type']).must_include 'json'
     end
-    it "throws an error if movie inventory is zero" do
 
+    it "throws an error if movie inventory is zero" do
+      rental_data[:movie_id] = movies(:movie3).id
+      expect {post checkout_path, params: rental_data}.wont_change "Rental.count"
+      must_respond_with :bad_request
+      expect(response.header['Content-Type']).must_include 'json'
     end
+
     it "if rental successfully created, movie inventory is decreased by one" do
+      post checkout_path, params: rental_data
+      expect(movies(:movie1).available_inventory).must_equal 2
     end
+
     it "if rental succesfully created, custoer's movies checked out count increased by one" do
+      post checkout_path, params: rental_data
+      expect(customers(:janice).movies_checked_out_count).must_equal 1
     end
   end
 
