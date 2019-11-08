@@ -60,7 +60,7 @@ describe RentalsController do
       expect(movie.available_inventory).must_equal 2
     end
 
-    it "if rental succesfully created, custoer's movies checked out count increased by one" do
+    it "if rental succesfully created, customer's movies checked out count increased by one" do
       rental_data[:movie_id] = movies(:movie4).id
       post checkout_path, params: rental_data
       customer = Customer.find_by(id: customers(:janice).id)
@@ -71,9 +71,21 @@ describe RentalsController do
 
   describe "checkin" do
     it "can successfully check a rental back in with valid input" do
+      expect{post checkin_path, params: rental_data}.wont_change 'Rental.count'
+      must_respond_with :ok
     end
     it "increases movie's inventory by one if successfully checked back in" do
-    end
+      post checkin_path, params: rental_data
+      movie = Movie.find_by(id: movies(:movie1).id)
 
+      expect(movie.available_inventory).must_equal 1
+    end
+    it "decreases customer's movies checked out count by one" do
+      rental_data[:movie_id] = movies(:movie4).id
+      post checkin_path, params: rental_data
+      customer = Customer.find_by(id: customers(:janice).id)
+
+      expect(customer.movies_checked_out_count).must_equal 2
+    end
   end
 end
