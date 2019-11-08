@@ -6,7 +6,7 @@ describe Customer do
   let (:new_movie2) { Movie.create(title: "American Beauty", inventory: 3) }
 
   describe "initialize" do
-    it "can be instantiated" do
+    it "can be instantiated if it has valid information" do
       expect(new_customer.valid?).must_equal true
     end
     
@@ -39,9 +39,11 @@ describe Customer do
       
       # Assert
       expect(new_customer.rentals.count).must_equal 2
+      expect((new_customer.rentals).include?(new_rental1)).must_equal true
+      expect((new_customer.rentals).include?(new_rental2)).must_equal true
     end
 
-    it "can have many movies" do
+    it "can have many movies through rentals" do
       # Arrange
       new_customer.save
       new_rental1 = Rental.create(customer_id: new_customer.id, movie_id: new_movie1.id)
@@ -49,24 +51,8 @@ describe Customer do
       
       # Assert
       expect(new_customer.movies.count).must_equal 2
+      expect((new_customer.movies).include?(new_movie1)).must_equal true
+      expect((new_customer.movies).include?(new_movie2)).must_equal true
     end
-
-    # it "can set a product through 'product'" do
-    #   review = Review.new(reviewer: "random", comment: "nothing", rating: 5)
-
-    #   review.product = products(:cucumber)
-
-    #   expect(review.product_id).must_equal products(:cucumber).id
-    #   expect(review.valid?).must_equal true
-    # end
-
-    # it "can set a product through 'product_id'" do
-    #   review = Review.new(reviewer: "random", comment: "nothing", rating: 5)
-
-    #   review.product_id = products(:rose).id
-
-    #   expect(review.product).must_equal products(:rose)
-    #   expect(review.valid?).must_equal true
-    # end
   end
 end
