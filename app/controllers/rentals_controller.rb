@@ -59,9 +59,8 @@ class RentalsController < ApplicationController
         json_body = json_body.sort_by{|rental| rental[params[:sort]]}
       end
       
-      
       if json_body.empty?
-        render json: {messages: "No overdue rentals!"}, status: :ok
+        render json: { messages: "No overdue rental is found!" }, status: :ok
         return
       else
         render json: json_body, status: :ok

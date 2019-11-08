@@ -1,11 +1,14 @@
 one: 
   customer: one
   movie: croods
+  is_overdue: true
 
 two:
   customer: one
   movie: ghibli
+  is_overdue: true
 
 three:
   customer: two
   movie: croods
+  is_overdue: true
