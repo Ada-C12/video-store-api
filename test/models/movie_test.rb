@@ -3,8 +3,8 @@ require "test_helper"
 describe Movie do
 
   let (:new_movie) { movies(:one) }
-  # let (:new_movie1) { Movie.create(title: "Gone", inventory: 2) }
-  # let (:new_movie2) { Movie.create(title: "American Beauty", inventory: 3) }
+  let (:new_customer) { customers(:one) }
+  let (:new_customer2) { customers(:two) }
 
   describe "initialize" do
     it "can be instantiated if it has valid information" do
@@ -45,55 +45,30 @@ describe Movie do
         expect(new_movie.errors.messages).must_include :inventory
         expect(new_movie.errors.messages[:inventory]).must_equal ["must be greater than or equal to 0"]
       end
-
-
     end
   end
-  
-  # describe "relationships" do
-  #   it "can have many rentals" do
-  #     # Arrange
-  #     new_customer.save
-  #     new_rental1 = Rental.create(customer_id: new_customer.id, movie_id: new_movie1.id)
-  #     new_rental2 = Rental.create(customer_id: new_customer.id, movie_id: new_movie2.id)
+
+  describe "relationships" do
+    it "can have many rentals" do
+      # Arrange
+      new_rental1 = Rental.create(customer_id: new_customer.id, movie_id: new_movie.id)
+      new_rental2 = Rental.create(customer_id: new_customer.id, movie_id: new_movie.id)
       
-  #     # Assert
-  #     expect(new_customer.rentals.count).must_equal 2
-  #     expect((new_customer.rentals).include?(new_rental1)).must_equal true
-  #     expect((new_customer.rentals).include?(new_rental2)).must_equal true
-  #   end
+      # Assert
+      expect(new_movie.rentals.count).must_equal 2
+      expect((new_movie.rentals).include?(new_rental1)).must_equal true
+      expect((new_movie.rentals).include?(new_rental2)).must_equal true
+    end
 
-  #   it "can have many movies through rentals" do
-  #     # Arrange
-  #     new_customer.save
-  #     new_rental1 = Rental.create(customer_id: new_customer.id, movie_id: new_movie1.id)
-  #     new_rental2 = Rental.create(customer_id: new_customer.id, movie_id: new_movie2.id)
+    it "can have many customers through rentals" do
+      # Arrange
+      new_rental1 = Rental.create(customer_id: new_customer.id, movie_id: new_movie.id)
+      new_rental2 = Rental.create(customer_id: new_customer2.id, movie_id: new_movie.id)
       
-  #     # Assert
-  #     expect(new_customer.movies.count).must_equal 2
-  #     expect((new_customer.movies).include?(new_movie1)).must_equal true
-  #     expect((new_customer.movies).include?(new_movie2)).must_equal true
-  #   end
-  # end
-
-
-  
-  # it "have created a relationship with Customer" do
-  #   movie = Movie.create(title: "futurama", inventory: 12)
-  #   customer = Customer.create(name: "John")
-  
-  #   movie.customers << customer
-  
-  #   Rental.first.customer.should == movie
-  #   Rental.first.customer.should == customer
-  # end
-  
-  # it "has customers" do
-  #   movie = Movie.create(title: "futurama", inventory: 12)
-  #   customer = Customer.create(name: "John")
-  
-  #   movie.customers << customer
-  
-  #   movie.customer.should == [customer]
-  # end
+      # Assert
+      expect(new_movie.customers.count).must_equal 2
+      expect((new_movie.customers).include?(new_customer)).must_equal true
+      expect((new_movie.customers).include?(new_customer2)).must_equal true
+    end
+  end
 end
