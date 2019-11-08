@@ -78,4 +78,24 @@ describe Movie do
     end
   end
 
+  describe "check in" do 
+    it "increases the available inventory by 1" do 
+      movie = movies(:movie1)
+
+      results = Movie.check_in(movie.id)
+
+      expect(results.available_inventory).must_equal 4
+    end
+
+    it "sets available inventory to inventory if nil and increases available inventory by 1" do 
+      movie = movies(:movie1)
+      movie.available_inventory = nil
+      movie.save
+
+      results = Movie.check_in(movie.id)
+
+      expect(results.available_inventory).must_equal 11
+    end
+  end
+
 end

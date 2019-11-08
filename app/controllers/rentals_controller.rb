@@ -23,13 +23,16 @@ class RentalsController < ApplicationController
   end
 
   def check_in
-    customer = Customer.find_by(id: rental_params[:customer_id])        
-    movie = Movie.find_by(id: rental_params[:movie_id])
-    if rental = Rental.find_by(customer_id: customer.id, movie_id: movie.id)
-
+    customer = Customer.find_by(id: rental_params[:customer_id]) 
     
-  
-      customer = Customer.check_in_movie(customer)
+    movie = Movie.find_by(id: rental_params[:movie_id])
+    
+    if movie && customer
+    rental = Rental.find_by(customer_id: customer.id, movie_id: movie.id)
+      
+
+      Customer.check_in_movie(customer)
+      Movie.check_in(movie.id)
 
       render json: rental.as_json(only: [:customer_id,:movie_id]) 
       return
