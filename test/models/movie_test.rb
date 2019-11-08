@@ -46,4 +46,9 @@ describe Movie do
       end
     end
   end
+
+  describe "custom methods" do
+  it "populates available_inventory field to inventory value upon creation" do
+  end
+  end
 end
