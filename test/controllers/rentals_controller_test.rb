@@ -111,8 +111,13 @@ describe RentalsController do
       expect {
         post checkout_path, params: checkout_params
       }.must_differ 'Rental.count', 1
-
       must_respond_with :ok
+
+      movie.reload
+      customer.reload
+
+      expect(movie_count - movie.available_inventory).must_equal 1
+      expect(customer.movies_checked_out_count - customer_count).must_equal 1
     end
   end
   
@@ -130,17 +135,23 @@ describe RentalsController do
         post checkout_path, params: checkin_params
       }.must_differ 'Rental.count', 1
 
+      movie.reload
+      customer.reload
+
       customer_count = customer.movies_checked_out_count
       movie_count = movie.available_inventory
-      # binding.pry
-
-      # post checkin_path, params: checkin_params
       
       expect {
         post checkin_path, params: checkin_params
       }.must_differ 'Rental.count', 0
 
+      movie.reload
+      customer.reload
+
       must_respond_with :ok
+
+      expect(movie.available_inventory - movie_count).must_equal 1
+      expect(customer_count - customer.movies_checked_out_count).must_equal 1
     end
   end
 end

@@ -43,45 +43,4 @@ describe Movie do
       expect(movie.customers.first.name).must_equal customer.name
     end
   end
-  
-  describe "movie_checkout" do
-    it "can checkout a movie and reduce available inventory" do
-      movie = movies(:movie_one)
-      inventory = movie.available_inventory
-      movie.movie_checkout
-      
-      expect(inventory - movie.available_inventory).must_equal 1
-    end
-    
-    it "should not allow a movie to be checked out if the inventory is less than 1" do
-      movie = movies(:movie_two)
-      previous = movie.available_inventory
-      updated_movie = movie.movie_checkout
-      
-      expect(previous - updated_movie.available_inventory).must_equal 0
-    end
-    
-    it "should not allow a movie to be checked out if the movie does not exist" do
-    end
-    
-  end
-  
-  describe "movie_checkin" do
-    it "can checkin a movie and add to available inventory" do
-      movie = movies(:movie_one)
-      movie_inv_start_count = movie.available_inventory
-      
-      movie = movie.movie_checkin
-      
-      expect(movie.available_inventory - movie_inv_start_count).must_equal 1
-    end
-    
-    it "should not allow a movie to be checked in if the checkin value would be greater than inventory" do
-      
-    end
-    
-    it "should not allow a movie to be checked out if the movie does not exist" do
-    end
-    
-  end
 end
