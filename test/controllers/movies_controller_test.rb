@@ -86,8 +86,6 @@ describe MoviesController do
       invalid_movie = @movie
       # I added release date validation on a different branch
       invalid_movie[:release_date] = "HOOBASTANK"
-      
-      # call
       # verify count doesn't change
       expect{post movies_path, params: invalid_movie}.wont_change 'Movie.count'
       # verify bad_request status
@@ -96,11 +94,5 @@ describe MoviesController do
       body = JSON.parse(response.body)
       expect(body['errors']).must_include "release_date"
     end
-  end
-
-  describe "check_out" do
-  end
-
-  describe "check_in" do
   end
 end
