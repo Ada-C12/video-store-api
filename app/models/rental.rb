@@ -10,8 +10,6 @@ class Rental < ApplicationRecord
   end
 
   def checkout 
-    # self.save
-
     if self.save && self.valid?(:checkout)
       self.movie.available_inventory -= 1
       self.customer.movies_checked_out_count += 1
@@ -22,6 +20,11 @@ class Rental < ApplicationRecord
     else
       return false
     end
+  end
+
+  def checkin 
+    self.movie.available_inventory += 1
+    self.customer.movies_checked_out_count -= 1
   end
 
 end

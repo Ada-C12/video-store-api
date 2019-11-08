@@ -7,7 +7,6 @@ class RentalsController < ApplicationController
       render json: rental.as_json(only: [:id]), status: :ok
       return
     else
-      # binding.pry
       render json: {
         ok: false,
         errors: rental.errors.messages
@@ -16,17 +15,8 @@ class RentalsController < ApplicationController
     end
   end
 
-      
-    # new_rental Rental.new(params params)
-    # new_rental.checkout
-
-    # if rental.checkout 
-    # else 
-    #   #not save 
-    # end
-
-
   def checkin 
+    
   end
 
   private 

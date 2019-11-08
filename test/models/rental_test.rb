@@ -76,7 +76,12 @@ describe Rental do
     end
 
     describe 'checkin' do
+      it "should increment the movie available inventory when checked in by 1" do
+      end
 
+      it "should decrement the customer movies checked out by 1" do
+      end
+      
     end
   end
 
