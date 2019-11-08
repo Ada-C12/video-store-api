@@ -41,4 +41,19 @@ describe Rental do
       expect(customer.movies_checked_out_count).must_equal 1
     end
   end
+  
+  describe "check_in" do
+    before do
+      new_rental = Rental.check_out(customer, movie)
+      checked_in_rental = Rental.check_in(new_rental)
+    end
+    
+    it "decrements the inventory of a movie if inventory is greater than 0" do
+      expect(movie.available_inventory).must_equal 12
+    end
+    
+    it "increments the number of movies a customer has checked out" do
+      expect(customer.movies_checked_out_count).must_equal 0
+    end
+  end
 end

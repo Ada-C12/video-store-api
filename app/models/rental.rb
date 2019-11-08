@@ -13,7 +13,7 @@ class Rental < ApplicationRecord
       
       new_available_inventory = movie.available_inventory - 1
       movie.update(available_inventory: new_available_inventory)
-
+      
       new_movies_checked_out_count = customer.movies_checked_out_count + 1
       customer.update(movies_checked_out_count: new_movies_checked_out_count)
       
@@ -30,7 +30,7 @@ class Rental < ApplicationRecord
     customer.movies_checked_out_count -= 1
     movie.available_inventory += 1
     
-    customer.save!
-    movie.save!
+    customer.save
+    movie.save
   end
 end
