@@ -43,6 +43,7 @@ class MoviesController < ApplicationController
     rental = Rental.find_by(customer_id: customer.id, movie_id: movie.id)
     if rental
       rental.check_in
+      rental.save
       render json: { id: rental.id }, status: :ok
     else
       render json: { ok: false, errors: "Rental not found"}, status: :not_found
