@@ -20,11 +20,7 @@ describe RentalsController do
       expect _(new_rental.checkout_date).must_equal Date.today
       expect _(new_rental.due_date).must_equal Date.today + 7
       
-      body = JSON.parse(response.body)
-      
-      expect _(body).must_be_instance_of Hash
-      expect _(body.keys).must_include "id"
-      must_respond_with :ok
+      check_response(expected_type: Hash, expected_status: :ok)
     end
     
     it "won't create a rental for invalid input and responds with bad request" do
@@ -34,9 +30,7 @@ describe RentalsController do
         data[key.to_sym] = nil
         expect { post checkout_path, params: data }.wont_change "Rental.count"
         
-        must_respond_with :bad_request
-        
-        body = JSON.parse(response.body)
+        body = check_response(expected_type: Hash, expected_status: :bad_request)
         expect(body.keys).must_include "errors"
         expect(body["errors"].keys).must_include key
       end
@@ -68,9 +62,7 @@ describe RentalsController do
         data[key.to_sym] = -1
         expect { post checkin_path, params: data }.wont_change "Rental.count"
         
-        must_respond_with :bad_request
-        
-        body = JSON.parse(response.body)
+        body = check_response(expected_type: Hash, expected_status: :bad_request)
         expect(body.keys).must_include "errors"
         expect(body["errors"].keys).must_include key
       end
@@ -84,9 +76,7 @@ describe RentalsController do
 
       expect { post checkin_path, params: data }.wont_change "Rental.count"
         
-      must_respond_with :bad_request
-      
-      body = JSON.parse(response.body)
+      body = check_response(expected_type: Hash, expected_status: :bad_request)
       expect(body.keys).must_include "errors"
       expect(body["errors"].keys).must_include 'rental_id'
     end

@@ -14,8 +14,7 @@ describe MoviesController do
     it "responds with an expected list of movies" do
       get movies_path
 
-      body = JSON.parse(response.body)
-      expect _(body).must_be_instance_of Array
+      body = body = check_response(expected_type: Array)
       expect _(body.size).must_equal Movie.count
 
       body.each do |movie_info|
@@ -28,8 +27,7 @@ describe MoviesController do
       Movie.destroy_all
       get movies_path
 
-      body = JSON.parse(response.body)
-      expect _(body).must_be_instance_of Array
+      body = check_response(expected_type: Array)
       expect _(body).must_be_empty
     end
   end
@@ -47,8 +45,7 @@ describe MoviesController do
     it "responds with the expected movies info for valid input" do
       get movie_path(valid_movie.id)
 
-      body = JSON.parse(response.body)
-      expect _(body).must_be_instance_of Hash
+      body = check_response(expected_type: Hash)
       expect _(body.keys.sort).must_equal ["available_inventory", "inventory", "overview", "release_date", "title"]
     end
 
@@ -56,10 +53,7 @@ describe MoviesController do
     it "sends back not_found if the movie doesn't exist" do
       get movie_path(-1)
 
-      body = JSON.parse(response.body)
-
-      expect _(body).must_be_instance_of Hash
-      must_respond_with :not_found
+      body = check_response(expected_type: Hash, expected_status: :not_found)
       expect _(body.keys).must_include "errors"
     end
   end
@@ -81,11 +75,8 @@ describe MoviesController do
       expect _(new_movie.release_date).must_equal @movie_data[:release_date]
       expect _(new_movie.inventory).must_equal @movie_data[:inventory]
 
-      body = JSON.parse(response.body)
-
-      expect _(body).must_be_instance_of Hash
+      body = check_response(expected_type: Hash, expected_status: :ok)
       expect _(body.keys).must_include "id"
-      must_respond_with :ok
     end
 
     it "won't create a new movie with invalid input and responds with :bad_request" do
@@ -94,10 +85,8 @@ describe MoviesController do
 
         data[key.to_sym] = nil
         expect { post movies_path, params: data }.wont_change "Movie.count"
-
-        must_respond_with :bad_request
-
-        body = JSON.parse(response.body)
+        
+        body = check_response(expected_type: Hash, expected_status: :bad_request)
         expect(body.keys).must_include "errors"
         expect(body["errors"].keys).must_include key
       end

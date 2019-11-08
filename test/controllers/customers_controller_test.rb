@@ -12,8 +12,7 @@ describe CustomersController do
     it "responds with the expected list of customers" do
       get customers_path
 
-      body = JSON.parse(response.body)
-      expect _(body).must_be_instance_of Array
+      body = check_response(expected_type: Array)
       expect _(body.size).must_equal Customer.count
 
       body.each do |customer_info|
@@ -26,8 +25,7 @@ describe CustomersController do
       Customer.destroy_all
       get customers_path
 
-      body = JSON.parse(response.body)
-      expect _(body).must_be_instance_of Array
+      body = check_response(expected_type: Array)
       expect _(body).must_be_empty
     end
   end
