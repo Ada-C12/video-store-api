@@ -7,7 +7,7 @@ class RentalsController < ApplicationController
     movie = Movie.find_by(id: rental.movie_id)
     if movie 
       if movie.available_inventory <=0
-        render json: {errors: {movie: "insufficient available inventory"}}, status: :bad_request
+        render json: {errors: {movie: "insufficient available inventory"}},status: :bad_request
         return
       else 
         movie.available_inventory -= 1

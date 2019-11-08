@@ -49,15 +49,41 @@ describe RentalsController do
       #verifies that movie available inventory decreased by 1
       expect(movie.available_inventory).must_equal initial_inventory - 1
       
-      
     end
     
-    it "returns an error when movie inventory is zero" do
-      # should not create an instance of a rental
-      # if the movie inventory is zero
+    it "returns an error with valid movie id, valid customer id, but insufficient inventory" do
       
-      # check that the database rental count did not change
-      # should return an error and status bad_request
+      # params
+      initial_inventory = 3
+      available_inventory = 0
+      test_movie = movies(:m_1)
+      test_movie.inventory = initial_inventory
+      test_movie.available_inventory = available_inventory
+      test_movie.save
+      
+      rental_params = {
+        customer_id: customers(:c_3).id,
+        movie_id: test_movie.id
+      }
+      
+      # the route
+      # it should update the rental database count
+      expect {
+        post checkout_path, params: rental_params
+      }.wont_differ "Rental.count"
+      
+      #returns JSON, status not_modified, and an error message  
+      body = check_response(expected_type: Hash, expected_status: :bad_request)
+      expect(body.keys).must_include 'errors'
+      expect(body['errors'].keys).must_include 'movie'
+      
+      #verifies that movie inventory is unchanged
+      movie = Movie.find_by(id: test_movie.id)
+      expect(movie.inventory).must_equal initial_inventory
+      
+      #verifies that movie available inventory decreased by 1
+      expect(movie.available_inventory).must_equal available_inventory
+      
     end
     
     it "returns an error if given invalid movie id" do
