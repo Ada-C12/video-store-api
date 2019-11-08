@@ -35,8 +35,14 @@ describe Customer do
     end
     
     describe "self.sort_by_group" do
-      it "returns an array of customers if n is defined but p is not defined" do
-        group = Customer.group_by_n(nil, nil, nil)
+      it "returns an array of one group of customers if n is defined but p is not defined" do
+        group = Customer.group_by_n(nil, 10, nil)
+        
+        expect(group[0].length).must_equal 3
+      end
+
+      it "returns nil if n is not defined but p is defined" do
+        group = Customer.group_by_n(nil, nil, 10)
         
         expect(group.length).must_equal 3
       end
@@ -90,4 +96,5 @@ describe Customer do
       end
     end
   end
+  
 end

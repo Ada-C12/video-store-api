@@ -1,8 +1,8 @@
 require "test_helper"
 
 describe Rental do
-  let (:movie) {movie = Movie.create(title: "valid movie", inventory: 10)}
-  let (:customer) {customer = Customer.create(name: "valid customer")}
+  let (:movie) { movie = Movie.create(title: "valid movie", inventory: 10) }
+  let (:customer) { customer = Customer.create(name: "valid customer") }
 
   describe "initialize" do
     before do
@@ -24,24 +24,27 @@ describe Rental do
   end
   
   describe "validation" do
+    before do 
+      @rental = Rental.create(movie_id: movie.id, customer_id: customer.id)
+    end
+
     it "must have a customer and movie" do
-      rental = Rental.create(movie_id: movie.id, customer_id: customer.id)
       
-      is_valid = rental.valid?
+      is_valid = @rental.valid?
       
       assert(is_valid)
     end
     it "returns invalid if no customer is present" do
-      rental = Rental.create(movie_id: movie.id)
-      
-      is_valid = rental.valid?
+      @rental.update(customer_id: nil)  
+
+      is_valid = @rental.valid?
       
       refute(is_valid)
     end
     it "returns invalid if no movie is present" do
-      rental = Rental.create(customer_id: customer.id)
-      
-      is_valid = rental.valid?
+      @rental.update(movie_id: nil) 
+
+      is_valid = @rental.valid?
       
       refute(is_valid)
     end
@@ -123,6 +126,6 @@ describe Rental do
         expect(@rental.returned).must_equal true
       end
     end
-    
   end
+  
 end

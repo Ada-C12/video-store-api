@@ -17,8 +17,10 @@ class Customer < ApplicationRecord
       end
       
       groups_of_customers << customers unless customers.empty?
-      
-      groups_of_customers = groups_of_customers[page.to_i - 1] if page
+
+      if page
+        groups_of_customers = groups_of_customers[page.to_i - 1]
+      end
       
       return groups_of_customers
     else 
