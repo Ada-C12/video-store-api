@@ -6,9 +6,15 @@ class Rental < ApplicationRecord
     if self.movie.available_inventory.nil?
       self.movie.available_inventory = self.movie.inventory - 1
       self.movie.save
+      
+      self.customer.movies_checked_out_count += 1
+      self.customer.save
     else
       self.movie.available_inventory -= 1
       self.movie.save
+      
+      self.customer.movies_checked_out_count += 1
+      self.customer.save
     end
   end
   
@@ -19,6 +25,9 @@ class Rental < ApplicationRecord
       else
         self.movie.available_inventory += 1
         self.movie.save
+        
+        self.customer.movies_checked_out_count -= 1
+        self.customer.save
       end
     end
   end
