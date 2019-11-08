@@ -5,6 +5,8 @@ class RentalsController < ApplicationController
   def create
     rental = Rental.new(rental_params)
     rental.save
+    @customer.movies_checked_out_count += 1
+    @customer.save
     render json: rental.as_json(only: [:id]), status: :ok
     return
   end
@@ -20,6 +22,8 @@ class RentalsController < ApplicationController
     else
       rental.returned = true
       rental.save
+      @customer.movies_checked_out_count -= 1
+      @customer.save
       render json: rental.as_json(only: [:id]), status: :ok
       return
     end
@@ -31,8 +35,8 @@ class RentalsController < ApplicationController
   end
 
   def find_movie
-    movie = Movie.find_by(id: params[:movie_id])
-    if movie.nil?
+    @movie = Movie.find_by(id: params[:movie_id])
+    if @movie.nil?
       render json: {
         ok: false,
         errors: { movie_id: "Invalid movie id" }
@@ -42,8 +46,8 @@ class RentalsController < ApplicationController
   end
 
   def find_customer
-    customer = Customer.find_by(id: params[:customer_id])
-    if customer.nil?
+    @customer = Customer.find_by(id: params[:customer_id])
+    if @customer.nil?
       render json: {
         ok: false,
         errors: { customer_id: "Invalid customer id" }

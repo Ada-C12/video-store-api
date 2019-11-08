@@ -12,6 +12,7 @@ describe RentalsController do
   
   describe "checkout" do
     it "can create a rental for valid input and responds with ok" do
+      start_checkout_count = valid_customer.movies_checked_out_count
       expect { post checkout_path, params: rental_data}.must_differ "Rental.count", 1
       new_rental = Rental.last
       expect _(new_rental.customer_id).must_equal rental_data[:customer_id]
@@ -19,6 +20,9 @@ describe RentalsController do
       expect _(new_rental.returned).must_equal false
       expect _(new_rental.checkout_date).must_equal Date.today
       expect _(new_rental.due_date).must_equal Date.today + 7
+
+      updated_customer = Customer.find_by(id: valid_customer.id)
+      expect _(updated_customer.movies_checked_out_count).must_equal start_checkout_count + 1
       
       check_response(expected_type: Hash, expected_status: :ok)
     end
@@ -41,6 +45,8 @@ describe RentalsController do
   describe "checkin" do
     before do
       post checkout_path, params: rental_data
+      customer = Customer.find_by(id: valid_customer.id)
+      @start_checkout_count = customer.movies_checked_out_count
     end
 
     it "can update with valid data" do
@@ -53,6 +59,9 @@ describe RentalsController do
 
       rental = Rental.find_by(customer_id: valid_customer.id, movie_id: valid_movie.id)
       expect(rental.returned).must_equal true
+
+      updated_customer = Customer.find_by(id: valid_customer.id)
+      expect _(updated_customer.movies_checked_out_count).must_equal @start_checkout_count - 1
     end 
 
     it "won't update with invalid data" do
