@@ -70,6 +70,18 @@ describe RentalsController do
   end
 
   describe "checkin" do
+    let(:customer) {
+      customers(:janice)
+    }
+    let(:movie) {
+      movies(:movie1)
+    }
+    let(:rental_data) {
+      {
+        customer_id: customer.id,
+        movie_id: movie.id
+      }
+    }
     it "can successfully check a rental back in with valid input" do
       expect{post checkin_path, params: rental_data}.wont_change 'Rental.count'
       must_respond_with :ok
