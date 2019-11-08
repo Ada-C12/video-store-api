@@ -10,4 +10,13 @@ class Customer < ApplicationRecord
   validates :postal_code, presence: true
   validates :phone, presence: true
   validates :movies_checked_out_count, presence: true
+
+  def update_movies_checked_out(status)
+    if status == "checkout"
+      self.movies_checked_out_count += 1
+    elsif status == "checkin"
+      self.movies_checked_out_count -= 1 
+    end 
+  end 
+
 end

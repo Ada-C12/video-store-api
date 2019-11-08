@@ -16,7 +16,7 @@ describe MoviesController do
   describe "index" do 
     it "responds with JSON and success" do 
       get movies_path
-      check_response(expected_type: Array)
+      check_response(expected_type: Array, expected_status: :success)
     end
     
     it "responds with an array of movie hashes" do 

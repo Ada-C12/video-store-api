@@ -7,4 +7,12 @@ class Movie < ApplicationRecord
   validates :release_date, presence: true
   validates :inventory, presence: true
   validates :available_inventory, presence: true
+
+  def update_available_inventory(status)
+    if status == "checkout"
+      self.available_inventory -= 1 
+    elsif status == "checkin"
+      self.available_inventory += 1
+    end 
+  end 
 end
