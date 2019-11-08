@@ -1,4 +1,4 @@
-# Video Store
+ # Video Store
 ## What We're Looking For
 
 Feature | Feedback

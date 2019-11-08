@@ -4,7 +4,18 @@ class RentalsController < ApplicationController
     rental.checkout_date = Date.today
     rental.due_date = Date.today + 7
     
-    if rental.save
+    movie = Movie.find_by(id: rental.movie_id)
+    if movie 
+      if movie.available_inventory <=0
+        render json: {errors: {movie: "insufficient available inventory"}}, status: :bad_request
+        return
+      else 
+        movie.available_inventory -= 1
+      end
+      # if movie == nil is not needed as it is addressed as part of the next if block
+    end
+    
+    if rental.save && movie.save
       render json: rental.as_json(only: [:due_date]), status: :ok
       return
     else

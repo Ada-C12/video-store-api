@@ -2,11 +2,18 @@ require "test_helper"
 
 describe RentalsController do
   describe "check-out" do
-    it "creates a rental given valid movie id and valid customer id" do
+    it "creates a rental given valid movie id and valid customer id and sufficient inventory" do
       # params
+      initial_inventory = 3
+      available_inventory = 3
+      test_movie = movies(:m_1)
+      test_movie.inventory = initial_inventory
+      test_movie.available_inventory = available_inventory
+      test_movie.save
+      
       rental_params = {
         customer_id: customers(:c_3).id,
-        movie_id: movies(:m_1).id
+        movie_id: test_movie.id
       }
       # need some comparison dates
       checkout_date = Date.today
@@ -35,6 +42,14 @@ describe RentalsController do
       # and movie.rentals list of the customer and movie assigned
       expect(movie.rentals).must_include new_rental
       expect(customer.rentals).must_include new_rental
+      
+      #verifies that movie inventory is unchanged
+      expect(movie.inventory).must_equal initial_inventory
+      
+      #verifies that movie available inventory decreased by 1
+      expect(movie.available_inventory).must_equal initial_inventory - 1
+      
+      
     end
     
     it "returns an error when movie inventory is zero" do
