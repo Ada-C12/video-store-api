@@ -5,21 +5,31 @@ class RentalsController < ApplicationController
     rental.due_date = Date.today + 7
     
     movie = Movie.find_by(id: rental.movie_id)
+    customer = Customer.find_by(id: rental.customer_id)
+    
+    if customer.nil? 
+      render json: {errors: {customer: "customer ID could not be found"}}, status: :bad_request
+      return
+    end
+    
     if movie 
       if movie.available_inventory <=0
         render json: {errors: {movie: "insufficient available inventory"}},status: :bad_request
         return
       else 
         movie.available_inventory -= 1
+        movie.save 
+        
+        customer.movies_checked_out_count += 1
+        customer.save
       end
-      # if movie == nil is not needed as it is addressed as part of the next if block
+    else
+      render json: {errors: {movie: "movie ID could not be found"}}, status: :bad_request
+      return
     end
     
-    if rental.save && movie.save
+    if rental.save
       render json: rental.as_json(only: [:due_date]), status: :ok
-      return
-    else
-      render json: {errors: rental.errors.messages}, status: :bad_request
       return
     end
   end
@@ -34,8 +44,16 @@ class RentalsController < ApplicationController
         render json: {errors: {rental: "Rental is not for this location"}}, status: :bad_request
         return
       end
+      
+      rental.checkin_date = Date.today
+      rental.save
+      
       movie.available_inventory += 1
       movie.save
+      
+      customer.movies_checked_out_count -= 1
+      customer.save
+      
       render json: rental.as_json(only: [:id]), status: :ok
       return
     elsif movie

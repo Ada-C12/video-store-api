@@ -11,8 +11,6 @@ class MoviesController < ApplicationController
     movie = Movie.find_by(id: params[:id])
     
     if movie
-      # movie.adjust_available_inventory()
-      # status should be :found, but Postman wants :ok
       render json: movie.as_json(only: SHOW_MOVIE_FIELDS), status: :ok
       return
     else

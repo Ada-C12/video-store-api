@@ -11,10 +11,14 @@ describe RentalsController do
       test_movie.available_inventory = available_inventory
       test_movie.save
       
+      test_customer = customers(:c_3)
+      test_customer.movies_checked_out_count = 0
+      
       rental_params = {
-        customer_id: customers(:c_3).id,
+        customer_id: test_customer.id,
         movie_id: test_movie.id
       }
+      
       # need some comparison dates
       checkout_date = Date.today
       due_date = Date.today + 7
@@ -48,6 +52,9 @@ describe RentalsController do
       
       #verifies that movie available inventory decreased by 1
       expect(movie.available_inventory).must_equal initial_inventory - 1
+      
+      #verifies that customer's movies_checked_out_count must increase by 1
+      expect(customer.movies_checked_out_count).must_equal 1
       
     end
     
@@ -129,8 +136,14 @@ describe RentalsController do
     it "renders JSON and success when given valid movie id, customer id WITH that rental being checked out" do
       # params
       test_movie = movies(:m_2)
+      test_customer = customers(:c_1)
+      
+      test_customer.movies_checked_out_count = 1
+      test_customer.save
+      
+      
       rental_params = {
-        customer_id: customers(:c_1).id,
+        customer_id: test_customer.id,
         movie_id: test_movie.id
       }
       
@@ -143,21 +156,33 @@ describe RentalsController do
       }.wont_differ "Rental.count"
       
       # returns JSON, status bad_request, and ok
-      check_response(expected_type: Hash, expected_status: :ok)
+      body = check_response(expected_type: Hash, expected_status: :ok)
       
       expect(Movie.find_by(id: test_movie.id).available_inventory).must_equal initial_available_inventory + 1
+      
+      # checks that checkin date must be today
+      rental = Rental.find_by(id: body["id"])
+      customer = Customer.find_by(id: rental.customer_id)
+      
+      expect(rental.checkin_date).must_equal Date.today
+      
+      expect(customer.movies_checked_out_count).must_equal 0
+      
     end
     
     it "renders JSON and success when given valid movie id, customer id WITHOUT that rental being checked out aka person returns a movie from another store" do
       #r_1 is being rereturned 
       # params
       test_movie = movies(:m_1)
+      test_customer = customers(:c_1)
       rental_params = {
-        customer_id: customers(:c_1).id,
+        customer_id: test_customer.id,
         movie_id: test_movie.id
       }
       
       initial_available_inventory = test_movie.available_inventory
+      
+      initial_rentals = Rental.where(movie_id: test_movie.id, customer_id: test_customer.id).sort
       
       # the route
       # expect that it won't change rental count
@@ -172,6 +197,12 @@ describe RentalsController do
       
       # checks rental from movie perspective
       expect(Movie.find_by(id: test_movie.id).available_inventory).must_equal initial_available_inventory 
+      
+      
+      rentals = Rental.where(movie_id: test_movie.id, customer_id: test_customer.id).sort
+      
+      expect(rentals).must_equal initial_rentals
+      
     end
     
     it "renders JSON and bad_request when given invalid movie id" do

@@ -6,6 +6,7 @@ c_1:
   state: OR
   postal_code: 24309
   phone: (322) 510-8695
+  movies_checked_out_count: 0
 
 c_2:
   name: Curran Stout
@@ -15,6 +16,7 @@ c_2:
   state: California
   postal_code: 94267
   phone: (908) 949-6758
+  movies_checked_out_count: 0
 
 c_3:
   name: Roanna Robinson
@@ -24,6 +26,7 @@ c_3:
   state: PA
   postal_code: 15867
   phone: (323) 336-1841
+  movies_checked_out_count: 0
 
 c_4:
   name: Carolyn Chandler
@@ -33,3 +36,4 @@ c_4:
   state: IN
   postal_code: 73684
   phone: (234) 837-2886
+  movies_checked_out_count: 0
