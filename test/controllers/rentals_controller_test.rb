@@ -11,12 +11,12 @@ describe RentalsController do
       expect{ 
         post checkout_path, params: {movie_id: @movie.id, customer_id: @customer.id} 
       }.must_change "Rental.count", 1
-
+      
       created_rental = Rental.find_by(movie_id: @movie.id)
       
       expect(created_rental.checkout_date).must_be_kind_of Date
       expect(created_rental.due_date).must_be_kind_of Date
-
+      
       body = check_response(expected_type: Hash)
       expect(body["id"]).must_equal created_rental.id
       must_respond_with :ok
@@ -33,13 +33,8 @@ describe RentalsController do
       body = check_response(expected_type: Hash, expected_status: :bad_request)
       expect(body["errors"]).must_include "unable to create rental"
     end
-<<<<<<< HEAD
     
-    it "will not create rental without valid movie id" do      
-=======
-
     it "will respond with error if invalid movie id" do      
->>>>>>> master
       expect{ 
         post checkout_path, params: {movie_id: nil, customer_id: @customer.id} 
       }.wont_change "Rental.count"
@@ -48,7 +43,7 @@ describe RentalsController do
       body = check_response(expected_type: Hash, expected_status: :bad_request)
       expect(body["errors"]).must_include "unable to create rental"
     end
-
+    
     it "will respond with error if invalid cusotmer id" do      
       expect{ 
         post checkout_path, params: {movie_id: @movie.id, customer_id: nil} 
