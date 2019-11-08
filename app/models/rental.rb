@@ -2,11 +2,7 @@ class Rental < ApplicationRecord
   belongs_to :movie
   belongs_to :customer
   
-  
-  
   def self.check_out(customer, movie)
-    rental = nil
-    
     if movie.available_inventory > 0
       rental = Rental.new
       rental.customer = customer
@@ -15,14 +11,16 @@ class Rental < ApplicationRecord
       rental.due_date = rental.check_out + 7
       rental.save
       
-      movie.available_inventory -= 1
-      movie.save
+      new_available_inventory = movie.available_inventory - 1
+      movie.update(available_inventory: new_available_inventory)
+
+      new_movies_checked_out_count = customer.movies_checked_out_count + 1
+      customer.update(movies_checked_out_count: new_movies_checked_out_count)
       
-      customer.movies_checked_out_count += 1
-      customer.save
+      return rental
     end
     
-    return rental
+    return nil
   end
   
   def self.check_in(rental)

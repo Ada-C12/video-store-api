@@ -27,6 +27,16 @@ describe Movie do
         expect(new_movie.errors.messages).must_include :title
         expect(new_movie.errors.messages[:title]).must_equal ["can't be blank"]
       end
+
+      it "must be unique" do
+        new_movie.save
+        duplicate_title = new_movie.title   
+        duplicate_movie = Movie.create(title: duplicate_title, inventory: 5)
+        
+        expect(duplicate_movie.valid?).must_equal false
+        expect(duplicate_movie.errors.messages).must_include :title
+        expect(duplicate_movie.errors.messages[:title]).must_equal ["has already been taken"]
+      end
     end
     
     describe "inventory" do
@@ -44,6 +54,24 @@ describe Movie do
         expect(new_movie.valid?).must_equal false
         expect(new_movie.errors.messages).must_include :inventory
         expect(new_movie.errors.messages[:inventory]).must_equal ["must be greater than or equal to 0"]
+      end
+    end
+
+    describe "available_inventory" do
+      it "must have available_inventory and be a number" do
+        new_movie.available_inventory = nil
+        
+        expect(new_movie.valid?).must_equal false
+        expect(new_movie.errors.messages).must_include :available_inventory
+        expect(new_movie.errors.messages[:available_inventory]).must_equal ["is not a number"]
+      end
+      
+      it "must be greater or equal to zero" do
+        new_movie.available_inventory = -1
+        
+        expect(new_movie.valid?).must_equal false
+        expect(new_movie.errors.messages).must_include :available_inventory
+        expect(new_movie.errors.messages[:available_inventory]).must_equal ["must be greater than or equal to 0"]
       end
     end
   end

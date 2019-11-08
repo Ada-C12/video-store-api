@@ -27,6 +27,24 @@ describe Customer do
         expect(new_customer.errors.messages[:name]).must_equal ["can't be blank"]
       end
     end
+
+    describe "movies_checked_out_count" do
+      it "must have movies_checked_out_count" do
+        new_customer.movies_checked_out_count = nil 
+        
+        expect(new_customer.valid?).must_equal false
+        expect(new_customer.errors.messages).must_include :movies_checked_out_count
+        expect(new_customer.errors.messages[:movies_checked_out_count]).must_equal ["is not a number"]
+      end
+      
+      it "must be greater or equal to zero" do
+        new_customer.movies_checked_out_count = -1
+        
+        expect(new_customer.valid?).must_equal false
+        expect(new_customer.errors.messages).must_include :movies_checked_out_count
+        expect(new_customer.errors.messages[:movies_checked_out_count]).must_equal ["must be greater than or equal to 0"]
+      end
+    end
   end
   
   describe "relationships" do
