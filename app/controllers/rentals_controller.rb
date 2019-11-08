@@ -7,9 +7,10 @@ class RentalsController < ApplicationController
       #set status
       if rental.save
         Rental.due_date(rental)
-        Rental.status_checkout(rental)
+        # Rental.status_checkout(rental)
 
         Customer.check_out_movie(rental_params[:customer_id])
+        Movie.check_out(rental_params[:movie_id])
         #decrement available_count
   
         render json: rental.as_json(only: [:customer_id, :movie_id]) 
@@ -24,15 +25,15 @@ class RentalsController < ApplicationController
   end
 
   def check_in
-    customer = Customer.find_by(id: rental_params[:customer_id])
+    customer = Customer.find_by(id: rental_params[:customer_id])        
     movie = Movie.find_by(id: rental_params[:movie_id])
-    if rental = Rental.find_by(customer_id: customer.id, movie_id: movie.id)
+    if rental = Rental.find_by(customer_id: rental_params[:customer_id], movie_id: rental_params[:movie_id])
   
-      # rental.update(inventory: rental.inventory + 1)
-      movie.update(inventory: movie.inventory + 1)
+      customer = Customer.check_in_movie(customer)
       
-      #rental.save
-      movie.save
+      
+   
+      
 
       render json: rental.as_json(only: [:customer_id,:movie_id]) 
       return

@@ -9,11 +9,11 @@ class Rental < ApplicationRecord
    return rental
   end
 
-  def self.status_checkout(rental)
-    rental.status = "checked out"
-    rental.save
-    return rental
-    #decrement available_count
-    #increment customer movie_checked_out_coun
-  end
+  # def self.status_checkout(rental)
+  #   rental.status = "checked out"
+  #   rental.save
+  #   return rental
+  #   #decrement available_count
+  #   #increment customer movie_checked_out_coun
+  # end
 end
