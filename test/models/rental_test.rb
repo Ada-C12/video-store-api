@@ -12,14 +12,14 @@ describe Rental do
   describe "relations" do
     it "belongs to a movie" do
       r = rentals(:rental_one)
-      r.must_respond_to :movie_id
-      r.movie_id.must_be_kind_of Integer
+      _(r).must_respond_to :movie_id
+      _(r.movie_id).must_be_kind_of Integer
     end
     
     it "belongs to a customer" do
       r = rentals(:rental_one)
-      r.must_respond_to :customer_id
-      r.customer_id.must_be_kind_of Integer
+      _(r).must_respond_to :customer_id
+      _(r.customer_id).must_be_kind_of Integer
     end
   end
   
