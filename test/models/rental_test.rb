@@ -149,24 +149,28 @@ describe Rental do
     describe "self.sort_by_type" do
       
       before do
-        @customer_two = Customer.create(name: "second customer")
+        @customer_two = Customer.create(name: "second customer", postal_code: "11111")
+        @customer.update(postal_code: "22222")
         @movie_two = Movie.create(title: "second movie", inventory: 5)
         Rental.create(movie_id: @movie.id, customer_id: @customer.id, checkout_date: Date.today - 10, due_date: Date.today - 3)
         Rental.create(movie_id: @movie_two.id, customer_id: @customer_two.id, checkout_date: Date.today - 9, due_date: Date.today - 2)
         Rental.create(movie_id: @movie.id, customer_id: @customer_two.id, checkout_date: Date.today - 9, due_date: Date.today - 3)
       end
-
+      
       it "sorts rentals by any possible type" do
-        # excluded params :title, :name, and :postal_code
-        # suitable for Sandi Metz-ing a template method
-        sort_types = [:movie_id, :customer_id, :checkout_date, :due_date]
+        sort_types = [:movie_id, :customer_id, :name, :postal_code, :title, :checkout_date, :due_date]
         sort_types.each do |type|
           rentals = Rental.sort_by_type(type)
-          expect(rentals[0][type] <= rentals[1][type]).must_equal true
-          expect(rentals[1][type] <= rentals[2][type]).must_equal true
+          if [:name, :postal_code].include? type
+            expect(rentals[0].customer[type] <= rentals[1].customer[type]).must_equal true 
+          elsif [:title].include? type
+            expect(rentals[0].movie[type] <= rentals[1].movie[type]).must_equal true 
+          else
+            expect(rentals[0][type] <= rentals[1][type]).must_equal true
+            expect(rentals[1][type] <= rentals[2][type]).must_equal true
+          end
         end
       end
-    end
-    
+    end      
   end
 end

@@ -48,7 +48,12 @@ class Rental < ApplicationRecord
   end
   
   def self.sort_by_type(sort_type)
-    sort_type = sort_type.to_sym
-    return Rental.order(sort_type => :asc)
+    if [:name, :postal_code].include? sort_type
+      return Rental.all.sort_by{|rental| rental.customer[sort_type]}
+    elsif [:title].include? sort_type
+      return Rental.all.sort_by{|rental| rental.movie[sort_type]}
+    else
+      return Rental.order(sort_type => :asc)
+    end
   end
 end
