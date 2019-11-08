@@ -3,10 +3,10 @@ require "test_helper"
 describe RentalsController do
   describe "checkout" do 
     it "checks out movie to customer by creating a Rental" do 
-      # binding.pry
       movie = movies(:m1)
       customer = customers(:c1)
-      expect{ post movie_checkout_path }.must_differ "Rental.count", 1
+      # binding.pry
+      expect{ post checkout_path }.must_differ "Rental.count", 1
 
       # rental = Rental.find_by(id: Rental.id)
       # expect(rental.check_out).must_equal 2019-11-07
