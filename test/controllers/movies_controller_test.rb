@@ -67,28 +67,27 @@ describe MoviesController do
         inventory: 10,
       }
     }
-    
+
     it "can create a new movie" do
-      # binding.pry
-      
       expect {
         post movies_path, params: movie_data
       }.must_differ "Movie.count", 1
       must_respond_with :ok
     end
-    
+
     it "will respond with bad_request for invalid data" do
-      movie_data[:title] = nil
-      
-      expect {
-        post movies_path, params: movie_data
-      }.wont_change "Movie.count"
-      
-      must_respond_with :bad_request
-      
-      expect(response.header["Content-Type"]).must_include "json"
-      body = JSON.parse(response.body)
-      expect(body["errors"].keys).must_include "title"
+      [:title, :overview, :release_date, :inventory].each do |field|
+        movie_data[field] = nil
+        expect {
+          post movies_path, params: movie_data
+        }.wont_change "Movie.count"
+
+        must_respond_with :bad_request
+
+        expect(response.header["Content-Type"]).must_include "json"
+        body = JSON.parse(response.body)
+        expect(body["errors"].keys).must_include field.to_s
+      end
     end
   end
 end
