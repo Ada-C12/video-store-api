@@ -24,6 +24,9 @@ class MoviesController < ApplicationController
   def create
     new_movie = Movie.new(movie_params)
     if new_movie.save
+      # if new_movie.release_date.class == String
+      #   new_movie.release_date = Date.parse(new_movie.release_date)
+      # end
       render json: new_movie.as_json(only: [:id]), status: :ok
     else
       render json: { errors: new_movie.errors.messages }, status: :bad_request
@@ -36,9 +39,6 @@ class MoviesController < ApplicationController
 
   def movie_params
     params.permit(:title, :overview, :release_date, :inventory)
-
-
-
   end
 
 
