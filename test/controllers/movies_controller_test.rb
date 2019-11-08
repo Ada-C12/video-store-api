@@ -28,7 +28,7 @@ describe MoviesController do
       end 
     end 
     
-    it "will respond with an empty array when there are no movies" do 
+    it "will respond with an empty array when no movies" do 
       Rental.destroy_all
       #probably have to add some state to the movies, like “isDeleted”?
       #We can either leave it like this, or add a field to the model so that we can basically leave a Movie in the movies table but have some way to tell that it’s actually deleted and that the controller should filter it out.
@@ -60,35 +60,35 @@ describe MoviesController do
   
   describe "create" do 
     let(:movie_data) { 
-      {
-        title: "Babe 2: Pig in the City",
-        inventory: 2,
-        overview: "This post-modern gothic addresses themes of loyalty and sacrifice.",
-        release_date: Date.new(11-1-20),
-        available_inventory: 10
-      }
-    }
-    
-    it "can create a new movie" do 
-      expect {
-        post movies_path, params: movie_data
-      }.must_differ 'Movie.count', 1
-      
-      body = check_response(expected_type: Hash, expected_status: :ok)
-      
-      new_movie = Movie.find(body["id"])
-      expect(body.keys).must_include "id"
-    end 
-    
-    it "will respond with bad_request for invalid data" do
-      movie_data[:title] = nil
-      
-      expect {
-        post movies_path, params: movie_data
-      }.wont_change "Movie.count"
-      
-      body = check_response(expected_type: Hash, expected_status: :bad_request)
-      expect(body["errors"].keys).must_include "title"
-    end 
-  end 
+    {
+    title: "Babe 2: Pig in the City",
+    inventory: 2,
+    overview: "This post-modern gothic addresses themes of loyalty and sacrifice.",
+    release_date: Date.new(11-1-20),
+    available_inventory: 10
+  }
+}
+
+it "can create a new movie" do 
+  expect {
+  post movies_path, params: movie_data
+}.must_differ 'Movie.count', 1
+
+body = check_response(expected_type: Hash, expected_status: :ok)
+
+new_movie = Movie.find(body["id"])
+expect(body.keys).must_include "id"
+end 
+
+it "will respond with bad_request for invalid data" do
+  movie_data[:title] = nil
+  
+  expect {
+  post movies_path, params: movie_data
+}.wont_change "Movie.count"
+
+body = check_response(expected_type: Hash, expected_status: :bad_request)
+expect(body["errors"].keys).must_include "title"
+end 
+end 
 end 
