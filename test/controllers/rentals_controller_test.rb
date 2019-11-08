@@ -36,18 +36,25 @@ describe RentalsController do
   end
 
    describe "check_in" do 
-    it "increases available inventory by 1" do
-      customer = customers(:customer1)
-      movie = movies(:movie1)
-      rental = rentals(:rental1)
+
+    # it "can find the rental from the customer and movie" do 
+    #   customer = 
+    # end
+
+
+  #   it "increases available inventory by 1" do
+  #     customer = customers(:customer1)
+  #     movie = movies(:movie1)
+  #     rental = rentals(:rental1)
 
     
 
-      post check_in_path(rental)
+  #     post check_in_path(rental)
 
-      expect(movie.inventory).must_equal 11
-    end
-   end
+  #     expect(movie.inventory).must_equal 11
+  #   end
+  #  end
+
   #   it "changes the status of the given rental to checked in" do 
   #   customer = customers(:customer1)
   #   movie = movies(:movie1)
