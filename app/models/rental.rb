@@ -20,4 +20,9 @@ class Rental < ApplicationRecord
       return false
     end
   end
+
+  def checkin
+    self.movie.available_inventory += 1
+    self.customer.movies_checked_out_count -= 1
+  end
 end

@@ -77,9 +77,21 @@ describe Rental do
 
     describe 'checkin' do
       it "should increment the movie available inventory when checked in by 1" do
+        rental = rentals(:one)
+        inventory = rental.movie.available_inventory
+
+        rental.checkin
+
+        expect(rental.movie.available_inventory).must_equal inventory + 1
       end
 
       it "should decrement the customer movies checked out by 1" do
+        rental = rentals(:one)
+        movies = rental.customer.movies_checked_out_count
+
+        rental.checkin
+
+        expect(rental.customer.movies_checked_out_count).must_equal movies - 1
       end
       
     end
