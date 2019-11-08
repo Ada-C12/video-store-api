@@ -29,7 +29,11 @@ class RentalsController < ApplicationController
     customer = Customer.find_by(id: rental_params[:customer_id])
     
     if movie && customer
-      render json: {}, status: :ok
+      rental = Rental.where(movie_id: movie.id, customer_id: customer.id, checkin_date: nil).first
+      
+      movie.available_inventory += 1
+      movie.save
+      render json: rental.as_json(only: [:id]), status: :ok
       return
     elsif movie
       render json: {errors: {customer: "customer ID could not be found"}}, status: :bad_request
