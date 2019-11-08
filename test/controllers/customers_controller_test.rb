@@ -63,6 +63,12 @@ describe CustomersController do
         expect(body["errors"]).must_include "not found"
       end
 
+      it "will respond with error if given invalid sort_type" do 
+        get customers_path, params: { sort: "banana", n: "3", p: "10"}
+      
+        body = check_response(expected_type: Hash, expected_status: :bad_request)
+        expect(body["errors"]).must_include "invalid sort category"
+      end
     end
     
   end
