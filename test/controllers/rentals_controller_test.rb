@@ -81,12 +81,13 @@ describe RentalsController do
       @rental = Rental.create(customer_id: @customer.id, movie_id: @movie.id)
       @rental.checkout_date = Date.today - 10
       @rental.due_date = Date.today - 3
+      @rental.save!
     end
     
     it "returns all overdue rentals" do
       get overdue_path
       
-      body = check_response(expected_type: Hash)
+      body = check_response(expected_type: Array)
     end
     
     it "returns an empty array if there are no overdue rentals" do
@@ -94,7 +95,7 @@ describe RentalsController do
       
       get overdue_path
       
-      body = check_response(expected_type: Hash)
+      body = check_response(expected_type: Array)
       expect(body.length).must_equal 0
     end
   end

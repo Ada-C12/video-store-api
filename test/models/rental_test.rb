@@ -125,18 +125,48 @@ describe Rental do
     end
     
     describe "overdue" do
+      before do
+        @rental.update(due_date: Date.today - 3)
+      end
       it "returns all overdue rentals" do
         expect(@rental.returned).must_equal false
         expect(Rental.overdue).must_include @rental
+        Rental.overdue.each do |rental|
+          assert(rental.due_date < Date.today)
+        end
       end
       
       it "ignores rentals that have been returned" do
         expect(@rental.returned).must_equal false
         
         @rental.check_in_rental
+        expect(@rental.returned).must_equal true
         assert(Rental.overdue.empty?)
         expect(Rental.overdue).must_equal []
       end
     end
+    
+    describe "self.sort_by_type" do
+      
+      before do
+        @customer_two = Customer.create(name: "second customer")
+        @movie_two = Movie.create(title: "second movie", inventory: 5)
+        Rental.create(movie_id: @movie.id, customer_id: @customer.id, checkout_date: Date.today - 10, due_date: Date.today - 3)
+        Rental.create(movie_id: @movie_two.id, customer_id: @customer_two.id, checkout_date: Date.today - 9, due_date: Date.today - 2)
+        Rental.create(movie_id: @movie.id, customer_id: @customer_two.id, checkout_date: Date.today - 9, due_date: Date.today - 3)
+      end
+
+      it "sorts rentals by any possible type" do
+        # excluded params :title, :name, and :postal_code
+        # suitable for Sandi Metz-ing a template method
+        sort_types = [:movie_id, :customer_id, :checkout_date, :due_date]
+        sort_types.each do |type|
+          rentals = Rental.sort_by_type(type)
+          expect(rentals[0][type] <= rentals[1][type]).must_equal true
+          expect(rentals[1][type] <= rentals[2][type]).must_equal true
+        end
+      end
+    end
+    
   end
 end

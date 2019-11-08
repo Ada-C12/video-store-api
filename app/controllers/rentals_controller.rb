@@ -33,7 +33,13 @@ class RentalsController < ApplicationController
   end
   
   def overdue
-    render json: Rental.overdue.as_json(only: [:id]), status: :ok
+    if params[:sort] || params[:n] || params[:p]
+      rentals = Rental.overdue.group_by_n(params[:sort], params[:n], params[:p])
+    else
+      rentals = Rental.overdue
+    end
+
+    render json: rentals.as_json(only: [:id, :movie_id, :title, :customer_id, :name, :postal_code, :checkout_date, :due_date]), status: :ok
     return
   end
   
