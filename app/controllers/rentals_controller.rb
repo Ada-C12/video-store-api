@@ -5,7 +5,7 @@ class RentalsController < ApplicationController
   
   def check_out
     rental = Rental.check_out(@customer, @movie)
-    if rental != nil
+    if rental 
       render json: rental.as_json(only: [:id]), status: :ok
       return
     else

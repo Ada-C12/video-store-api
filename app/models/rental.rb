@@ -2,8 +2,6 @@ class Rental < ApplicationRecord
   belongs_to :movie
   belongs_to :customer
   
-  
-  
   def self.check_out(customer, movie)
     rental = nil
     
