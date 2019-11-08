@@ -4,3 +4,9 @@ m1:
   release_date: 2019-11-05
   inventory: 10
   available_inventory: 10
+m2:
+  title: m2
+  overview: What a cool movie
+  release_date: 2019-11-05
+  inventory: 10
+  available_inventory: 0
