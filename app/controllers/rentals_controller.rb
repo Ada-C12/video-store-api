@@ -4,13 +4,12 @@ class RentalsController < ApplicationController
     customer = Customer.find_by(id: rental_params[:customer_id])
 
     new_rental = Rental.new(rental_params)
+    new_rental.check_out = Time.now
+    new_rental.due_date = new_rental.check_out + (7*24*60*60)
     
-    if new_rental.save
-      new_rental.check_out = Time.now
-      new_rental.due_date = new_rental.check_out + (7*24*60*60)
-      
-      new_rental.movie.available_inventory -= 1 
-      
+    new_rental.movie.available_inventory -= 1 
+    
+    if new_rental.save && new_rental.movie.save
       render json: new_rental.as_json(only: [:customer_id, :movie_id]), status: :created 
       return
     else 

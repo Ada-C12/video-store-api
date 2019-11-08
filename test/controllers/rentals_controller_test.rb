@@ -21,8 +21,9 @@ describe RentalsController do
       
       expect(rental.check_out).must_be_kind_of Time
       expect(rental.due_date).must_be_kind_of Time
-      # binding.pry
-      expect(rental.movie.available_inventory).must_equal 9
+      
+      movie.reload 
+      expect(movie.available_inventory).must_equal 9
     end 
 
     it "sends response for bad request" do 
