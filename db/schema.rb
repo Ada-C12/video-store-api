@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 2019_11_07_231315) do
     t.integer "movie_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "checkout"
     t.datetime "check_in"
     t.datetime "check_out"
     t.datetime "due_date"
