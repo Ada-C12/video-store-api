@@ -100,4 +100,10 @@ describe RentalsController do
       expect(body["errors"]).must_equal "Rental is not found!"
     end
   end
+
+  describe "overdue" do 
+    it "returns a list of all overdue rentals" do 
+      get overdue_path
+    end
+  end
 end
