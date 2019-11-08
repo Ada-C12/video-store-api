@@ -1,0 +1,170 @@
+[
+  {
+    "checkout_date": "2019-01-02",
+    "due_date": "2019-01-09",
+    "customer_id": 199,
+    "movie_id": 1,
+    "checkin_date": "2019-01-10"
+  },
+  {
+    "checkout_date": "2019-01-03",
+    "due_date": "2019-01-10",
+    "customer_id": 125,
+    "movie_id": 31,
+    "checkin_date": "2019-01-07"
+  },
+  {
+    "checkout_date": "2019-01-02",
+    "due_date": "2019-01-09",
+    "customer_id": 113,
+    "movie_id": 46,
+    "checkin_date": "2019-01-08"
+  },
+  {
+    "checkout_date": "2019-01-09",
+    "due_date": "2019-01-16",
+    "customer_id": 85,
+    "movie_id": 9,
+    "checkin_date": "nil"
+  },
+  {
+    "checkout_date": "2019-01-02",
+    "due_date": "2019-01-09",
+    "customer_id": 188,
+    "movie_id": 21,
+    "checkin_date": "2019-01-03"
+  },
+  {
+    "checkout_date": "2019-01-02",
+    "due_date": "2019-01-09",
+    "customer_id": 160,
+    "movie_id": 82,
+    "checkin_date": "2019-01-03"
+  },
+  {
+    "checkout_date": "2019-01-09",
+    "due_date": "2019-01-16",
+    "customer_id": 4,
+    "movie_id": 89,
+    "checkin_date": "2019-01-13"
+  },
+  {
+    "checkout_date": "2019-01-02",
+    "due_date": "2019-01-09",
+    "customer_id": 40,
+    "movie_id": 76,
+    "checkin_date": "2019-01-05"
+  },
+  {
+    "checkout_date": "2019-01-02",
+    "due_date": "2019-01-09",
+    "customer_id": 52,
+    "movie_id": 80,
+    "checkin_date": "2019-01-06"
+  },
+  {
+    "checkout_date": "2019-01-03",
+    "due_date": "2019-01-10",
+    "customer_id": 141,
+    "movie_id": 35,
+    "checkin_date": "2019-01-05"
+  },
+  {
+    "checkout_date": "2019-01-04",
+    "due_date": "2019-01-11",
+    "customer_id": 15,
+    "movie_id": 51,
+    "checkin_date": "nil"
+  },
+  {
+    "checkout_date": "2019-01-05",
+    "due_date": "2019-01-12",
+    "customer_id": 119,
+    "movie_id": 26,
+    "checkin_date": "2019-01-08"
+  },
+  {
+    "checkout_date": "2019-01-09",
+    "due_date": "2019-01-16",
+    "customer_id": 112,
+    "movie_id": 51,
+    "checkin_date": "2019-01-13"
+  },
+  {
+    "checkout_date": "2019-01-02",
+    "due_date": "2019-01-09",
+    "customer_id": 91,
+    "movie_id": 25,
+    "checkin_date": "2019-01-03"
+  },
+  {
+    "checkout_date": "2019-01-02",
+    "due_date": "2019-01-09",
+    "customer_id": 64,
+    "movie_id": 62,
+    "checkin_date": "2019-01-06"
+  },
+  {
+    "checkout_date": "2019-01-09",
+    "due_date": "2019-01-16",
+    "customer_id": 125,
+    "movie_id": 65,
+    "checkin_date": "2019-01-12"
+  },
+  {
+    "checkout_date": "2019-01-02",
+    "due_date": "2019-01-09",
+    "customer_id": 171,
+    "movie_id": 53,
+    "checkin_date": "2019-01-07"
+  },
+  {
+    "checkout_date": "2019-01-03",
+    "due_date": "2019-01-10",
+    "customer_id": 130,
+    "movie_id": 68,
+    "checkin_date": "nil"
+  },
+  {
+    "checkout_date": "2019-01-09",
+    "due_date": "2019-01-16",
+    "customer_id": 58,
+    "movie_id": 10,
+    "checkin_date": "nil"
+  },
+  {
+    "checkout_date": "2019-01-02",
+    "due_date": "2019-01-09",
+    "customer_id": 158,
+    "movie_id": 27,
+    "checkin_date": "2019-01-03"
+  },
+  {
+    "checkout_date": "2019-01-02",
+    "due_date": "2019-01-09",
+    "customer_id": 188,
+    "movie_id": 30,
+    "checkin_date": "2019-01-07"
+  },
+  {
+    "checkout_date": "2019-01-07",
+    "due_date": "2019-01-14",
+    "customer_id": 134,
+    "movie_id": 67,
+    "checkin_date": "2019-01-12"
+  },
+  {
+    "checkout_date": "2019-01-08",
+    "due_date": "2019-01-15",
+    "customer_id": 176,
+    "movie_id": 85,
+    "checkin_date": "2019-01-15"
+  },
+  {
+    "checkout_date": "2019-01-09",
+    "due_date": "2019-01-16",
+    "customer_id": 21,
+    "movie_id": 64,
+    "checkin_date": "nil"
+  }
+]
