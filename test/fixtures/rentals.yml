@@ -1,0 +1,7 @@
+rental_one:
+  customer_id: 1
+  movie_id: 2
+rental_two:
+  customer_id: 5
+  movie_id: 10
+  

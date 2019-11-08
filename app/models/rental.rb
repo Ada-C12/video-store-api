@@ -13,13 +13,13 @@ class Rental < ApplicationRecord
       rental.movie = movie
       rental.check_out = Date.today
       rental.due_date = rental.check_out + 7
-      rental.save!
+      rental.save
       
       movie.available_inventory -= 1
-      movie.save!
+      movie.save
       
       customer.movies_checked_out_count += 1
-      customer.save! 
+      customer.save
     end
     
     return rental

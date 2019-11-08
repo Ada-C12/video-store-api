@@ -1,11 +1,11 @@
 require "test_helper"
 
 describe Movie do
-
+  
   let (:new_movie) { movies(:one) }
   let (:new_customer) { customers(:one) }
   let (:new_customer2) { customers(:two) }
-
+  
   describe "initialize" do
     it "can be instantiated if it has valid information" do
       expect(new_movie.valid?).must_equal true
@@ -17,7 +17,7 @@ describe Movie do
       end
     end
   end
-
+  
   describe "validations" do
     describe "title" do
       it "must have a title" do
@@ -28,7 +28,7 @@ describe Movie do
         expect(new_movie.errors.messages[:title]).must_equal ["can't be blank"]
       end
     end
-
+    
     describe "inventory" do
       it "must have a inventory and be a number" do
         new_movie.inventory = nil
@@ -37,7 +37,7 @@ describe Movie do
         expect(new_movie.errors.messages).must_include :inventory
         expect(new_movie.errors.messages[:inventory]).must_equal ["is not a number"]
       end
-
+      
       it "must have be greater or equal to zero" do
         new_movie.inventory = -1
         
@@ -47,7 +47,7 @@ describe Movie do
       end
     end
   end
-
+  
   describe "relationships" do
     it "can have many rentals" do
       # Arrange
@@ -59,7 +59,7 @@ describe Movie do
       expect((new_movie.rentals).include?(new_rental1)).must_equal true
       expect((new_movie.rentals).include?(new_rental2)).must_equal true
     end
-
+    
     it "can have many customers through rentals" do
       # Arrange
       new_rental1 = Rental.create(customer_id: new_customer.id, movie_id: new_movie.id)
