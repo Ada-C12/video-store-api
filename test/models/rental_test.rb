@@ -153,7 +153,44 @@ describe Rental do
 
     describe "self.group_by_n" do
       before do
-      ends
+        Rental.destroy_all
+
+        @movie = Movie.create(title: "valid movie", inventory: 10, available_inventory: 10)
+        @customer = Customer.create(name: "valid customer")
+        
+        3.times do
+          Rental.create(movie_id: @movie.id, customer_id: @customer.id)
+        end
+      end
+
+      it "returns an array of one group of customers if n is defined but p is not defined" do
+        group = Rental.group_by_n(nil, 10, nil)
+        
+        expect(group[0].length).must_equal Rental.count
+      end
+
+      it "returns nil if n is not defined but p is defined" do
+        group = Rental.group_by_n(nil, nil, 10)
+        
+        expect(group.length).must_equal Rental.count
+      end
+      
+      it "returns an array of customers for that page if n and p are defined" do
+        group = Rental.group_by_n("title", 2, 2)
+        
+        expect(group.length).must_equal 1
+        
+        group = Rental.group_by_n("title", 2, 1)
+        
+        expect(group.length).must_equal 2
+      end
+      
+      it "if no type of sort is specified, customers are sorted by ID" do
+        rentals = Rental.group_by_n(nil, nil, nil)
+        
+        expect(rentals[0].id < rentals[1].id).must_equal true
+        expect(rentals[1].id < rentals[2].id).must_equal true
+      end
     end
     
     describe "self.sort_by_type" do
@@ -169,13 +206,14 @@ describe Rental do
       end
       
       it "sorts rentals by any possible type" do
-        SORT_TYPES = [:movie_id, :customer_id, :name, :postal_code, :title, :checkout_date, :due_date]
+        SORT_TYPES = ["movie_id", "title", "customer_id", "name", "postal_code", "checkout_date", "due_date"]
 
         SORT_TYPES.each do |type|
           rentals = Rental.sort_by_type(type)
-          if [:name, :postal_code].include? type
+
+          if ["name", "postal_code"].include? type
             expect(rentals[0].customer[type] <= rentals[1].customer[type]).must_equal true 
-          elsif [:title].include? type
+          elsif ["title"].include? type
             expect(rentals[0].movie[type] <= rentals[1].movie[type]).must_equal true 
           else
             expect(rentals[0][type] <= rentals[1][type]).must_equal true
@@ -183,10 +221,6 @@ describe Rental do
           end
         end
       end
-
-      it "if sort type is invalid, returns error" do
-      end
-    end      
+    end   
   end
-  
 end
