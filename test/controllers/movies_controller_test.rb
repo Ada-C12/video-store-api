@@ -76,19 +76,32 @@ describe MoviesController do
       must_respond_with :success
     end
     
-    # this test would be necessary if validations are added
-    # it "will respond with bad_request for invalid data" do
-    #   movie_data[:title] = nil
+    it "will respond with bad_request for no title given" do
+      movie_data[:title] = nil
+      
+      expect {
+        post movies_path, params: movie_data
+      }.wont_change "Movie.count"
+      
+      must_respond_with :bad_request
+      
+      expect(response.header['Content-Type']).must_include 'json'
+      body = JSON.parse(response.body)
+      expect(body["errors"].keys).must_include "title"
+    end
     
-    #   expect {
-    #     post movies_path, params: movie_data
-    #   }.wont_change "Movie.count"
-    
-    #   must_respond_with :bad_request
-    
-    #   expect(response.header['Content-Type']).must_include 'json'
-    #   body = JSON.parse(response.body)
-    #   expect(body["errors"].keys).must_include "title"
-    # end
+    it "will respond with bad_request for duplicate title given" do
+      movie_data[:title] = "The Lion King"
+      
+      expect {
+        post movies_path, params: movie_data
+      }.wont_change "Movie.count"
+      
+      must_respond_with :bad_request
+      
+      expect(response.header['Content-Type']).must_include 'json'
+      body = JSON.parse(response.body)
+      expect(body["errors"].keys).must_include "title"
+    end
   end
 end
