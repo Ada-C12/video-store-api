@@ -1,5 +1,6 @@
 class Customer < ApplicationRecord
-  has_many :rentals
+
+  has_many :rentals, dependent: :nullify
   validates :name, presence: true
 
   def self.check_out_movie(id)
@@ -17,4 +18,5 @@ class Customer < ApplicationRecord
     customer.save
     return customer
   end
+
 end

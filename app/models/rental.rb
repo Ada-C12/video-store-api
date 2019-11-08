@@ -9,4 +9,9 @@ class Rental < ApplicationRecord
    return rental
   end
 
+  def self.status_checkout(rental)
+    rental.status = "checked out"
+    rental.save
+    return rental
+  end
 end
