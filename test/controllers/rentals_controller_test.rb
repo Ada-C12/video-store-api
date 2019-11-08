@@ -33,13 +33,8 @@ describe RentalsController do
       body = check_response(expected_type: Hash, expected_status: :bad_request)
       expect(body["errors"]).must_include "unable to create rental"
     end
-<<<<<<< HEAD
-    
-    it "will not create rental without valid movie id" do      
-=======
 
     it "will respond with error if invalid movie id" do      
->>>>>>> master
       expect{ 
         post checkout_path, params: {movie_id: nil, customer_id: @customer.id} 
       }.wont_change "Rental.count"
@@ -98,6 +93,8 @@ describe RentalsController do
       get overdue_path
       
       body = check_response(expected_type: Array)
+      expect(body.length).must_equal Rental.count
+      must_respond_with :ok
     end
     
     it "returns an empty array if there are no overdue rentals" do
@@ -106,7 +103,8 @@ describe RentalsController do
       get overdue_path
       
       body = check_response(expected_type: Array)
-      expect(body.length).must_equal 0
+      expect(body.length).must_equal 0 
+      must_respond_with :ok  
     end
   end
 end

@@ -1,15 +1,12 @@
 require "test_helper"
 
 describe Rental do
-  <<<<<<< HEAD
   let (:movie) {movie = Movie.create(title: "valid movie", inventory: 10)}
   let (:customer) {customer = Customer.create(name: "valid customer")}
   
-  =======
   let (:movie) { movie = Movie.create(title: "valid movie", inventory: 10) }
   let (:customer) { customer = Customer.create(name: "valid customer") }
   
-  >>>>>>> master
   describe "initialize" do
     before do
       @new_rental = Rental.new(movie_id: movie.id, customer_id: customer.id)
