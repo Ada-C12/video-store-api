@@ -6,7 +6,6 @@ class RentalsController < ApplicationController
     
     if movie && customer && movie.available_inventory > 0 
       rental = Rental.new(rental_params)
-      # rental.due_date = rental.checkout_date + 7 
       customer = rental.customer
       movie = rental.movie
       
@@ -16,7 +15,10 @@ class RentalsController < ApplicationController
       #Decrease the amount of movies there are available in the movie's available inventory
       movie.update_available_inventory("checkout")
       
-      if rental.save && customer.save && movie.save 
+      if rental.save && customer.save && movie.save
+        rental.reload
+        rental.due_date = rental.checkout_date + 7 
+ 
         render json: rental.as_json(only: [:id]), status: :ok 
         return 
       else 
