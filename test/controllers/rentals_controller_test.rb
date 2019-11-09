@@ -32,7 +32,6 @@ describe RentalsController do
       post checkout_path, params: rental_data
       body = check_response(expected_type: Hash, expected_status: :success)
       
-      # new_rental = Rental.find(body["id"])
       expect(body.keys).must_include "id"
     end
     
