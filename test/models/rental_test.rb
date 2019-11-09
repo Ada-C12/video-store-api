@@ -50,17 +50,5 @@ describe Rental do
       expect(rental_one).must_be_kind_of Rental 
       expect(rental_two).must_be_kind_of Rental 
     end 
-  end 
-  
-  describe "find_customer" do
-    it "finds a customer by id" do
-      @customer = custumers(:one)
-      
-    end   
-  end
-  
-  describe "find_movie" do
-    it "finds a movie by id" do 
-    end 
   end
 end
