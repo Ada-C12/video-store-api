@@ -20,12 +20,14 @@ class RentalsController < ApplicationController
       }, status: :bad_request
       return
     else
-      rental.returned = true
-      rental.save
-      @customer.movies_checked_out_count -= 1
-      @customer.save
-      render json: rental.as_json(only: [:id]), status: :ok
-      return
+      if rental.returned == false  
+        rental.returned = true
+        rental.save
+        @customer.movies_checked_out_count -= 1
+        @customer.save
+        render json: rental.as_json(only: [:id]), status: :ok
+        return
+      end
     end
   end
 

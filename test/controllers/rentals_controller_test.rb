@@ -64,6 +64,25 @@ describe RentalsController do
       expect _(updated_customer.movies_checked_out_count).must_equal @start_checkout_count - 1
     end 
 
+    it "won't change customer's movies checked out count for a already returned rental" do
+      expect {
+        post checkin_path, params: rental_data
+      }.wont_change 'Rental.count'
+
+      rental = Rental.find_by(customer_id: valid_customer.id, movie_id: valid_movie.id)
+      expect(rental.returned).must_equal true
+
+      updated_customer = Customer.find_by(id: valid_customer.id)
+      movies_checked_out_count = updated_customer.movies_checked_out_count
+
+      expect {
+        post checkin_path, params: rental_data
+      }.wont_change 'Rental.count'
+
+      updated_customer = Customer.find_by(id: valid_customer.id)
+      expect _(updated_customer.movies_checked_out_count).must_equal movies_checked_out_count
+    end 
+
     it "won't update with invalid data" do
       ["customer_id", "movie_id"].each do |key|
         data = rental_data.deep_dup
