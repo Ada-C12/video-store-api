@@ -29,6 +29,26 @@ describe RentalsController do
       expect(end_count).must_equal start_count+1
     end
     
+    it "doesn't checkout an invalid movie" do
+      @params = {movie_id: -1, customer_id: Customer.first.id}
+      
+      expect{post checkout_path, params: @params}.wont_change "Rental.count"
+      
+      must_respond_with :bad_request
+      body = JSON.parse(response.body)
+      expect(body['errors']).must_include "movie"
+    end
+    
+    it "doesn't checkout with an invalid customer" do
+      @params = {movie_id: Movie.first.id, customer_id: nil}
+      
+      expect{post checkout_path, params: @params}.wont_change "Rental.count"
+      
+      must_respond_with :bad_request
+      body = JSON.parse(response.body)
+      expect(body['errors']).must_include "customer"
+    end
+    
   end
   
   describe "checkin" do
@@ -57,7 +77,6 @@ describe RentalsController do
       expect(end_count).must_equal start_count-1
       assert_nil(rental.due_date)
     end
-    
     
   end
   
