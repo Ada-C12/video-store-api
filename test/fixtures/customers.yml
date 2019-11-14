@@ -1,0 +1,26 @@
+one: 
+  name: "Yolanda Lasagne"
+  registered_at: "Wed, 18 Apr 2014 21:40:20 -0700"
+  address: "123 Golden Gate Road"
+  city: "San Francisco"
+  state: "California"
+  postal_code: "94267"
+  phone: "(908) 949-6758"
+
+two: 
+  name: "Bob Smith"
+  registered_at: "Mon, 16 Apr 2014 01:40:20 -0700"
+  address: "420 Valley St."
+  city: "Seattle"
+  state: "Washington"
+  postal_code: "98107"
+  phone: "(206) 224-1244"
+
+three: 
+  name: "Maria Alfredo"
+  registered_at: "Tue, 17 Apr 2014 22:40:07 -0700"
+  address: "1265 North Street"
+  city: "Olympia"
+  state: "Washington"
+  postal_code: "98501"
+  phone: "(360) 786-9537"

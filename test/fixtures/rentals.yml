@@ -1,0 +1,25 @@
+bride_rental-1:
+  customer: one
+  movie: bride
+  due_date: Sat, 09 Nov 2019
+  
+bride_rental-2:
+  customer: two
+  movie: bride
+  due_date: Sun, 10 Nov 2019
+
+bride_rental-3:
+  customer: three
+  movie: bride
+  due_date: Sat, 16 Nov 2019
+
+swamp_rental:
+  customer: two
+  movie: swamp
+  due_date: Sat, 16 Nov 2019
+  
+harry_rental:
+  customer: three
+  movie: harry
+  due_date: Sat, 16 Nov 2019
+  
