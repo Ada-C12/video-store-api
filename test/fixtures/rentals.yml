@@ -1,0 +1,15 @@
+rental1:
+  customer: customer1
+  movie: movie1
+  due_date: 11/12/19
+  status: checked_out
+rental2:
+  customer: customer2
+  movie: movie1
+  due_date: 11/12/19
+  status: checked_out
+rental3:
+  customer: customer1
+  movie: movie2
+  due_date: 11/12/19
+  status: checked_out

@@ -1,0 +1,29 @@
+customer1:
+  name: Malik Barber
+  registered_at: Sat, 14 Feb 2015 10:24:50 -0800
+  address: Ap 364-1684 Quam. St.
+  city: Waterbury
+  state: Connecticut
+  postal_code: 75696
+  phone: (575) 915-7794
+  movies_checked_out_count: 0
+
+customer2:
+  name: Nell Bishop
+  registered_at: Fri, 01 May 2015 18:59:31 -0700
+  address: 7623 Torquent Street
+  city: Minneapolis
+  state: MN
+  postal_code: 27078
+  phone: (819) 107-0728
+  movies_checked_out_count: 1
+
+customer3:
+  name: Leigh Anderson
+  registered_at: Tue, 22 Jul 2014 13:05:46 -0700
+  address: Ap 149-1154 Cras Rd.
+  city: Montgomery
+  state: Alabama
+  postal_code: 36037
+  phone: (176) 966-1214
+  movies_checked_out_count: 0
