@@ -1,0 +1,24 @@
+mariya:
+  name: mariya
+  registered_at: Wed, 29 Apr 2015 07:54:14 -0700
+  address: 801 Dexter Ave
+  city: Seattle
+  state: WA
+  postal_code: 98119
+  phone: 425-123-4567
+cloudy:
+  name: cloudy
+  registered_at: Wed, 16 Apr 2014 21:40:20 -0700
+  address: 100 Acre Wood
+  city: PoohLand
+  state: WA
+  postal_code: 98144
+  phone: 206-456-6678
+sara:
+  name: sara
+  registered_at: Fri, 28 Nov 2014 13:14:08 -0800
+  address: 534 Oreos Road
+  city: Syracuse
+  state: New York 
+  postal_code: 13224
+  phone: 415-890-4456

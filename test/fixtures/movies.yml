@@ -1,0 +1,15 @@
+up:
+  title: up
+  overview: hot air balloon adventure
+  release_date: 2009-01-05
+  inventory: 10
+avengers:
+  title: avengers
+  overview: they fight crime
+  release_date: 2018-01-05
+  inventory: 48
+zootopia:
+  title: zootopia
+  overview: cute zoo animals fight thinly veiled racism
+  release_date: 2015-09-15
+  inventory: 8
