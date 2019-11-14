@@ -199,7 +199,7 @@ Request body:
 | `customer_id` | integer             | ID of the customer checking out this film
 | `movie_id`    | integer | ID of the movie to be checked out
 
-#### `POST /rentals/check-in`
+#### `PATCH /rentals/check-in`
 Check in one of a customer's rentals
 
 Request body:
