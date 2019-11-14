@@ -1,0 +1,17 @@
+one:
+  # checkout_date: Date.today - 4
+  # due_date: Date.today + 2
+  customer: one
+  movie: two
+
+two:
+  # checkout_date: Date.today - 4
+  # due_date: Date.today + 2
+  customer: one
+  movie: one
+
+three:
+  # checkout_date: Date.today - 1
+  # due_date: Date.today + 5
+  customer: two
+  movie: one
