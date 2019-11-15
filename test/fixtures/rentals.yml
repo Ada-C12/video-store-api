@@ -1,0 +1,4 @@
+rental1:
+  customer_id: customer1.id
+  movie_id: movie1.id
+  checkout_date: Date.today

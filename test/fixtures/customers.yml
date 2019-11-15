@@ -1,0 +1,8 @@
+customer1:
+  name: Sally
+  address: 123 NotReal Street
+  city: Seattle
+  state: WA
+  postal_code: 98133
+  phone: (123)456-7891
+  registered_at: '2019-11-28T21:14:08.000Z'
