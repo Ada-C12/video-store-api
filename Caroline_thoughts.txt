@@ -1,0 +1,28 @@
+###### THOUGHTS... 
+
+GET /rentals/overdue
+  Option A: go through each affected customer? 
+  Option B: go through each rental? No b/c worse time complexity
+  
+  with optionA, I search Customer for all those who has movies_checked_out_count > 0,
+  then iterate thru and find customerInstance.rentals where returned: false && due_date < today
+
+###
+GET /movies/:id/current
+  I vote for Option A, same reason
+  Go through movieInstance.rentals, where returned: false 
+
+GET /movies/:id/history 
+  Go through movieInstance.rentals, where returned: true 
+###
+
+
+###
+GET /customers/:id/current
+  Go through customerInstance.rentals, get all the ones with returned: false
+
+GET /customers/:id/history
+  Go through customerInstance.rentals, get all the ones with returned: true
+###
+
+! Can probably refactor out some more between the prev 4 GET lines...
