@@ -1,0 +1,13 @@
+janice:
+  name: "Janice"
+  registered_at: Date.now
+  address: bogus
+  city: Seattle
+  phone: doh
+  postal_code: somewhere
+  state: doh
+  movies_checked_out_count: 2
+
+dora:
+  name: "Dora"
+  registered_at: Date.now

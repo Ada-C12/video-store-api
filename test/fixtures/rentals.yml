@@ -1,0 +1,12 @@
+rental1:
+  customer: janice
+  movie: movie2
+
+rental2:
+  customer: dora
+  movie: movie1
+
+rental3:
+  customer: janice
+  movie: movie1
+  
