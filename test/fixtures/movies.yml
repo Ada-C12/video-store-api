@@ -1,0 +1,16 @@
+one:
+  title: Moviea
+  inventory: 12
+  available_inventory: 12
+two:
+  title: Movieb
+  inventory: 20
+  available_inventory: 20
+three:
+  title: Moviec
+  inventory: 2
+  available_inventory: 2
+four:
+  title: Movied
+  inventory: 1
+  available_inventory: 0

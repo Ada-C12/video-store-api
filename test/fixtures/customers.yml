@@ -1,0 +1,7 @@
+one:
+  name: Dani 
+  movies_checked_out_count: 0
+two:
+  name: Alex
+  movies_checked_out_count: 1
+   
