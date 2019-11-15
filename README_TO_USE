@@ -1,0 +1,30 @@
+ACTION : 
+METHOD URL : 
+PREFERRED HTTP METHOD : 
+ARGUMENTS: 
+  ARGUMENT: 
+  EXAMPLE: 
+  REQUIRED?: 
+
+
+  resources :customers, only: [:index]
+  http://localhost:3000/customers
+
+  resources :movies, only: [:index,
+   http://localhost:3000/movies
+  :show,
+   http://localhost:3000/movie 
+
+  :create]
+     http://localhost:3000/movies
+  
+  post '/rentals/check-out', to: "rentals#checkout", as: "checkout"
+  post '/rentals/check-in', to: "rentals#checkin", as: "checkin"
+
+ACTION : 
+METHOD URL : 
+PREFERRED HTTP METHOD : 
+ARGUMENTS: 
+  ARGUMENT: 
+  EXAMPLE:
+  REQUIRED?:
