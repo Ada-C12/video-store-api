@@ -1,0 +1,6 @@
+rental1:
+  checkout_date: "Wed 22 Apr 2015 07:54:14 -0700"
+  checkin_date: "Wed 27 Apr 2015 07:54:14 -0700"
+  due_date: "Wed 29 Apr 2015 07:54:14 -0700"
+  customer: :shelley
+  movie: :blacksmith
