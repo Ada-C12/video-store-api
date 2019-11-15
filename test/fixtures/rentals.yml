@@ -1,0 +1,12 @@
+rental_1:
+  customer: eminique
+  movie: titanic
+rental_2:
+  customer: emily
+  movie: signs
+rental_3:
+  customer: dominique 
+  movie: inception
+rental_4:
+  customer: eminique
+  movie: signs

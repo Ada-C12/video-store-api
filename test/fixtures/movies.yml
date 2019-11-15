@@ -1,0 +1,30 @@
+titanic:
+  title: titanic
+  overview: a romance tale for the ages
+  release_date: "1991-01-09"
+  inventory: 20
+  available_inventory: 20
+signs:
+  title: signs
+  overview: scary scifi
+  release_date: "2000-11-12"
+  inventory: 20
+  available_inventory: 20 
+inception:
+  title: inception
+  overview: mind bender
+  release_date: "2011-01-18"
+  inventory: 20
+  available_inventory: 20
+batman:
+  title: batman
+  overview: dark superhero
+  release_date: "2012-11-01"
+  inventory: 20
+  available_inventory: 20
+chappie:
+  title: chappie
+  overview: robot
+  release_date: "2012-11-01"
+  inventory: 20
+  available_inventory: 0
