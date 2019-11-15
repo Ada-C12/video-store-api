@@ -1,0 +1,15 @@
+one:
+  name: Ada
+  address: 123 Ada St
+  city: Seattle
+  state: WA
+  postal_code: 98101
+  phone: 206-533-8999
+
+two:
+  name: Bill
+  address: 890 Weller St
+  city: Seattle
+  state: WA
+  postal_code: 98109
+  phone: 206-533-0000
